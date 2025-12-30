@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog", ({ data }) => {
+    // Only get Spanish blog posts
+    return data.published !== false && data.lang === 'es';
+  });
+  
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Generate enhanced jsonLd for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: new Date(entry.data.date).toISOString(),
+  dateModified: new Date(entry.data.date).toISOString(),
+  author: {
+    "@type": "Organization",
+    name: entry.data.author,
+    url: "https://cardrender.com",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Cardrender",
+    url: "https://cardrender.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://cardrender.com/cardrender.svg",
+    },
+  },
+  keywords: entry.data.keywords.join(", "),
+  articleSection: entry.data.category,
+  inLanguage: "es-ES",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://cardrender.com/es/blog/${entry.slug}`,
+  },
+};
+---
+
+<BlogLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  date={entry.data.date}
+  readTime={entry.data.readTime}
+  author={entry.data.author}
+  category={entry.data.category}
+  keywords={entry.data.keywords}
+  jsonLd={jsonLd}
+>
+  <Content />
+</BlogLayout>

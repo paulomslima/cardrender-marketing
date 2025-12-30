@@ -1,28 +1,240 @@
 ---
 import DocsLayout from "../../layouts/DocsLayout.astro";
+
+// SEO-optimized frontmatter
+const title = "Team Management & Role-Based Access Control - Cardrender";
+const description = "Manage digital business cards at scale with role-based permissions, bulk imports, directory management, and approval workflows for teams of any size.";
+const category = "Teams";
+const lastUpdated = "2025-12-30";
+
+const keywords = [
+  "team management",
+  "role based access control",
+  "bulk import users",
+  "team permissions",
+  "workspace management",
+  "enterprise card management",
+  "SSO integration"
+];
+
+const relatedDocs = [
+  { title: "Getting Started", url: "/docs/getting-started" },
+  { title: "Branding & Templates", url: "/docs/branding-and-templates" },
+  { title: "Security", url: "/docs/security" },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description,
+  dateModified: lastUpdated + "T00:00:00Z",
+  author: {
+    "@type": "Organization",
+    name: "Cardrender",
+    url: "https://cardrender.com",
+  },
+  keywords: keywords.join(", "),
+  articleSection: category,
+  proficiencyLevel: "Intermediate",
+};
 ---
 
-<DocsLayout
-  title="Teams & Roles"
-  description="Manage access, permissions, and invitations for every department."
->
-  <h1>Teams & Roles</h1>
-  <p>
-    Cardrender supports granular access so you can empower teams without losing control. Use roles to decide who can
-    manage branding, templates, and member invites.
-  </p>
-  <h2>Default roles</h2>
-  <ul>
-    <li><strong>Owner</strong>: Full access to billing, branding, and workspace settings.</li>
-    <li><strong>Admin</strong>: Manage members, templates, and analytics.</li>
-    <li><strong>Member</strong>: Edit personal cards and signatures.</li>
-  </ul>
-  <h2>Invitations</h2>
-  <p>
-    Invite teammates from the Team dashboard. You can pre-create cards or let members fill in their own profiles.
-  </p>
-  <h2>Directory visibility</h2>
-  <p>
-    Control who appears in the public directory. Members can opt out when needed.
-  </p>
+<DocsLayout title={title} description={description}>
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+      {category}
+    </div>
+    <h1 class="text-4xl font-bold mb-4">{title}</h1>
+    <p class="text-xl text-muted-foreground mb-2">{description}</p>
+    <p class="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+  </div>
+
+  <div class="prose prose-lg max-w-none">
+    <p class="lead">
+      Cardrender supports teams of all sizes with role-based permissions, bulk user management, and centralized directory controls. Scale from 10 to 10,000 users without losing control over branding, data, or access.
+    </p>
+
+    <h2>Role-Based Permissions</h2>
+    <p>
+      Cardrender uses a flexible permission system that balances autonomy with governance. Assign roles based on responsibility level and operational needs.
+    </p>
+
+    <h3>Owner</h3>
+    <p>
+      Full administrative access to the workspace. Owners can:
+    </p>
+    <ul>
+      <li>Manage billing, subscription plans, and payment methods</li>
+      <li>Add or remove team members and change their roles</li>
+      <li>Configure workspace branding, templates, and settings</li>
+      <li>Access all analytics and export data</li>
+      <li>Delete the workspace or transfer ownership</li>
+    </ul>
+    <p>
+      <strong>Best practice:</strong> Limit Owner access to 1-2 trusted administrators (e.g., VP of Operations, IT Director).
+    </p>
+
+    <h3>Admin</h3>
+    <p>
+      Operational control without billing access. Admins can:
+    </p>
+    <ul>
+      <li>Invite and manage team members (but cannot change Owner role)</li>
+      <li>Create and edit templates for the entire workspace</li>
+      <li>View all team analytics and export reports</li>
+      <li>Configure integrations (CRM, SSO, API keys)</li>
+      <li>Approve or reject card designs when approval workflows are enabled</li>
+    </ul>
+    <p>
+      <strong>Typical users:</strong> Marketing operations, sales enablement, IT administrators.
+    </p>
+
+    <h3>Member</h3>
+    <p>
+      Standard user access for creating and managing personal cards. Members can:
+    </p>
+    <ul>
+      <li>Create and edit their own digital business cards</li>
+      <li>Choose from approved templates and customize within branding guidelines</li>
+      <li>View their own analytics (views, clicks, contact saves)</li>
+      <li>Share cards via link, QR code, or email signature</li>
+      <li>Update contact details, photos, and social links</li>
+    </ul>
+    <p>
+      <strong>Restrictions:</strong> Members cannot access other users' cards, modify workspace settings, or view team-wide analytics.
+    </p>
+
+    <h3>Guest (Optional)</h3>
+    <p>
+      Limited access for external collaborators or temporary staff. Guests can create cards but cannot see directory listings or team analytics. Useful for contractors, event staff, or partner organizations.
+    </p>
+
+    <h2>Inviting Team Members</h2>
+    <p>
+      Add users individually or in bulk depending on your rollout strategy.
+    </p>
+
+    <h3>Single Invitations</h3>
+    <p>
+      From the Team dashboard, click <strong>"Invite Member"</strong> and enter:
+    </p>
+    <ul>
+      <li>Email address</li>
+      <li>Role (Owner, Admin, Member, Guest)</li>
+      <li>Optional: Pre-assign a template or card URL</li>
+    </ul>
+    <p>
+      The recipient receives an email invitation with a secure link to join your workspace. They'll create their account and land directly in your branded environment.
+    </p>
+
+    <h3>Bulk Import</h3>
+    <p>
+      For teams larger than 20 users, use the <strong>CSV bulk import tool</strong>. Upload a spreadsheet with columns for:
+    </p>
+    <ul>
+      <li><code>email</code> (required)</li>
+      <li><code>first_name</code> and <code>last_name</code> (required)</li>
+      <li><code>title</code> (optional)</li>
+      <li><code>department</code> (optional)</li>
+      <li><code>phone</code> (optional)</li>
+      <li><code>role</code> (defaults to Member if not specified)</li>
+    </ul>
+    <p>
+      Cardrender will send invitation emails to all valid addresses and provide a summary of successful and failed imports. This reduces onboarding time from hours to minutes.
+    </p>
+
+    <h3>Directory Sync & SSO</h3>
+    <p>
+      Enterprise plans support <strong>SCIM 2.0 directory sync</strong> with Okta, Azure AD, Google Workspace, and OneLogin. When enabled:
+    </p>
+    <ul>
+      <li>New employees are automatically provisioned with Cardrender accounts on their first day</li>
+      <li>Role changes in your directory sync to Cardrender permissions in real time</li>
+      <li>Departing employees are immediately deprovisioned, ensuring security compliance</li>
+    </ul>
+    <p>
+      Combine directory sync with <strong>SSO (SAML 2.0 or OIDC)</strong> for seamless, secure authentication. See the <a href="/docs/security">Security documentation</a> for setup instructions.
+    </p>
+
+    <h2>Team Directory</h2>
+    <p>
+      The team directory provides a searchable, filterable list of all active cards in your workspace. Use it to:
+    </p>
+    <ul>
+      <li>Find colleagues' cards for internal sharing</li>
+      <li>Generate a public-facing team directory page (optional)</li>
+      <li>Export the directory as a CSV for offline use</li>
+    </ul>
+
+    <h3>Public vs. Private Visibility</h3>
+    <p>
+      Control whether your team directory is publicly accessible:
+    </p>
+    <ul>
+      <li><strong>Public directory:</strong> Anyone with the link can browse all team members (useful for sales teams, agencies, event staff)</li>
+      <li><strong>Private directory:</strong> Only authenticated workspace members can see the directory (default for enterprises)</li>
+      <li><strong>Opt-out:</strong> Individual members can hide their cards from the public directory while keeping them shareable via direct link</li>
+    </ul>
+
+    <h2>Approval Workflows</h2>
+    <p>
+      For organizations with strict branding requirements, enable <strong>card approval workflows</strong>. When activated:
+    </p>
+    <ol>
+      <li>Members create or edit their cards as usual</li>
+      <li>Changes enter a "Pending Approval" state and are not yet published</li>
+      <li>Admins receive a notification to review the card</li>
+      <li>Admins approve the card (publishes immediately) or request revisions (sends feedback to the member)</li>
+    </ol>
+    <p>
+      This ensures brand consistency while maintaining member autonomy. Most organizations only enable approvals for new hires or major rebrand periods.
+    </p>
+
+    <h2>Department & Team Segmentation</h2>
+    <p>
+      Organize members into departments or teams for easier management and reporting:
+    </p>
+    <ul>
+      <li>Create custom departments (Sales, Marketing, Engineering, Customer Success, etc.)</li>
+      <li>Assign members to one or more departments</li>
+      <li>Filter analytics by department to measure team-specific performance</li>
+      <li>Apply department-specific templates or branding overrides</li>
+    </ul>
+
+    <h2>Offboarding Team Members</h2>
+    <p>
+      When an employee leaves, Admins or Owners can:
+    </p>
+    <ul>
+      <li><strong>Deactivate their card:</strong> Card becomes unavailable, but data is retained for analytics</li>
+      <li><strong>Reassign their card:</strong> Transfer ownership to another team member (useful for role transitions)</li>
+      <li><strong>Delete their account:</strong> Permanently removes the user and all associated data</li>
+    </ul>
+    <p>
+      With directory sync enabled, offboarding happens automatically when a user is removed from your identity provider.
+    </p>
+
+    <h2>Best Practices for Large Teams</h2>
+    <ul>
+      <li><strong>Start with a pilot:</strong> Roll out to one department (e.g., Sales) before expanding company-wide</li>
+      <li><strong>Assign department admins:</strong> Distribute management workload by appointing admins for each business unit</li>
+      <li><strong>Standardize onboarding:</strong> Include Cardrender setup in new hire checklists alongside email, Slack, and CRM access</li>
+      <li><strong>Review permissions quarterly:</strong> Audit roles to ensure proper access levels as team structure evolves</li>
+      <li><strong>Use templates:</strong> Reduce design overhead by creating department-specific templates that members can personalize</li>
+    </ul>
+  </div>
+
+  <div class="mt-12 pt-8 border-t border-border">
+    <h3 class="text-lg font-semibold mb-4">Related Documentation</h3>
+    <div class="grid gap-4 sm:grid-cols-3">
+      {relatedDocs.map((doc) => (
+        <a href={doc.url} class="block p-4 rounded-lg border border-border hover:border-primary transition-colors">
+          <p class="font-medium text-foreground">{doc.title}</p>
+        </a>
+      ))}
+    </div>
+  </div>
 </DocsLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

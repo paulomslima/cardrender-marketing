@@ -3,6 +3,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import { SITE_URL } from "../lib/config";
+import { getLangFromUrl, getAlternateLinks } from "../lib/i18n";
 
 const {
   title,
@@ -22,6 +23,10 @@ const metaDescription =
   "Create, manage, and share digital business cards and email signatures for your team. Track engagement, enforce branding, and scale your outreach.";
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_URL).toString();
+
+// Get language and alternate links
+const currentLang = getLangFromUrl(Astro.url);
+const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
 ---
 
 <html lang="en">
@@ -45,10 +50,18 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_URL).toString
     <meta name="twitter:title" content={metaTitle} />
     <meta name="twitter:description" content={metaDescription} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+    
+    <!-- Alternate language links for SEO -->
+    {alternateLinks.map(({ lang, url }) => (
+      <link rel="alternate" hreflang={lang} href={new URL(url, SITE_URL).toString()} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname, SITE_URL).toString()} />
+    
     <link rel="alternate" href={canonicalUrl} hreflang="en" />
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

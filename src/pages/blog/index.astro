@@ -1,17 +1,24 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { BookOpen, Clock, ArrowRight } from "lucide-astro";
+import { getCollection } from "astro:content";
 
-const posts = [
-  {
-    title: "Why digital business cards are the new standard for teams",
-    slug: "digital-business-cards",
-    description: "A practical look at why teams are switching from paper cards to trackable, branded digital profiles.",
-    date: "Dec 30, 2025",
-    readTime: "6 min read",
-    category: "Product",
-  },
-];
+// Get all published blog posts, sorted by date
+const allPosts = await getCollection("blog", ({ data }) => {
+  return data.published !== false;
+});
+
+// Sort posts by date (newest first) and map to format expected by the template
+const posts = allPosts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .map((post) => ({
+    title: post.data.title,
+    slug: post.slug,
+    description: post.data.description,
+    date: post.data.date,
+    readTime: post.data.readTime,
+    category: post.data.category,
+  }));
 ---
 
 <BaseLayout

@@ -1,12 +1,84 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import { Clock, Calendar, ArrowLeft, Share2 } from "lucide-astro";
+import { Clock, Calendar, ArrowLeft, Share2, Tag } from "lucide-astro";
 
-const { title, description, date, readTime, jsonLd, author = "Cardrender Team", category = "Product" } = Astro.props;
+const { 
+  title, 
+  description, 
+  date, 
+  readTime, 
+  jsonLd, 
+  author = "Cardrender Team", 
+  category = "Product",
+  keywords = []
+} = Astro.props;
+
+// Generate Open Graph and Twitter meta tags for social sharing
+const siteUrl = "https://cardrender.com";
+const currentUrl = `${siteUrl}${Astro.url.pathname}`;
+const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
 ---
 
 <BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <!-- Enhanced SEO Meta Tags -->
+  <Fragment slot="head">
+    <!-- Canonical URL -->
+    <link rel="canonical" href={currentUrl} />
+    
+    <!-- Keywords -->
+    {keywords.length > 0 && (
+      <meta name="keywords" content={keywords.join(", ")} />
+    )}
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="article:published_time" content={jsonLd?.datePublished || ""} />
+    <meta property="article:modified_time" content={jsonLd?.dateModified || ""} />
+    <meta property="article:author" content={author} />
+    <meta property="article:section" content={category} />
+    {keywords.map((keyword) => (
+      <meta property="article:tag" content={keyword} />
+    ))}
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Additional SEO -->
+    <meta name="author" content={author} />
+    <meta name="article:published_time" content={jsonLd?.datePublished || ""} />
+  </Fragment>
+
   <article class="blog-article-page">
+    <!-- Breadcrumb Navigation for SEO -->
+    <nav class="container breadcrumb-nav" aria-label="Breadcrumb">
+      <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a itemprop="item" href="/">
+            <span itemprop="name">Home</span>
+          </a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a itemprop="item" href="/blog">
+            <span itemprop="name">Blog</span>
+          </a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{title}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+      </ol>
+    </nav>
+
     <!-- Back Navigation -->
     <div class="container article-nav">
       <a href="/blog" class="back-link">
@@ -36,6 +108,18 @@ const { title, description, date, readTime, jsonLd, author = "Cardrender Team", 
             <span class="author-name">By {author}</span>
           </div>
         </div>
+        
+        <!-- Keywords/Tags Display -->
+        {keywords.length > 0 && (
+          <div class="article-tags">
+            <Tag size={14} />
+            <div class="tags-list">
+              {keywords.slice(0, 5).map((keyword) => (
+                <span class="tag-badge">{keyword}</span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </header>
 
@@ -68,8 +152,49 @@ const { title, description, date, readTime, jsonLd, author = "Cardrender Team", 
     background: hsl(var(--background));
   }
 
+  /* Breadcrumb Navigation */
+  .breadcrumb-nav {
+    padding: 1.5rem 0 0.5rem;
+  }
+
+  .breadcrumb-nav ol {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .breadcrumb-nav li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumb-nav li:not(:last-child)::after {
+    content: "›";
+    color: hsl(var(--muted-foreground));
+    font-size: 1rem;
+  }
+
+  .breadcrumb-nav a {
+    color: hsl(var(--muted-foreground));
+    transition: color 200ms;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: hsl(var(--primary));
+  }
+
+  .breadcrumb-nav li:last-child span {
+    color: hsl(var(--foreground));
+  }
+
   .article-nav {
-    padding: 2rem 0 1rem;
+    padding: 1rem 0 1rem;
   }
 
   .back-link {
@@ -151,6 +276,41 @@ const { title, description, date, readTime, jsonLd, author = "Cardrender Team", 
 
   .author-name {
     font-weight: 600;
+  }
+
+  /* Article Tags */
+  .article-tags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tags-list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tag-badge {
+    display: inline-flex;
+    padding: 0.25rem 0.75rem;
+    background: hsl(var(--secondary) / 0.1);
+    border: 1px solid hsl(var(--border));
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: hsl(var(--secondary));
+    transition: all 200ms;
+  }
+
+  .tag-badge:hover {
+    background: hsl(var(--secondary) / 0.2);
+    border-color: hsl(var(--secondary));
   }
 
   /* Content */

@@ -1,32 +1,186 @@
 ---
 import DocsLayout from "../../layouts/DocsLayout.astro";
+
+// SEO-optimized frontmatter for documentation
+const title = "Getting Started with Cardrender - Create Your First Digital Business Card";
+const description = "Create and deploy your first professional digital business card in under 5 minutes. Step-by-step guide for individuals and teams.";
+const category = "Setup";
+const lastUpdated = "2025-12-30";
+
+// Keywords for LLM and SEO
+const keywords = [
+  "digital business card setup",
+  "create digital card",
+  "cardrender tutorial",
+  "business card quickstart",
+  "team card deployment",
+  "QR code card setup"
+];
+
+// Related docs for navigation
+const relatedDocs = [
+  { title: "Branding & Templates", url: "/docs/branding-and-templates" },
+  { title: "Teams", url: "/docs/teams" },
+  { title: "Analytics", url: "/docs/analytics" },
+];
+
+// Enhanced schema for documentation
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description,
+  datePublished: "2025-12-30T00:00:00Z",
+  dateModified: lastUpdated + "T00:00:00Z",
+  author: {
+    "@type": "Organization",
+    name: "Cardrender",
+    url: "https://cardrender.com",
+  },
+  keywords: keywords.join(", "),
+  inLanguage: "en-US",
+  articleSection: category,
+  proficiencyLevel: "Beginner",
+};
 ---
 
-<DocsLayout
-  title="Getting Started"
-  description="Launch your Cardrender workspace in minutes with a repeatable rollout plan."
->
-  <h1>Getting Started</h1>
-  <p>
-    Cardrender helps you deploy digital business cards and email signatures across your team. Start by setting up a
-    workspace, defining branding, and inviting your first members.
-  </p>
-  <h2>1. Create your workspace</h2>
-  <p>
-    Choose a name, upload your logo, and define primary brand colors. These settings become the foundation for all card
-    templates and signatures.
-  </p>
-  <h2>2. Configure default templates</h2>
-  <p>
-    Select the card template you want new members to start with. You can enable premium templates for teams that need
-    more customization.
-  </p>
-  <h2>3. Invite teammates</h2>
-  <p>
-    Add members manually or send bulk invites. Each teammate receives a pre-built card that they can personalize.
-  </p>
-  <h2>4. Publish and share</h2>
-  <p>
-    Encourage teammates to publish cards and add QR codes to their email signatures, event badges, and collateral.
-  </p>
+<DocsLayout title={title} description={description}>
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+      {category}
+    </div>
+    <h1 class="text-4xl font-bold mb-4">{title}</h1>
+    <p class="text-xl text-muted-foreground mb-2">{description}</p>
+    <p class="text-sm text-muted-foreground">Last updated: {lastUpdated}</p>
+  </div>
+
+  <div class="prose prose-lg max-w-none">
+    <p class="lead">
+      Cardrender makes it simple to create professional digital business cards for yourself or your entire team. Follow this step-by-step guide to launch your first card in under 5 minutes and start sharing with confidence.
+    </p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+      <li>A valid email address (work or personal)</li>
+      <li>Basic contact information (name, title, phone, email)</li>
+      <li>Optional: Company logo or headshot photo</li>
+      <li>Optional: Social media profile URLs (LinkedIn, Twitter, etc.)</li>
+    </ul>
+
+    <h2>Step 1: Create Your Account</h2>
+    <p>
+      Navigate to the <strong>Cardrender sign-up page</strong> and register using your email address or SSO provider (Google, Microsoft, etc.). You'll receive a verification email—click the link to confirm your account and access the dashboard.
+    </p>
+    <p>
+      <strong>For teams:</strong> If someone from your organization has already set up Cardrender, ask for an invitation link to join the existing workspace. This ensures brand consistency from day one.
+    </p>
+
+    <h2>Step 2: Set Up Your Workspace</h2>
+    <p>
+      After verifying your email, you'll be prompted to create a <strong>workspace</strong>. A workspace is where you manage cards, templates, and team members. Enter your organization name, upload a logo, and configure your brand colors. Don't worry—you can update these settings anytime from the workspace dashboard.
+    </p>
+    <p>
+      <strong>Pro tip:</strong> Use your brand's hex color codes or HSL values to match your existing identity guidelines. This ensures your digital cards align with email signatures, presentations, and marketing materials.
+    </p>
+
+    <h2>Step 3: Design Your Card</h2>
+    <p>
+      Choose from our library of <strong>professionally designed templates</strong> or start from scratch with the custom builder. Add your essential information:
+    </p>
+    <ul>
+      <li><strong>Name and title:</strong> Your full name and current role (e.g., "Sales Director")</li>
+      <li><strong>Contact details:</strong> Email, phone number, and company website</li>
+      <li><strong>Social profiles:</strong> LinkedIn, Twitter, GitHub, or any custom links</li>
+      <li><strong>Call-to-action:</strong> "Schedule a meeting," "Download our deck," or "View pricing"</li>
+      <li><strong>Profile photo:</strong> A professional headshot (recommended size: 400x400px)</li>
+      <li><strong>Company logo:</strong> Your organization's branding asset</li>
+    </ul>
+    <p>
+      Use the <strong>live preview panel</strong> on the right side of the editor to see changes in real time. Test the card on both desktop and mobile to ensure readability and usability across devices.
+    </p>
+
+    <h2>Step 4: Customize Your URL (Optional)</h2>
+    <p>
+      By default, your card lives at <code>cardrender.com/yourname</code>. You can customize this slug to match your personal brand or make it easier to remember. For example:
+    </p>
+    <ul>
+      <li><code>cardrender.com/johndoe</code> → <code>cardrender.com/john-sales</code></li>
+      <li><code>cardrender.com/jane-marketing</code></li>
+      <li><code>cardrender.com/acme-ceo</code></li>
+    </ul>
+
+    <h2>Step 5: Share Your Card</h2>
+    <p>
+      Once your card is live, Cardrender provides multiple sharing methods to fit any networking scenario:
+    </p>
+    <ul>
+      <li><strong>Direct link:</strong> Copy your unique URL and paste it into emails, Slack messages, or text threads</li>
+      <li><strong>QR code:</strong> Download a high-resolution QR code for business cards, conference badges, or presentation slides</li>
+      <li><strong>Email signature:</strong> Embed a "View My Card" button directly in your email footer</li>
+      <li><strong>NFC tag:</strong> Pair your card with an NFC-enabled accessory (phone case, card, sticker) for tap-to-share convenience</li>
+      <li><strong>Social media:</strong> Add your Cardrender link to your LinkedIn profile, Twitter bio, or Instagram profile</li>
+    </ul>
+    <p>
+      Recipients can save your details directly to their phone contacts with a <strong>single tap</strong>—no app required. On iOS, they'll see an "Add to Contacts" prompt. On Android, the vCard download happens automatically.
+    </p>
+
+    <h2>Step 6: Track Engagement</h2>
+    <p>
+      After sharing your card, visit the <strong>Analytics dashboard</strong> to monitor performance. You'll see:
+    </p>
+    <ul>
+      <li>Total views and unique visitors</li>
+      <li>Click-through rates for each link (phone, email, LinkedIn, custom CTAs)</li>
+      <li>Geographic distribution of viewers</li>
+      <li>Top referral sources (events, campaigns, direct shares)</li>
+    </ul>
+    <p>
+      Use this data to optimize your messaging, prioritize follow-ups, and identify high-value networking opportunities. Learn more in the <a href="/docs/analytics">Analytics guide</a>.
+    </p>
+
+    <h2>Next Steps</h2>
+    <p>
+      Now that your card is live, explore these advanced features to maximize ROI:
+    </p>
+    <ul>
+      <li><strong><a href="/docs/branding-and-templates">Branding & Templates:</a></strong> Learn how to maintain brand consistency across your team with shared design systems and approval workflows</li>
+      <li><strong><a href="/docs/teams">Teams:</a></strong> Invite colleagues, manage permissions, and deploy cards at scale with bulk import and directory sync</li>
+      <li><strong><a href="/docs/analytics">Analytics:</a></strong> Set up conversion tracking, integrate with your CRM, and measure networking ROI</li>
+      <li><strong><a href="/docs/api">API:</a></strong> Automate card creation, sync data with your existing tools, and build custom integrations</li>
+    </ul>
+
+    <h2>Common Questions</h2>
+    <h3>Can I update my card after sharing it?</h3>
+    <p>
+      Yes! Any changes you make to your card are reflected instantly across all existing shares. If you update your phone number or job title, everyone who has your link will see the new information automatically.
+    </p>
+
+    <h3>Do recipients need to install an app?</h3>
+    <p>
+      No. Cardrender cards work in any web browser and integrate with native contact management apps (iOS Contacts, Google Contacts, Outlook) without requiring a separate download.
+    </p>
+
+    <h3>How do I add multiple team members?</h3>
+    <p>
+      From the workspace dashboard, click <strong>"Invite Team"</strong> and enter email addresses. You can also bulk import users from a CSV file or sync with your employee directory. See the <a href="/docs/teams">Teams guide</a> for details.
+    </p>
+
+    <h3>Can I use a custom domain?</h3>
+    <p>
+      Yes. Enterprise plans support custom domains (e.g., <code>cards.yourcompany.com</code>). Contact sales to enable this feature for your workspace.
+    </p>
+  </div>
+
+  <div class="mt-12 pt-8 border-t border-border">
+    <h3 class="text-lg font-semibold mb-4">Related Documentation</h3>
+    <div class="grid gap-4 sm:grid-cols-3">
+      {relatedDocs.map((doc) => (
+        <a href={doc.url} class="block p-4 rounded-lg border border-border hover:border-primary transition-colors">
+          <p class="font-medium text-foreground">{doc.title}</p>
+        </a>
+      ))}
+    </div>
+  </div>
 </DocsLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

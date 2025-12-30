@@ -1,0 +1,140 @@
+---
+import { languages, getLangFromUrl, getAlternateLinks, type Language } from "../lib/i18n";
+import { Globe } from "lucide-astro";
+
+const currentLang = getLangFromUrl(Astro.url);
+const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
+
+// Get available translations (only show languages that have content)
+const availableLanguages = alternateLinks.filter(link => {
+  // For now, show en and es
+  return link.lang === 'en' || link.lang === 'es';
+});
+---
+
+<div class="language-switcher">
+  <button class="lang-toggle" aria-label="Switch language" aria-expanded="false">
+    <Globe size={18} />
+    <span class="lang-current">{languages[currentLang]}</span>
+  </button>
+  
+  <div class="lang-dropdown">
+    {availableLanguages.map(({ lang, url }) => (
+      <a 
+        href={url} 
+        class={`lang-option ${lang === currentLang ? 'active' : ''}`}
+        hreflang={lang}
+      >
+        {languages[lang]}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .language-switcher {
+    position: relative;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    border-radius: 10px;
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 200ms;
+  }
+
+  .lang-toggle:hover {
+    background: hsl(var(--muted));
+    border-color: hsl(var(--primary));
+  }
+
+  .lang-current {
+    min-width: 80px;
+    text-align: left;
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 150px;
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 200ms;
+    z-index: 50;
+    overflow: hidden;
+  }
+
+  .language-switcher:hover .lang-dropdown,
+  .language-switcher:focus-within .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lang-option {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 150ms;
+  }
+
+  .lang-option:hover {
+    background: hsl(var(--muted));
+  }
+
+  .lang-option.active {
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+
+  @media (max-width: 768px) {
+    .lang-toggle {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .lang-current {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Add keyboard accessibility
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.lang-toggle');
+    const dropdown = document.querySelector('.lang-dropdown');
+    
+    if (toggle && dropdown) {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+      });
+
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target as Node) && !dropdown.contains(e.target as Node)) {
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
+</script>
