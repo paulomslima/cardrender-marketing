@@ -10,10 +10,14 @@ export async function getStaticPaths() {
     return data.lang === 'es';
   });
   
-  return docsEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return docsEntries.map((entry) => {
+    // Extract slug from folder path (e.g., "es/getting-started" -> "getting-started")
+    const slug = entry.slug.split('/').pop();
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
 }
 
 const { entry } = Astro.props;

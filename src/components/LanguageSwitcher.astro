@@ -22,10 +22,11 @@ if (isBlogPost || isDocsPage) {
     const collection = isBlogPost ? "blog" : "docs";
     const allEntries = await getCollection(collection);
     
-    // Find the current entry by slug
-    const currentEntry = allEntries.find(entry => 
-      entry.slug.endsWith(slug) || entry.slug === slug
-    );
+    // Find the current entry by slug (now needs to check folder structure)
+    const currentEntry = allEntries.find(entry => {
+      const entrySlug = entry.slug.split('/').pop(); // Extract slug from folder path
+      return entrySlug === slug;
+    });
     
     if (currentEntry?.data.translationKey) {
       // Find all entries with the same translationKey

@@ -11,10 +11,14 @@ export async function getStaticPaths() {
     return data.published !== false && data.lang === defaultLang;
   });
   
-  return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  return blogEntries.map((entry) => {
+    // Extract slug from folder path (e.g., "en/post-name" -> "post-name")
+    const slug = entry.slug.split('/').pop();
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
 }
 
 const { entry } = Astro.props;
@@ -47,7 +51,7 @@ const jsonLd = {
   inLanguage: "en-US",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": `https://cardrender.com/blog/${entry.slug}`,
+    "@id": `https://cardrender.com/blog/${entry.slug.split('/').pop()}`,
   },
 };
 ---

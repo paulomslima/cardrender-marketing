@@ -13,7 +13,7 @@ const posts = allPosts
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .map((post) => ({
     title: post.data.title,
-    slug: post.slug,
+    slug: post.slug.split('/').pop(), // Extract slug from folder path
     description: post.data.description,
     date: post.data.date,
     readTime: post.data.readTime,
