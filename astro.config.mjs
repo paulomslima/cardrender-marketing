@@ -8,7 +8,7 @@ export default defineConfig({
   site: "https://cardrender.com",
   output: "server",
   adapter: cloudflare(),
-  trailingSlash: "never",
+  trailingSlash: "ignore", // Changed from "never" to avoid redirect loop with Cloudflare
   integrations: [
     tailwind({
       applyBaseStyles: false,
