@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { BookOpen, Users, Palette, BarChart3, Code, Shield, Rocket } from "lucide-astro";
+
+const sections = [
+  {
+    title: "Comenzando",
+    description: "Configure su espacio de trabajo, kit de marca y primeros miembros del equipo.",
+    href: "/es/docs/getting-started-es",
+    icon: Rocket,
+  },
+  {
+    title: "Equipos y Roles",
+    description: "Gestione acceso, roles e invitaciones en todos los departamentos.",
+    href: "/es/docs/teams",
+    icon: Users,
+  },
+  {
+    title: "Branding y Plantillas",
+    description: "Personalice diseños de tarjetas, firmas y configuraciones del directorio.",
+    href: "/es/docs/branding-and-templates",
+    icon: Palette,
+  },
+  {
+    title: "Análisis",
+    description: "Comprenda vistas, clics y engagement en todo su equipo.",
+    href: "/es/docs/analytics",
+    icon: BarChart3,
+  },
+  {
+    title: "API Pública",
+    description: "Automatice la creación de tarjetas y sincronización de datos con la API.",
+    href: "/es/docs/api",
+    icon: Code,
+  },
+  {
+    title: "Seguridad",
+    description: "Comprenda controles de acceso, cifrado y registros de auditoría.",
+    href: "/es/docs/security",
+    icon: Shield,
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Documentación - Guías y Referencia API de Cardrender",
+  description: "Guías, referencias y mejores prácticas para gestionar tarjetas de presentación digitales con Cardrender.",
+  inLanguage: "es-ES",
+};
+---
+
+<BaseLayout
+  title="Documentación - Guías y Referencia API de Cardrender"
+  description="Guías, referencias y mejores prácticas para gestionar tarjetas de presentación digitales con Cardrender."
+  jsonLd={jsonLd}
+>
+  <section class="docs-hero-section">
+    <div class="container">
+      <div class="docs-hero-content">
+        <div class="hero-badge">
+          <BookOpen size={16} />
+          <span>Documentación</span>
+        </div>
+        <h1 class="docs-hero-title">
+          Todo lo que necesitas para <span class="gradient-text">implementar Cardrender</span>
+        </h1>
+        <p class="docs-hero-description">
+          Comience en minutos, luego profundice en configuración avanzada para branding, 
+          análisis, integraciones API y seguridad empresarial.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="docs-grid-section">
+    <div class="container">
+      <div class="docs-grid">
+        {sections.map((section) => (
+          <a class="docs-card" href={section.href}>
+            <div class="docs-card-icon">
+              <section.icon size={24} />
+            </div>
+            <h3 class="docs-card-title">{section.title}</h3>
+            <p class="docs-card-description">{section.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .docs-hero-section {
+    padding: 6rem 0 4rem;
+    text-align: center;
+  }
+  
+  .docs-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .docs-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .docs-hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .docs-grid-section {
+    padding: 4rem 0 6rem;
+  }
+  
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .docs-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+  }
+  
+  .docs-card:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 8px 16px hsl(var(--primary) / 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .docs-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--primary) / 0.1);
+    border-radius: calc(var(--radius) - 4px);
+    color: hsl(var(--primary));
+    margin-bottom: 1rem;
+  }
+  
+  .docs-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .docs-card-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .docs-hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
