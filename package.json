@@ -10,7 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "astro": "^5.16.6",
+    "lucide-astro": "^0.556.0"
   },
   "devDependencies": {
     "@astrojs/cloudflare": "^12.6.12",

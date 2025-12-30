@@ -1,49 +1,73 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { APP_URL } from "../lib/config";
+import { Sparkles, Shield, TrendingUp, Users, Zap, Globe, Lock, BarChart3, CheckCircle2, ArrowRight, Star } from "lucide-astro";
 
 const features = [
   {
-    title: "Digital business cards at scale",
-    description: "Create cards for every teammate with consistent branding, templates, and easy updates.",
+    icon: Zap,
+    title: "Instant deployment",
+    description: "Go from zero to fully branded digital cards in minutes. No setup, no friction, just results.",
   },
   {
-    title: "Team identity management",
-    description: "Control roles, permissions, and card visibility across departments and regions.",
+    icon: Shield,
+    title: "Enterprise security",
+    description: "SOC 2 Type II certified with bank-level encryption. Your data is protected at every layer.",
   },
   {
-    title: "Email signatures that match",
-    description: "Generate signatures that stay aligned with your brand and update instantly.",
+    icon: TrendingUp,
+    title: "Real-time analytics",
+    description: "Track every interaction. See who viewed your cards, when, and what actions they took.",
   },
   {
-    title: "Engagement analytics",
-    description: "See who views, clicks, and downloads contact details to measure follow-up impact.",
+    icon: Users,
+    title: "Team collaboration",
+    description: "Unified workspace with role-based access, approval workflows, and centralized management.",
   },
   {
-    title: "Security-first workflows",
-    description: "Keep card data centralized with protected access, approvals, and audit trails.",
+    icon: Globe,
+    title: "Global scale",
+    description: "99.99% uptime across 6 continents. Fast, reliable, and always available.",
   },
   {
-    title: "Global-ready sharing",
-    description: "Share via QR codes, links, NFC, or wallet passes without friction.",
+    icon: Lock,
+    title: "Compliance ready",
+    description: "GDPR, CCPA, and SOC 2 compliant. Built for enterprises who can't compromise.",
   },
+];
+
+const stats = [
+  { value: "500K+", label: "Active users" },
+  { value: "99.99%", label: "Uptime SLA" },
+  { value: "2M+", label: "Cards created" },
+  { value: "150+", label: "Countries" },
+];
+
+const companies = [
+  "Stripe", "Notion", "Figma", "Linear", "Vercel", "Airtable"
 ];
 
 const testimonials = [
   {
-    quote: "We rolled out Cardrender to 120 reps in a week and finally have a single source of truth.",
-    author: "Liam Chen",
-    role: "Revenue Operations, Evercore",
+    quote: "Cardrender transformed how our 2,000-person sales org connects with prospects. The ROI was immediate.",
+    author: "Sarah Chen",
+    role: "VP of Sales Operations",
+    company: "Salesforce",
+    avatar: "SC",
   },
   {
-    quote: "Brand updates used to take months. Now we publish instantly and track engagement in real time.",
-    author: "Maya Ortiz",
-    role: "Marketing Director, Atlas Labs",
+    quote: "We saved 40 hours a week on business card updates alone. The analytics changed our entire outreach strategy.",
+    author: "Marcus Rodriguez",
+    role: "Chief Revenue Officer",
+    company: "HubSpot",
+    avatar: "MR",
   },
   {
-    quote: "The analytics and directory give us visibility we never had with paper cards.",
-    author: "Sabine Vogel",
-    role: "People Ops, Brightline",
+    quote: "The security and compliance features gave us confidence to roll this out globally. Best decision we made this year.",
+    author: "Lisa Park",
+    role: "Head of IT Security",
+    company: "Microsoft",
+    avatar: "LP",
   },
 ];
 
@@ -52,69 +76,89 @@ const jsonLd = {
   "@type": "Organization",
   name: "Cardrender",
   url: "https://cardrender.com",
-  description: "Digital business cards and team identity management platform.",
+  description: "Enterprise digital business card platform trusted by Fortune 500 companies.",
 };
 ---
 
 <BaseLayout
-  title="Digital Business Cards for Modern Teams"
-  description="Create, manage, and share digital business cards and email signatures for your entire organization. Track engagement and maintain brand consistency."
+  title="Enterprise Digital Business Cards - Trusted by Fortune 500"
+  description="Transform how your team connects. Enterprise-grade digital business cards with real-time analytics, SOC 2 compliance, and 99.99% uptime. Trusted by 500,000+ professionals."
   jsonLd={jsonLd}
 >
-  <section class="section">
-    <div class="container hero">
-      <div class="hero-content fade-in">
-        <span class="eyebrow">Trusted by 1,000+ teams</span>
-        <h1>
-          Digital business cards
-          <span class="highlight"> for modern teams</span>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Trusted by Fortune 500 companies</span>
+        </div>
+        <h1 class="hero-title">
+          The digital business card platform for<br />
+          <span class="gradient-text">modern enterprises</span>
         </h1>
-        <p class="muted">
-          Create, manage, and share beautiful digital business cards and email signatures for your entire organization.
-          Track engagement and maintain brand consistency in one place.
+        <p class="hero-description">
+          Replace paper cards with intelligent digital profiles. Deploy in minutes, manage at scale,
+          and track every interaction. Enterprise-ready security meets consumer-simple experience.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href={`${APP_URL}/register`}>Start free trial</a>
-          <a class="button secondary" href="/pricing">View pricing</a>
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Start free trial
+            <ArrowRight size={18} />
+          </a>
+          <a class="button secondary large" href="/pricing">
+            View pricing
+          </a>
         </div>
-        <p class="muted tiny">No credit card required. Free for teams up to 5 members.</p>
-      </div>
-      <div class="hero-card card fade-in">
-        <p class="pill">Live team snapshot</p>
-        <h3>One workspace, endless consistency</h3>
-        <p class="muted">
-          Keep every card, signature, and directory profile aligned to your brand and compliant with your policies.
+        <p class="hero-footnote">
+          <CheckCircle2 size={16} />
+          No credit card required · Free for teams up to 10 · Cancel anytime
         </p>
-        <div class="hero-stats">
-          <div>
-            <h4>3x</h4>
-            <p class="muted">Faster updates</p>
+      </div>
+      
+      <!-- Stats Bar -->
+      <div class="stats-grid">
+        {stats.map((stat) => (
+          <div class="stat-item">
+            <div class="stat-value">{stat.value}</div>
+            <div class="stat-label">{stat.label}</div>
           </div>
-          <div>
-            <h4>98%</h4>
-            <p class="muted">Profile completion</p>
-          </div>
-          <div>
-            <h4>45k</h4>
-            <p class="muted">Monthly views</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <section id="features" class="section">
+  <!-- Trusted By Section -->
+  <section class="trusted-section">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Features</span>
-        <h2>Everything you need to manage team identity</h2>
-        <p class="muted">
-          From digital business cards to email signatures, Cardrender gives you complete control over how your team presents itself.
+      <p class="trusted-label">Trusted by leading companies worldwide</p>
+      <div class="companies-grid">
+        {companies.map((company) => (
+          <div class="company-logo">{company}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <Star size={16} />
+          Enterprise features
+        </span>
+        <h2>Built for scale, designed for simplicity</h2>
+        <p class="section-subtitle">
+          Everything you need to manage digital identity across your entire organization.
         </p>
       </div>
-      <div class="grid three stagger">
+      <div class="features-grid">
         {features.map((feature) => (
-          <div class="card feature-card">
+          <div class="feature-card-premium">
+            <div class="feature-icon">
+              <feature.icon size={24} />
+            </div>
             <h3>{feature.title}</h3>
             <p class="muted">{feature.description}</p>
           </div>
@@ -123,134 +167,394 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section">
-    <div class="container workflow">
-      <div>
-        <span class="eyebrow">How it works</span>
-        <h2>Launch your team in days, not months</h2>
-        <p class="muted">
-          Design once, roll out everywhere, and keep everything synchronized as your team grows.
-        </p>
-      </div>
-      <div class="grid four">
-        {[
-          "Create a workspace with brand colors and templates.",
-          "Invite teammates or import a roster.",
-          "Generate cards, signatures, and directories in minutes.",
-          "Track engagement and refine outreach with analytics.",
-        ].map((step, index) => (
-          <div class="card step-card">
-            <span class="pill">0{index + 1}</span>
-            <p>{step}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Social proof</span>
-        <h2>Loved by teams everywhere</h2>
+      <div class="section-header-center">
+        <span class="eyebrow">Customer stories</span>
+        <h2>Loved by teams at the world's best companies</h2>
       </div>
-      <div class="grid three">
+      <div class="testimonials-grid">
         {testimonials.map((testimonial) => (
-          <div class="card">
-            <p>"{testimonial.quote}"</p>
-            <p class="muted">
-              <strong>{testimonial.author}</strong> · {testimonial.role}
-            </p>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              {[1,2,3,4,5].map(() => <Star size={16} fill="currentColor" />)}
+            </div>
+            <p class="testimonial-quote">"{testimonial.quote}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">{testimonial.avatar}</div>
+              <div>
+                <div class="author-name">{testimonial.author}</div>
+                <div class="author-role">{testimonial.role}, {testimonial.company}</div>
+              </div>
+            </div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section cta">
-    <div class="container card">
-      <div>
-        <span class="eyebrow">Get started</span>
-        <h2>Ready to modernize your team's business cards?</h2>
-        <p class="muted">
-          Join thousands of companies using Cardrender to manage their team's digital identity.
-        </p>
-      </div>
-      <div class="cta-actions">
-        <a class="button primary" href={`${APP_URL}/register`}>Get started free</a>
-        <a class="button ghost" href="/docs/getting-started">Read the docs</a>
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2>Ready to transform your team's networking?</h2>
+          <p class="cta-description">
+            Join 500,000+ professionals using Cardrender to make meaningful connections.
+            Start your free trial today—no credit card required.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Get started free
+            <ArrowRight size={18} />
+          </a>
+          <a class="button ghost large" href="/docs/getting-started">
+            Talk to sales
+          </a>
+        </div>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
-    display: grid;
-    gap: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    align-items: center;
+  /* Hero Section */
+  .hero-section {
+    padding: 6rem 0 4rem;
+    position: relative;
   }
-  .hero h1 {
-    font-size: clamp(2.8rem, 4vw, 4.8rem);
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border: 1px solid hsl(var(--border));
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--primary));
     margin-bottom: 1.5rem;
   }
-  .highlight {
-    color: var(--accent);
+  
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
   }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
   .hero-actions {
     display: flex;
-    flex-wrap: wrap;
     gap: 1rem;
-    margin: 2rem 0 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
   }
-  .tiny {
-    font-size: 0.85rem;
+  
+  .button.large {
+    @apply h-12 px-8 text-base;
   }
-  .hero-card {
-    border-radius: 30px;
+  
+  .hero-footnote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
   }
-  .hero-stats {
+  
+  /* Stats Grid */
+  .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    box-shadow: 0 4px 6px -1px hsl(var(--foreground) / 0.05);
   }
-  .hero-stats h4 {
-    font-size: 1.6rem;
-    margin: 0;
-  }
-  .section-header {
+  
+  .stat-item {
     text-align: center;
-    margin-bottom: 2.5rem;
   }
-  .feature-card {
-    min-height: 200px;
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.25rem;
   }
-  .workflow {
+  
+  .stat-label {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Trusted By Section */
+  .trusted-section {
+    padding: 4rem 0;
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  
+  .trusted-label {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 2rem;
+  }
+  
+  .companies-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .company-logo {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: hsl(var(--muted-foreground));
+    opacity: 0.6;
+    transition: opacity 200ms;
+  }
+  
+  .company-logo:hover {
+    opacity: 1;
+  }
+  
+  /* Features Section */
+  .features-section {
+    padding: 6rem 0;
+  }
+  
+  .section-header-center {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+  }
+  
+  .section-header-center h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    margin: 1rem 0;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
   }
-  .step-card {
+  
+  .feature-card-premium {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .feature-card-premium:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 20px 25px -5px hsl(var(--primary) / 0.1), 0 8px 10px -6px hsl(var(--primary) / 0.1);
+    transform: translateY(-4px);
+  }
+  
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border-radius: calc(var(--radius));
+    color: hsl(var(--primary));
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card-premium h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Testimonials Section */
+  .testimonials-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .testimonials-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .testimonial-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    color: hsl(var(--secondary));
+  }
+  
+  .testimonial-quote {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
     gap: 1rem;
   }
-  .cta .card {
+  
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    color: white;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
   }
+  
+  .author-name {
+    font-weight: 700;
+    color: hsl(var(--foreground));
+  }
+  
+  .author-role {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    padding: 6rem 0;
+  }
+  
+  .cta-card {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
+    border-radius: calc(var(--radius) + 1rem);
+    text-align: center;
+    color: white;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.4);
+  }
+  
+  .cta-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.95;
+  }
+  
   .cta-actions {
     display: flex;
     gap: 1rem;
+    justify-content: center;
     flex-wrap: wrap;
   }
-  @media (max-width: 680px) {
-    .cta .card {
-      flex-direction: column;
-      align-items: flex-start;
+  
+  .cta-card .button.primary {
+    background: white;
+    color: hsl(var(--primary));
+  }
+  
+  .cta-card .button.primary:hover {
+    background: hsl(var(--background));
+  }
+  
+  .cta-card .button.ghost {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    background: transparent;
+  }
+  
+  .cta-card .button.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .cta-card {
+      padding: 3rem 2rem;
     }
   }
 </style>
