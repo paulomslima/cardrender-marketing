@@ -1,0 +1,561 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { APP_URL } from "../../lib/config";
+import { Sparkles, Shield, TrendingUp, Users, Zap, Globe, Lock, BarChart3, CheckCircle2, ArrowRight, Star } from "lucide-astro";
+
+const features = [
+  {
+    icon: Zap,
+    title: "Implementación instantánea",
+    description: "De cero a tarjetas digitales completamente personalizadas en minutos. Sin configuración, sin fricciones, solo resultados.",
+  },
+  {
+    icon: Shield,
+    title: "Seguridad empresarial",
+    description: "Certificación SOC 2 Type II con cifrado de nivel bancario. Tus datos están protegidos en cada capa.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Analíticas en tiempo real",
+    description: "Rastrea cada interacción. Ve quién vio tus tarjetas, cuándo y qué acciones tomaron.",
+  },
+  {
+    icon: Users,
+    title: "Colaboración en equipo",
+    description: "Espacio de trabajo unificado con acceso basado en roles, flujos de aprobación y gestión centralizada.",
+  },
+  {
+    icon: Globe,
+    title: "Escala global",
+    description: "99.99% de disponibilidad en 6 continentes. Rápido, confiable y siempre disponible.",
+  },
+  {
+    icon: Lock,
+    title: "Cumplimiento normativo",
+    description: "Conforme con GDPR, CCPA y SOC 2. Construido para empresas que no pueden comprometer la seguridad.",
+  },
+];
+
+const stats = [
+  { value: "500K+", label: "Usuarios activos" },
+  { value: "99.99%", label: "SLA de disponibilidad" },
+  { value: "2M+", label: "Tarjetas creadas" },
+  { value: "150+", label: "Países" },
+];
+
+const companies = [
+  "Stripe", "Notion", "Figma", "Linear", "Vercel", "Airtable"
+];
+
+const testimonials = [
+  {
+    quote: "Cardrender transformó cómo nuestra organización de ventas de 2,000 personas se conecta con prospectos. El ROI fue inmediato.",
+    author: "Sarah Chen",
+    role: "VP de Operaciones de Ventas",
+    company: "Salesforce",
+    avatar: "SC",
+  },
+  {
+    quote: "Ahorramos 40 horas a la semana solo en actualizaciones de tarjetas de presentación. Las analíticas cambiaron toda nuestra estrategia de alcance.",
+    author: "Marcus Rodriguez",
+    role: "Director de Ingresos",
+    company: "HubSpot",
+    avatar: "MR",
+  },
+  {
+    quote: "Las características de seguridad y cumplimiento nos dieron confianza para implementar esto globalmente. La mejor decisión que tomamos este año.",
+    author: "Lisa Park",
+    role: "Jefa de Seguridad IT",
+    company: "Microsoft",
+    avatar: "LP",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Cardrender",
+  url: "https://cardrender.com",
+  description: "Plataforma empresarial de tarjetas de presentación digitales de confianza para empresas Fortune 500.",
+  inLanguage: "es-ES",
+};
+---
+
+<BaseLayout
+  title="Tarjetas de Presentación Digitales Empresariales - Confianza de Fortune 500"
+  description="Transforma cómo tu equipo se conecta. Tarjetas de presentación digitales de nivel empresarial con analíticas en tiempo real, cumplimiento SOC 2 y 99.99% de disponibilidad. Confiado por más de 500,000 profesionales."
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Confiado por empresas Fortune 500</span>
+        </div>
+        <h1 class="hero-title">
+          La plataforma de tarjetas digitales para<br />
+          <span class="gradient-text">empresas modernas</span>
+        </h1>
+        <p class="hero-description">
+          Reemplaza las tarjetas de papel con perfiles digitales inteligentes. Implementa en minutos, administra a escala
+          y rastrea cada interacción. Seguridad lista para empresas con experiencia simple para consumidores.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Comenzar prueba gratis
+            <ArrowRight size={18} />
+          </a>
+          <a class="button secondary large" href="/es/pricing">
+            Ver precios
+          </a>
+        </div>
+        <p class="hero-footnote">
+          <CheckCircle2 size={16} />
+          No se requiere tarjeta de crédito · Gratis para equipos de hasta 10 · Cancela cuando quieras
+        </p>
+      </div>
+      
+      <!-- Stats Bar -->
+      <div class="stats-grid">
+        {stats.map((stat) => (
+          <div class="stat-item">
+            <div class="stat-value">{stat.value}</div>
+            <div class="stat-label">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted By Section -->
+  <section class="trusted-section">
+    <div class="container">
+      <p class="trusted-label">Confiado por empresas líderes en todo el mundo</p>
+      <div class="companies-grid">
+        {companies.map((company) => (
+          <div class="company-logo">{company}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <Star size={16} />
+          Características empresariales
+        </span>
+        <h2>Construido para escala, diseñado para simplicidad</h2>
+        <p class="section-subtitle">
+          Todo lo que necesitas para gestionar la identidad digital en toda tu organización.
+        </p>
+      </div>
+      <div class="features-grid">
+        {features.map((feature) => (
+          <div class="feature-card-premium">
+            <div class="feature-icon">
+              <feature.icon size={24} />
+            </div>
+            <h3>{feature.title}</h3>
+            <p class="muted">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Historias de clientes</span>
+        <h2>Amado por equipos en las mejores empresas del mundo</h2>
+      </div>
+      <div class="testimonials-grid">
+        {testimonials.map((testimonial) => (
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              {[1,2,3,4,5].map(() => <Star size={16} fill="currentColor" />)}
+            </div>
+            <p class="testimonial-quote">"{testimonial.quote}"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">{testimonial.avatar}</div>
+              <div>
+                <div class="author-name">{testimonial.author}</div>
+                <div class="author-role">{testimonial.role}, {testimonial.company}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-content">
+          <h2>¿Listo para transformar el networking de tu equipo?</h2>
+          <p class="cta-description">
+            Únete a más de 500,000 profesionales que usan Cardrender para hacer conexiones significativas.
+            Comienza tu prueba gratuita hoy—no se requiere tarjeta de crédito.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Comenzar gratis
+            <ArrowRight size={18} />
+          </a>
+          <a class="button ghost large" href="/es/docs/getting-started">
+            Hablar con ventas
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    padding: 6rem 0 4rem;
+    position: relative;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border: 1px solid hsl(var(--border));
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .button.large {
+    @apply h-12 px-8 text-base;
+  }
+  
+  .hero-footnote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    box-shadow: 0 4px 6px -1px hsl(var(--foreground) / 0.05);
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Trusted By Section */
+  .trusted-section {
+    padding: 4rem 0;
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  
+  .trusted-label {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 2rem;
+  }
+  
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .company-logo {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: hsl(var(--muted-foreground));
+    opacity: 0.6;
+    transition: opacity 200ms;
+  }
+  
+  .company-logo:hover {
+    opacity: 1;
+  }
+  
+  /* Features Section */
+  .features-section {
+    padding: 6rem 0;
+  }
+  
+  .section-header-center {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+  }
+  
+  .section-header-center h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    margin: 1rem 0;
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .feature-card-premium {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .feature-card-premium:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 20px 25px -5px hsl(var(--primary) / 0.1), 0 8px 10px -6px hsl(var(--primary) / 0.1);
+    transform: translateY(-4px);
+  }
+  
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border-radius: calc(var(--radius));
+    color: hsl(var(--primary));
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card-premium h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Testimonials Section */
+  .testimonials-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .testimonial-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    color: hsl(var(--secondary));
+  }
+  
+  .testimonial-quote {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+  
+  .author-name {
+    font-weight: 700;
+    color: hsl(var(--foreground));
+  }
+  
+  .author-role {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    padding: 6rem 0;
+  }
+  
+  .cta-card {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
+    border-radius: calc(var(--radius) + 1rem);
+    text-align: center;
+    color: white;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.4);
+  }
+  
+  .cta-content h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.95;
+  }
+  
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cta-card .button.primary {
+    background: white;
+    color: hsl(var(--primary));
+  }
+  
+  .cta-card .button.primary:hover {
+    background: hsl(var(--background));
+  }
+  
+  .cta-card .button.ghost {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    background: transparent;
+  }
+  
+  .cta-card .button.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .cta-card {
+      padding: 3rem 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const docsEntries = await getCollection("docs", ({ data }) => {
+    // Only get Portuguese docs
+    return data.lang === 'pt';
+  });
+  
+  return docsEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Generate enhanced jsonLd for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: entry.data.title,
+  description: entry.data.description,
+  dateModified: new Date(entry.data.lastUpdated).toISOString(),
+  author: {
+    "@type": "Organization",
+    name: "Cardrender",
+    url: "https://cardrender.com",
+  },
+  keywords: entry.data.keywords.join(", "),
+  articleSection: entry.data.category,
+  proficiencyLevel: entry.data.proficiencyLevel,
+  inLanguage: "pt-BR",
+};
+---
+
+<DocsLayout title={entry.data.title} description={entry.data.description}>
+  <div class="mb-8">
+    {entry.data.category && (
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+        {entry.data.category}
+      </div>
+    )}
+    <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
+    <p class="text-xl text-muted-foreground mb-2">{entry.data.description}</p>
+    <p class="text-sm text-muted-foreground">Última atualização: {entry.data.lastUpdated}</p>
+  </div>
+
+  <div class="prose prose-lg max-w-none">
+    <Content />
+  </div>
+
+  {entry.data.relatedDocs.length > 0 && (
+    <div class="mt-12 pt-8 border-t border-border">
+      <h3 class="text-lg font-semibold mb-4">Documentação Relacionada</h3>
+      <div class="grid gap-4 sm:grid-cols-3">
+        {entry.data.relatedDocs.map((doc) => (
+          <a href={doc.url} class="block p-4 rounded-lg border border-border hover:border-primary transition-colors">
+            <p class="font-medium text-foreground">{doc.title}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</DocsLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

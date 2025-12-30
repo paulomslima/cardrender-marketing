@@ -1,0 +1,437 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { fetchPlans, formatPrice } from "../../lib/plans";
+import { APP_URL } from "../../lib/config";
+import { Check, Sparkles, MessageCircle, Zap, Shield, Users, Crown } from "lucide-astro";
+
+export const prerender = false;
+
+const { plans, error } = await fetchPlans();
+
+const activePlans = plans
+  .filter((plan) => plan.isActive)
+  .sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
+
+const mostPopularId = "professional";
+
+const toLimit = (value: number | null, suffix: string) => {
+  if (value === null) return `${suffix} personalizados`;
+  if (value === -1) return `${suffix} ilimitados`;
+  return `${value} ${suffix}`;
+};
+
+const allFeatures = [
+  { icon: Users, text: "Directorio de equipo y gestión de miembros" },
+  { icon: Zap, text: "Plantillas de tarjetas personalizables" },
+  { icon: MessageCircle, text: "Constructor de firmas de email" },
+  { icon: Shield, text: "Compartir código QR y pases de cartera" },
+  { icon: Crown, text: "Panel de analíticas del espacio de trabajo" },
+  { icon: Check, text: "Controles de acceso basados en roles" },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Cardrender",
+  description: "Tarjetas de presentación digitales, firmas de email y gestión de identidad de equipo para empresas modernas.",
+  inLanguage: "es-ES",
+  offers: activePlans.map((plan) => ({
+    "@type": "Offer",
+    name: plan.name,
+    priceCurrency: "USD",
+    price: plan.monthlyPriceCents ? plan.monthlyPriceCents / 100 : 0,
+    availability: "https://schema.org/InStock",
+  })),
+};
+---
+
+<BaseLayout
+  title="Precios Simples y Transparentes"
+  description="Planes flexibles para equipos de todos los tamaños. Compara características y elige el plan de Cardrender que se ajuste a tu organización."
+  jsonLd={jsonLd}
+>
+  <section class="pricing-hero-section">
+    <div class="container">
+      <div class="hero-content-pricing">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Precios simples y transparentes</span>
+        </div>
+        <h1 class="hero-title-pricing">
+          Planes que escalan con tu <span class="gradient-text">negocio</span>
+        </h1>
+        <p class="hero-description-pricing">
+          Comienza gratis, escala a empresarial. Cada plan incluye nuestras características principales sin tarifas ocultas.
+          Actualiza en cualquier momento a medida que tu equipo crece.
+        </p>
+      </div>
+      <div class="enterprise-card">
+        <div class="enterprise-icon">
+          <Crown size={32} />
+        </div>
+        <h3>¿Necesitas soporte empresarial?</h3>
+        <p class="muted">
+          SSO, revisiones de seguridad personalizadas, gerente de éxito dedicado y capacitación personalizada para equipos de más de 100.
+        </p>
+        <a class="button secondary" href={`${APP_URL}/register`}>Hablar con ventas</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-cards-section">
+    <div class="container">
+      {error && (
+        <div class="card">
+          <p>{error}. Por favor actualiza o contacta a soporte.</p>
+        </div>
+      )}
+      {!error && (
+        <div class="pricing-grid-premium">
+          {activePlans.map((plan) => (
+            <div class={`pricing-card-premium ${plan.id === mostPopularId ? "popular" : ""}`}>
+              {plan.id === mostPopularId && (
+                <div class="popular-badge">
+                  <Sparkles size={14} />
+                  Más popular
+                </div>
+              )}
+              <div class="plan-header">
+                <h3 class="plan-name">{plan.name}</h3>
+                <p class="plan-description">{plan.description ?? "Construye una presencia digital consistente para tu equipo."}</p>
+              </div>
+              <div class="price-section">
+                <div class="price-row">
+                  <span class="price">{formatPrice(plan.monthlyPriceCents)}</span>
+                  {plan.monthlyPriceCents > 0 && <span class="price-period">/mes</span>}
+                </div>
+                <p class="price-note">por usuario, facturado mensualmente</p>
+              </div>
+              <a class="button primary full-width" href={`${APP_URL}/register`}>
+                Comenzar
+              </a>
+              <div class="features-divider"></div>
+              <ul class="plan-features-premium">
+                <li><Check size={18} /><span>{toLimit(plan.maxSeats, "miembros del equipo")}</span></li>
+                <li><Check size={18} /><span>{toLimit(plan.maxCards, "tarjetas por usuario")}</span></li>
+                <li><Check size={18} /><span>{toLimit(plan.maxSignatures, "firmas")}</span></li>
+                <li><Check size={18} /><span>{plan.premiumTemplates ? "Plantillas premium" : "Plantillas básicas"}</span></li>
+                <li><Check size={18} /><span>{plan.customDomain ? "Dominio personalizado" : "Solo subdominio"}</span></li>
+                <li><Check size={18} /><span>{plan.analyticsEnabled ? "Analíticas completas" : "Analíticas básicas"}</span></li>
+                <li><Check size={18} /><span>{plan.apiAccess ? "Acceso completo a API" : "API limitada"}</span></li>
+                <li><Check size={18} /><span>{plan.prioritySupport ? "Soporte prioritario" : "Soporte estándar"}</span></li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="features-included-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <Check size={16} />
+          Incluido en cada plan
+        </span>
+        <h2>Todo lo que necesitas para implementar a escala</h2>
+        <p class="section-subtitle">
+          Cada plan incluye gestión de equipo, plantillas con marca y compartición segura. Sin restricciones de características.
+        </p>
+      </div>
+      <div class="features-grid-included">
+        {allFeatures.map((feature) => (
+          <div class="feature-item-included">
+            <div class="feature-icon-small">
+              <feature.icon size={20} />
+            </div>
+            <span>{feature.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2>Preguntas sobre precios</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3>¿Puedo cambiar de plan más tarde?</h3>
+          <p class="muted">Sí. Puedes actualizar o cambiar a un plan inferior en cualquier momento desde el panel de administración. Los cambios surten efecto de inmediato.</p>
+        </div>
+        <div class="faq-card">
+          <h3>¿Ofrecen capacitación personalizada?</h3>
+          <p class="muted">Los clientes empresariales reciben capacitación dedicada, soporte de migración y planificación de implementación con un gerente de éxito.</p>
+        </div>
+        <div class="faq-card">
+          <h3>¿Hay una prueba gratuita?</h3>
+          <p class="muted">Cada nuevo espacio de trabajo comienza con una prueba gratuita de 14 días de nuestro plan Profesional. No se requiere tarjeta de crédito para comenzar.</p>
+        </div>
+        <div class="faq-card">
+          <h3>¿Qué métodos de pago aceptan?</h3>
+          <p class="muted">Aceptamos todas las tarjetas de crédito principales, transferencias ACH para planes anuales y órdenes de compra para clientes empresariales.</p>
+        </div>
+        <div class="faq-card">
+          <h3>¿Puedo pagar anualmente?</h3>
+          <p class="muted">¡Sí! Los planes anuales obtienen un 20% de descuento. Cambia a facturación anual desde tu panel en cualquier momento.</p>
+        </div>
+        <div class="faq-card">
+          <h3>¿Qué sucede si excedo mis límites?</h3>
+          <p class="muted">Te notificaremos y ofreceremos un camino de actualización. Ninguna característica se apaga sin advertencia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .pricing-hero-section {
+    padding: 6rem 0 4rem;
+  }
+  
+  .hero-content-pricing {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  
+  .hero-title-pricing {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-description-pricing {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .enterprise-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--secondary) / 0.05));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    text-align: center;
+  }
+  
+  .enterprise-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: var(--radius);
+    color: white;
+  }
+  
+  /* Pricing Cards */
+  .pricing-cards-section {
+    padding: 4rem 0;
+  }
+  
+  .pricing-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .pricing-card-premium {
+    position: relative;
+    padding: 2.5rem;
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .pricing-card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 8px 10px -6px hsl(var(--foreground) / 0.1);
+  }
+  
+  .pricing-card-premium.popular {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 10px 20px -5px hsl(var(--primary) / 0.2);
+  }
+  
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    color: white;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .plan-header {
+    margin-bottom: 2rem;
+  }
+  
+  .plan-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  
+  .plan-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+  }
+  
+  .price-section {
+    margin-bottom: 2rem;
+  }
+  
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: hsl(var(--foreground));
+  }
+  
+  .price-period {
+    font-size: 1rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .price-note {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .features-divider {
+    height: 1px;
+    background: hsl(var(--border));
+    margin: 2rem 0;
+  }
+  
+  .plan-features-premium {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .plan-features-premium li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .plan-features-premium li svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  /* Features Included */
+  .features-included-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .features-grid-included {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .feature-item-included {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    transition: all 200ms;
+  }
+  
+  .feature-item-included:hover {
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .feature-icon-small {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--primary) / 0.1);
+    border-radius: calc(var(--radius) - 2px);
+    color: hsl(var(--primary));
+  }
+  
+  /* FAQ */
+  .faq-section {
+    padding: 6rem 0;
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .faq-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+  
+  .faq-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    .pricing-hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .pricing-grid-premium {
+      grid-template-columns: 1fr;
+    }
+    
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
