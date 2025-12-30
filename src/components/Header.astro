@@ -9,7 +9,7 @@ const { currentPath } = Astro.props;
       <img src="/cardrender.svg" alt="Cardrender" />
     </a>
     <nav class="nav-links">
-      <a href="/#features">Features</a>
+      <a class={currentPath === "/features" ? "active" : ""} href="/features">Features</a>
       <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
       <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
       <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>

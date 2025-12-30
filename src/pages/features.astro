@@ -1,0 +1,667 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { APP_URL } from "../lib/config";
+import { 
+  Sparkles, Zap, Shield, TrendingUp, Users, Globe, 
+  CheckCircle2, XCircle, BarChart3, Lock, Palette, 
+  Workflow, Clock, Target, RefreshCw, MessageSquare,
+  ArrowRight, AlertCircle
+} from "lucide-astro";
+
+const painPoints = [
+  {
+    icon: XCircle,
+    title: "Outdated contact information",
+    description: "Team members share cards with old titles, phone numbers, or email addresses. By the time prospects reach out, half the info is wrong.",
+  },
+  {
+    icon: AlertCircle,
+    title: "Inconsistent branding",
+    description: "Every department designs their own cards. Sales uses one template, marketing another, and leadership has custom designs that break brand guidelines.",
+  },
+  {
+    icon: Clock,
+    title: "Slow rollout cycles",
+    description: "Brand updates take months to cascade. By the time new cards arrive, the rebrand is already outdated and budget is blown.",
+  },
+  {
+    icon: Target,
+    title: "Zero visibility into impact",
+    description: "You hand out hundreds of cards but have no idea who viewed them, which events drove engagement, or what follow-up actions matter.",
+  },
+];
+
+const solutions = [
+  {
+    icon: RefreshCw,
+    title: "Always up-to-date",
+    problem: "Paper cards with outdated info",
+    solution: "Live profiles that sync across every share",
+    details: "Update once, change everywhere. When someone views your card, they always see your current details—no reprints, no delays.",
+  },
+  {
+    icon: Palette,
+    title: "Brand consistency by default",
+    problem: "Everyone creating their own designs",
+    solution: "Centralized templates with approval workflows",
+    details: "Marketing sets the templates. Teams customize within guardrails. Every card matches your brand standards without design reviews.",
+  },
+  {
+    icon: Zap,
+    title: "Deploy in minutes, not months",
+    problem: "Weeks waiting for print vendors",
+    solution: "Instant rollout to unlimited team members",
+    details: "Launch your entire sales org on Monday morning. Add new hires in seconds. Scale from 10 to 10,000 without procurement cycles.",
+  },
+  {
+    icon: BarChart3,
+    title: "Track every interaction",
+    problem: "No data on card effectiveness",
+    solution: "Real-time analytics on views, clicks, and conversions",
+    details: "See which cards get shared, what content drives clicks, and which team members generate the most engagement.",
+  },
+];
+
+const featuresByCategory = [
+  {
+    category: "Team Management",
+    icon: Users,
+    features: [
+      "Bulk import from CSV or CRM",
+      "Role-based access controls",
+      "Department and region segmentation",
+      "Approval workflows for changes",
+      "SSO and SAML integration",
+    ],
+  },
+  {
+    category: "Design & Branding",
+    icon: Palette,
+    features: [
+      "Template library with 50+ designs",
+      "Custom brand colors and fonts",
+      "Logo and asset management",
+      "Preview before publishing",
+      "White-label options for enterprise",
+    ],
+  },
+  {
+    category: "Analytics & Insights",
+    icon: TrendingUp,
+    features: [
+      "Real-time view tracking",
+      "Click-through rates by content",
+      "Geographic engagement data",
+      "Time-based performance reports",
+      "Export to BI tools via API",
+    ],
+  },
+  {
+    category: "Security & Compliance",
+    icon: Shield,
+    features: [
+      "SOC 2 Type II certified",
+      "GDPR and CCPA compliant",
+      "End-to-end encryption",
+      "Audit logs for all changes",
+      "Data residency options",
+    ],
+  },
+  {
+    category: "Integration & Automation",
+    icon: Workflow,
+    features: [
+      "REST API with webhooks",
+      "Zapier and Make.com connectors",
+      "CRM sync (Salesforce, HubSpot)",
+      "Email signature auto-generation",
+      "Directory embeds for websites",
+    ],
+  },
+  {
+    category: "Global Distribution",
+    icon: Globe,
+    features: [
+      "QR code generation",
+      "Apple/Google Wallet passes",
+      "NFC card support",
+      "Shareable links and embeds",
+      "Multi-language support",
+    ],
+  },
+];
+
+const useCases = [
+  {
+    title: "Sales Teams",
+    description: "Reps share cards at conferences and track which prospects engage. Leadership sees which events drive pipeline.",
+    metrics: "3x faster follow-up, 45% increase in contact saves",
+  },
+  {
+    title: "Enterprise Rollouts",
+    description: "Launch 500+ employees with consistent branding. Update titles and territories instantly as org changes happen.",
+    metrics: "2 days to deploy, 98% profile completion rate",
+  },
+  {
+    title: "Event Marketing",
+    description: "Create event-specific cards with booth info and session links. Track engagement by attendee segment.",
+    metrics: "67% scan rate, 2.3x higher session attendance",
+  },
+  {
+    title: "Recruiting & HR",
+    description: "Recruiters share cards with candidates. New hires get onboarded with cards on day one.",
+    metrics: "89% candidate response rate, zero setup friction",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Cardrender Features",
+  description: "Enterprise digital business card platform with analytics, team management, and real-time updates.",
+};
+---
+
+<BaseLayout
+  title="Features - Digital Business Cards That Scale"
+  description="Replace outdated paper cards with intelligent digital profiles. Real-time updates, brand consistency, and analytics for modern teams."
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="features-hero-section">
+    <div class="container">
+      <div class="features-hero-content">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Powerful features</span>
+        </div>
+        <h1 class="features-hero-title">
+          Everything your team needs.<br />
+          <span class="gradient-text">Nothing you don't.</span>
+        </h1>
+        <p class="features-hero-description">
+          Stop fighting with outdated cards, inconsistent branding, and zero visibility.
+          Get live profiles, centralized management, and real-time analytics in one platform.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Start free trial
+            <ArrowRight size={18} />
+          </a>
+          <a class="button secondary large" href="/pricing">
+            View pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain Points Section -->
+  <section class="pain-points-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <AlertCircle size={16} />
+          The problems teams face
+        </span>
+        <h2>Paper cards are costing you more than you think</h2>
+        <p class="section-subtitle">
+          These problems compound as your team grows. Cardrender eliminates them by design.
+        </p>
+      </div>
+      <div class="pain-points-grid">
+        {painPoints.map((pain) => (
+          <div class="pain-card">
+            <div class="pain-icon">
+              <pain.icon size={24} />
+            </div>
+            <h3>{pain.title}</h3>
+            <p class="muted">{pain.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section class="solutions-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <CheckCircle2 size={16} />
+          How Cardrender solves it
+        </span>
+        <h2>From pain point to power feature</h2>
+      </div>
+      <div class="solutions-grid">
+        {solutions.map((solution) => (
+          <div class="solution-card">
+            <div class="solution-icon">
+              <solution.icon size={28} />
+            </div>
+            <h3 class="solution-title">{solution.title}</h3>
+            <div class="solution-comparison">
+              <div class="comparison-item before">
+                <XCircle size={16} />
+                <span>{solution.problem}</span>
+              </div>
+              <div class="comparison-item after">
+                <CheckCircle2 size={16} />
+                <span>{solution.solution}</span>
+              </div>
+            </div>
+            <p class="solution-details">{solution.details}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features by Category -->
+  <section class="features-categories-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Complete platform</span>
+        <h2>Built for enterprise, priced for scale</h2>
+        <p class="section-subtitle">
+          Every feature you need to manage team identity from onboarding to offboarding.
+        </p>
+      </div>
+      <div class="categories-grid">
+        {featuresByCategory.map((category) => (
+          <div class="category-card">
+            <div class="category-header">
+              <div class="category-icon">
+                <category.icon size={24} />
+              </div>
+              <h3 class="category-title">{category.category}</h3>
+            </div>
+            <ul class="category-features">
+              {category.features.map((feature) => (
+                <li>
+                  <CheckCircle2 size={16} />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="use-cases-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Real results</span>
+        <h2>How teams use Cardrender</h2>
+      </div>
+      <div class="use-cases-grid">
+        {useCases.map((useCase) => (
+          <div class="use-case-card">
+            <h3 class="use-case-title">{useCase.title}</h3>
+            <p class="use-case-description">{useCase.description}</p>
+            <div class="use-case-metrics">
+              <MessageSquare size={16} />
+              <span>{useCase.metrics}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="features-cta-section">
+    <div class="container">
+      <div class="features-cta-card">
+        <div class="cta-content">
+          <h2>Ready to solve your team's business card problem?</h2>
+          <p class="cta-description">
+            Join 500,000+ professionals who stopped fighting with paper cards.
+            Start your free trial—no credit card required.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Get started free
+            <ArrowRight size={18} />
+          </a>
+          <a class="button ghost large" href="/docs/getting-started">
+            View documentation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .features-hero-section {
+    padding: 6rem 0 4rem;
+    position: relative;
+  }
+  
+  .features-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .features-hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .features-hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
+  /* Pain Points Section */
+  .pain-points-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--destructive) / 0.02), transparent);
+  }
+  
+  .pain-points-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .pain-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+  }
+  
+  .pain-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--destructive) / 0.1);
+    border-radius: var(--radius);
+    color: hsl(var(--destructive));
+    margin-bottom: 1.5rem;
+  }
+  
+  .pain-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Solutions Section */
+  .solutions-section {
+    padding: 6rem 0;
+  }
+  
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .solution-card {
+    padding: 2.5rem;
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .solution-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px hsl(var(--primary) / 0.15), 0 8px 10px -6px hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary));
+  }
+  
+  .solution-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: var(--radius);
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+  
+  .solution-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  
+  .solution-comparison {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .comparison-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+  }
+  
+  .comparison-item.before {
+    background: hsl(var(--destructive) / 0.05);
+    color: hsl(var(--destructive));
+  }
+  
+  .comparison-item.before svg {
+    flex-shrink: 0;
+    color: hsl(var(--destructive));
+  }
+  
+  .comparison-item.after {
+    background: hsl(var(--secondary) / 0.1);
+    color: hsl(var(--foreground));
+    font-weight: 600;
+  }
+  
+  .comparison-item.after svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  .solution-details {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+  }
+  
+  /* Features by Category */
+  .features-categories-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .category-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .category-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border-radius: var(--radius);
+    color: hsl(var(--primary));
+  }
+  
+  .category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .category-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  
+  .category-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .category-features li svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  /* Use Cases */
+  .use-cases-section {
+    padding: 6rem 0;
+  }
+  
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .use-case-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms;
+  }
+  
+  .use-case-card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .use-case-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  .use-case-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  
+  .use-case-metrics {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: hsl(var(--secondary) / 0.1);
+    border-radius: calc(var(--radius) - 2px);
+    color: hsl(var(--secondary));
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .use-case-metrics svg {
+    flex-shrink: 0;
+  }
+  
+  /* CTA Section */
+  .features-cta-section {
+    padding: 6rem 0;
+  }
+  
+  .features-cta-card {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
+    border-radius: calc(var(--radius) + 1rem);
+    text-align: center;
+    color: white;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.4);
+  }
+  
+  .features-cta-card h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .features-cta-card .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.95;
+  }
+  
+  .features-cta-card .button.primary {
+    background: white;
+    color: hsl(var(--primary));
+  }
+  
+  .features-cta-card .button.primary:hover {
+    background: hsl(var(--background));
+  }
+  
+  .features-cta-card .button.ghost {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    background: transparent;
+  }
+  
+  .features-cta-card .button.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    .features-hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .pain-points-grid,
+    .solutions-grid,
+    .categories-grid,
+    .use-cases-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .features-cta-card {
+      padding: 3rem 2rem;
+    }
+  }
+</style>
