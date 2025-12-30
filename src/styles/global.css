@@ -125,7 +125,7 @@ img {
     justify-content: center;
     gap: 0.5rem;
     white-space: nowrap;
-    border-radius: 9999px;
+    border-radius: 10px;
     font-size: 0.875rem;
     font-weight: 600;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
