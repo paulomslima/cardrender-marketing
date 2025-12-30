@@ -1,5 +1,5 @@
 ---
-import { languages, getLangFromUrl, getAlternateLinks } from "../lib/i18n";
+import { getLangFromUrl, getAlternateLinks } from "../lib/i18n";
 import { Globe, Check } from "lucide-astro";
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -7,21 +7,12 @@ const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
 
 // Show all configured languages
 const availableLanguages = alternateLinks;
-
-// Language flags emoji mapping
-const languageFlags: Record<string, string> = {
-  en: "🇬🇧",
-  es: "🇪🇸", 
-  pt: "🇧🇷",
-  fr: "🇫🇷",
-  de: "🇩🇪"
-};
 ---
 
 <div class="language-switcher">
   <button class="lang-toggle" aria-label="Switch language" aria-expanded="false" type="button">
     <Globe size={20} />
-    <span class="lang-current">{languageFlags[currentLang]} {languages[currentLang]}</span>
+    <span class="lang-current">{currentLang.toUpperCase()}</span>
     <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -38,8 +29,7 @@ const languageFlags: Record<string, string> = {
         class={`lang-option ${lang === currentLang ? 'active' : ''}`}
         hreflang={lang}
       >
-        <span class="lang-flag">{languageFlags[lang]}</span>
-        <span class="lang-name">{languages[lang]}</span>
+        <span class="lang-code">{lang.toUpperCase()}</span>
         {lang === currentLang && <Check size={16} class="lang-check" />}
       </a>
     ))}
@@ -81,8 +71,9 @@ const languageFlags: Record<string, string> = {
   .lang-current {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
     font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   .chevron {
@@ -135,7 +126,7 @@ const languageFlags: Record<string, string> = {
 
   .lang-option {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
     color: hsl(var(--foreground));
@@ -167,12 +158,10 @@ const languageFlags: Record<string, string> = {
     background: hsl(var(--primary));
   }
 
-  .lang-flag {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .lang-name {
+  .lang-code {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    font-size: 0.875reme {
     flex: 1;
   }
 
@@ -186,9 +175,6 @@ const languageFlags: Record<string, string> = {
       padding: 0.5rem 0.75rem;
     }
 
-    .lang-current span:not(.lang-flag) {
-      display: none;
-    }
   }
 
   @media (max-width: 540px) {
@@ -204,6 +190,9 @@ const languageFlags: Record<string, string> = {
     .chevron {
       display: none;
     }
+    
+    .lang-current {
+      font-size: 0.75rem
   }
 </style>
 
