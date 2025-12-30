@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = [
+  {
+    title: "Why digital business cards are the new standard for teams",
+    slug: "digital-business-cards",
+    description: "A practical look at why teams are switching from paper cards to trackable, branded digital profiles.",
+    date: "Dec 30, 2025",
+    readTime: "6 min read",
+  },
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Insights, playbooks, and updates on digital business cards, team branding, and contact sharing."
+>
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Blog</span>
+      <h1>Stories for teams modernizing their outreach</h1>
+      <p class="muted">
+        Learn how teams use digital business cards, analytics, and templates to stay consistent and convert more conversations.
+      </p>
+      <div class="grid three blog-grid">
+        {posts.map((post) => (
+          <a class="card blog-card" href={`/blog/${post.slug}`}>
+            <p class="pill">{post.readTime}</p>
+            <h3>{post.title}</h3>
+            <p class="muted">{post.description}</p>
+            <p class="muted">{post.date}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-grid {
+    margin-top: 2rem;
+  }
+  .blog-card:hover {
+    transform: translateY(-4px);
+    transition: transform 0.2s ease;
+  }
+</style>

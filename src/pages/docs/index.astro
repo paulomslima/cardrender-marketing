@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const sections = [
+  {
+    title: "Getting Started",
+    description: "Set up your workspace, brand kit, and first team members.",
+    href: "/docs/getting-started",
+  },
+  {
+    title: "Teams & Roles",
+    description: "Manage access, roles, and invitations across departments.",
+    href: "/docs/teams",
+  },
+  {
+    title: "Branding & Templates",
+    description: "Customize card designs, signatures, and directory settings.",
+    href: "/docs/branding-and-templates",
+  },
+  {
+    title: "Analytics",
+    description: "Understand views, clicks, and engagement across your team.",
+    href: "/docs/analytics",
+  },
+  {
+    title: "Public API",
+    description: "Automate card creation and data sync with the API.",
+    href: "/docs/api",
+  },
+  {
+    title: "Security",
+    description: "Understand access controls, encryption, and audit trails.",
+    href: "/docs/security",
+  },
+];
+---
+
+<BaseLayout
+  title="Documentation"
+  description="Guides, references, and best practices for managing digital business cards with Cardrender."
+>
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Documentation</span>
+      <h1>Everything you need to roll out Cardrender</h1>
+      <p class="muted">
+        Get up and running quickly, then dive into advanced configuration for branding, analytics, and integrations.
+      </p>
+      <div class="grid three docs-grid">
+        {sections.map((section) => (
+          <a class="card" href={section.href}>
+            <h3>{section.title}</h3>
+            <p class="muted">{section.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .docs-grid {
+    margin-top: 2rem;
+  }
+</style>

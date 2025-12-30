@@ -1,0 +1,256 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { APP_URL } from "../lib/config";
+
+const features = [
+  {
+    title: "Digital business cards at scale",
+    description: "Create cards for every teammate with consistent branding, templates, and easy updates.",
+  },
+  {
+    title: "Team identity management",
+    description: "Control roles, permissions, and card visibility across departments and regions.",
+  },
+  {
+    title: "Email signatures that match",
+    description: "Generate signatures that stay aligned with your brand and update instantly.",
+  },
+  {
+    title: "Engagement analytics",
+    description: "See who views, clicks, and downloads contact details to measure follow-up impact.",
+  },
+  {
+    title: "Security-first workflows",
+    description: "Keep card data centralized with protected access, approvals, and audit trails.",
+  },
+  {
+    title: "Global-ready sharing",
+    description: "Share via QR codes, links, NFC, or wallet passes without friction.",
+  },
+];
+
+const testimonials = [
+  {
+    quote: "We rolled out Cardrender to 120 reps in a week and finally have a single source of truth.",
+    author: "Liam Chen",
+    role: "Revenue Operations, Evercore",
+  },
+  {
+    quote: "Brand updates used to take months. Now we publish instantly and track engagement in real time.",
+    author: "Maya Ortiz",
+    role: "Marketing Director, Atlas Labs",
+  },
+  {
+    quote: "The analytics and directory give us visibility we never had with paper cards.",
+    author: "Sabine Vogel",
+    role: "People Ops, Brightline",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Cardrender",
+  url: "https://cardrender.com",
+  description: "Digital business cards and team identity management platform.",
+};
+---
+
+<BaseLayout
+  title="Digital Business Cards for Modern Teams"
+  description="Create, manage, and share digital business cards and email signatures for your entire organization. Track engagement and maintain brand consistency."
+  jsonLd={jsonLd}
+>
+  <section class="section">
+    <div class="container hero">
+      <div class="hero-content fade-in">
+        <span class="eyebrow">Trusted by 1,000+ teams</span>
+        <h1>
+          Digital business cards
+          <span class="highlight"> for modern teams</span>
+        </h1>
+        <p class="muted">
+          Create, manage, and share beautiful digital business cards and email signatures for your entire organization.
+          Track engagement and maintain brand consistency in one place.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href={`${APP_URL}/register`}>Start free trial</a>
+          <a class="button secondary" href="/pricing">View pricing</a>
+        </div>
+        <p class="muted tiny">No credit card required. Free for teams up to 5 members.</p>
+      </div>
+      <div class="hero-card card fade-in">
+        <p class="pill">Live team snapshot</p>
+        <h3>One workspace, endless consistency</h3>
+        <p class="muted">
+          Keep every card, signature, and directory profile aligned to your brand and compliant with your policies.
+        </p>
+        <div class="hero-stats">
+          <div>
+            <h4>3x</h4>
+            <p class="muted">Faster updates</p>
+          </div>
+          <div>
+            <h4>98%</h4>
+            <p class="muted">Profile completion</p>
+          </div>
+          <div>
+            <h4>45k</h4>
+            <p class="muted">Monthly views</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Features</span>
+        <h2>Everything you need to manage team identity</h2>
+        <p class="muted">
+          From digital business cards to email signatures, Cardrender gives you complete control over how your team presents itself.
+        </p>
+      </div>
+      <div class="grid three stagger">
+        {features.map((feature) => (
+          <div class="card feature-card">
+            <h3>{feature.title}</h3>
+            <p class="muted">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container workflow">
+      <div>
+        <span class="eyebrow">How it works</span>
+        <h2>Launch your team in days, not months</h2>
+        <p class="muted">
+          Design once, roll out everywhere, and keep everything synchronized as your team grows.
+        </p>
+      </div>
+      <div class="grid four">
+        {[
+          "Create a workspace with brand colors and templates.",
+          "Invite teammates or import a roster.",
+          "Generate cards, signatures, and directories in minutes.",
+          "Track engagement and refine outreach with analytics.",
+        ].map((step, index) => (
+          <div class="card step-card">
+            <span class="pill">0{index + 1}</span>
+            <p>{step}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Social proof</span>
+        <h2>Loved by teams everywhere</h2>
+      </div>
+      <div class="grid three">
+        {testimonials.map((testimonial) => (
+          <div class="card">
+            <p>"{testimonial.quote}"</p>
+            <p class="muted">
+              <strong>{testimonial.author}</strong> · {testimonial.role}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <div class="container card">
+      <div>
+        <span class="eyebrow">Get started</span>
+        <h2>Ready to modernize your team's business cards?</h2>
+        <p class="muted">
+          Join thousands of companies using Cardrender to manage their team's digital identity.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a class="button primary" href={`${APP_URL}/register`}>Get started free</a>
+        <a class="button ghost" href="/docs/getting-started">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 4vw, 4.8rem);
+    margin-bottom: 1.5rem;
+  }
+  .highlight {
+    color: var(--accent);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem 0 0.5rem;
+  }
+  .tiny {
+    font-size: 0.85rem;
+  }
+  .hero-card {
+    border-radius: 30px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .hero-stats h4 {
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .feature-card {
+    min-height: 200px;
+  }
+  .workflow {
+    display: grid;
+    gap: 2rem;
+  }
+  .step-card {
+    display: grid;
+    gap: 1rem;
+  }
+  .cta .card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 680px) {
+    .cta .card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

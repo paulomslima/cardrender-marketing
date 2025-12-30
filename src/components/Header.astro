@@ -1,0 +1,68 @@
+---
+import { APP_URL } from "../lib/config";
+const { currentPath } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="/">
+      <img src="/cardrender.svg" alt="Cardrender" />
+    </a>
+    <nav class="nav-links">
+      <a href="/#features">Features</a>
+      <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
+      <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
+      <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="button ghost" href={`${APP_URL}/login`}>Sign in</a>
+      <a class="button primary" href={`${APP_URL}/register`}>Start free</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(12px);
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+  .logo img {
+    height: 34px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: 600;
+  }
+  .nav-links a {
+    color: var(--muted);
+  }
+  .nav-links a.active {
+    color: var(--ink);
+  }
+  .nav-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  @media (max-width: 860px) {
+    .nav-links {
+      display: none;
+    }
+  }
+  @media (max-width: 540px) {
+    .nav-actions .button.ghost {
+      display: none;
+    }
+  }
+</style>

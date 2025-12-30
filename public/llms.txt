@@ -1,0 +1,20 @@
+Cardrender Marketing Site
+
+Summary:
+Cardrender is a digital business card and email signature platform for teams. The site includes pricing, blog insights, and documentation for onboarding, branding, analytics, and API usage.
+
+Primary pages:
+- https://cardrender.com/
+- https://cardrender.com/pricing
+- https://cardrender.com/blog
+- https://cardrender.com/blog/digital-business-cards
+- https://cardrender.com/docs
+- https://cardrender.com/docs/getting-started
+- https://cardrender.com/docs/teams
+- https://cardrender.com/docs/branding-and-templates
+- https://cardrender.com/docs/analytics
+- https://cardrender.com/docs/api
+- https://cardrender.com/docs/security
+
+API endpoint used by pricing:
+- https://app.cardrender.com/api/public/plans

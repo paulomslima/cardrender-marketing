@@ -1,0 +1,75 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+const { title, description } = Astro.props;
+const pages = [
+  { label: "Getting Started", href: "/docs/getting-started" },
+  { label: "Teams & Roles", href: "/docs/teams" },
+  { label: "Branding & Templates", href: "/docs/branding-and-templates" },
+  { label: "Analytics", href: "/docs/analytics" },
+  { label: "Public API", href: "/docs/api" },
+  { label: "Security", href: "/docs/security" },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="section">
+    <div class="container docs-layout">
+      <aside class="docs-nav">
+        <h3>Documentation</h3>
+        <nav>
+          {pages.map((page) => (
+            <a class={Astro.url.pathname === page.href ? "active" : ""} href={page.href}>
+              {page.label}
+            </a>
+          ))}
+        </nav>
+      </aside>
+      <article class="docs-content">
+        <slot />
+      </article>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .docs-layout {
+    display: grid;
+    grid-template-columns: minmax(200px, 240px) 1fr;
+    gap: 2.5rem;
+  }
+  .docs-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 20px;
+    height: fit-content;
+  }
+  .docs-nav h3 {
+    margin-top: 0;
+  }
+  .docs-nav a {
+    display: block;
+    padding: 0.4rem 0;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .docs-nav a.active {
+    color: var(--ink);
+  }
+  .docs-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .docs-content h1 {
+    margin-top: 0;
+  }
+  @media (max-width: 900px) {
+    .docs-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
