@@ -1,5 +1,6 @@
 ---
 import { APP_URL } from "../lib/config";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 const { currentPath } = Astro.props;
 ---
 
@@ -15,6 +16,7 @@ const { currentPath } = Astro.props;
       <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
     </nav>
     <div class="nav-actions">
+      <LanguageSwitcher />
       <a class="button ghost" href={`${APP_URL}/login`}>Sign in</a>
       <a class="button primary" href={`${APP_URL}/register`}>Start free</a>
     </div>

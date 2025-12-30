@@ -1,31 +1,46 @@
 ---
-import { languages, getLangFromUrl, getAlternateLinks, type Language } from "../lib/i18n";
-import { Globe } from "lucide-astro";
+import { languages, getLangFromUrl, getAlternateLinks } from "../lib/i18n";
+import { Globe, Check } from "lucide-astro";
 
 const currentLang = getLangFromUrl(Astro.url);
 const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
 
-// Get available translations (only show languages that have content)
-const availableLanguages = alternateLinks.filter(link => {
-  // For now, show en and es
-  return link.lang === 'en' || link.lang === 'es';
-});
+// Show all configured languages
+const availableLanguages = alternateLinks;
+
+// Language flags emoji mapping
+const languageFlags: Record<string, string> = {
+  en: "🇬🇧",
+  es: "🇪🇸", 
+  pt: "🇧🇷",
+  fr: "🇫🇷",
+  de: "🇩🇪"
+};
 ---
 
 <div class="language-switcher">
-  <button class="lang-toggle" aria-label="Switch language" aria-expanded="false">
-    <Globe size={18} />
-    <span class="lang-current">{languages[currentLang]}</span>
+  <button class="lang-toggle" aria-label="Switch language" aria-expanded="false" type="button">
+    <Globe size={20} />
+    <span class="lang-current">{languageFlags[currentLang]} {languages[currentLang]}</span>
+    <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </button>
   
   <div class="lang-dropdown">
+    <div class="lang-dropdown-header">
+      <Globe size={16} />
+      <span>Choose language</span>
+    </div>
     {availableLanguages.map(({ lang, url }) => (
       <a 
         href={url} 
         class={`lang-option ${lang === currentLang ? 'active' : ''}`}
         hreflang={lang}
       >
-        {languages[lang]}
+        <span class="lang-flag">{languageFlags[lang]}</span>
+        <span class="lang-name">{languages[lang]}</span>
+        {lang === currentLang && <Check size={16} class="lang-check" />}
       </a>
     ))}
   </div>
@@ -40,41 +55,60 @@ const availableLanguages = alternateLinks.filter(link => {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    background: hsl(var(--background));
+    padding: 0.5rem 1rem;
+    background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    border-radius: 10px;
+    border-radius: var(--radius);
     color: hsl(var(--foreground));
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 200ms;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
   }
 
   .lang-toggle:hover {
     background: hsl(var(--muted));
-    border-color: hsl(var(--primary));
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 2px 8px hsl(var(--primary) / 0.1);
+  }
+
+  .lang-toggle:focus {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
   }
 
   .lang-current {
-    min-width: 80px;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+  }
+
+  .chevron {
+    transition: transform 200ms;
+    opacity: 0.6;
+  }
+
+  .lang-toggle[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
   }
 
   .lang-dropdown {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
-    min-width: 150px;
-    background: hsl(var(--background));
+    min-width: 200px;
+    background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 40px -10px hsl(var(--foreground) / 0.2),
+                0 0 1px hsl(var(--border));
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 200ms;
-    z-index: 50;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
     overflow: hidden;
   }
 
@@ -85,32 +119,89 @@ const availableLanguages = alternateLinks.filter(link => {
     transform: translateY(0);
   }
 
+  .lang-dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: hsl(var(--muted) / 0.5);
+    border-bottom: 1px solid hsl(var(--border));
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: hsl(var(--muted-foreground));
+  }
+
   .lang-option {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     padding: 0.75rem 1rem;
     color: hsl(var(--foreground));
     font-size: 0.875rem;
     font-weight: 500;
     text-decoration: none;
-    transition: background 150ms;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
   }
 
   .lang-option:hover {
     background: hsl(var(--muted));
+    padding-left: 1.25rem;
   }
 
   .lang-option.active {
     background: hsl(var(--primary) / 0.1);
     color: hsl(var(--primary));
+    font-weight: 600;
   }
 
-  @media (max-width: 768px) {
+  .lang-option.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: hsl(var(--primary));
+  }
+
+  .lang-flag {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .lang-name {
+    flex: 1;
+  }
+
+  .lang-check {
+    color: hsl(var(--primary));
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 860px) {
     .lang-toggle {
-      padding: 0.4rem 0.6rem;
-      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
     }
 
-    .lang-current {
+    .lang-current span:not(.lang-flag) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .lang-toggle {
+      padding: 0.4rem 0.6rem;
+    }
+    
+    .lang-toggle svg:first-child {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .chevron {
       display: none;
     }
   }
