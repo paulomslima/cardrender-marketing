@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { fetchPlans, formatPrice } from "../lib/plans";
 import { APP_URL } from "../lib/config";
+import { Check, Sparkles, MessageCircle, Zap, Shield, Users, Crown } from "lucide-astro";
 
 export const prerender = false;
 
@@ -19,6 +20,15 @@ const toLimit = (value: number | null, suffix: string) => {
   return `${value} ${suffix}`;
 };
 
+const allFeatures = [
+  { icon: Users, text: "Team directory and member management" },
+  { icon: Zap, text: "Customizable card templates" },
+  { icon: MessageCircle, text: "Email signature builder" },
+  { icon: Shield, text: "QR code sharing and wallet passes" },
+  { icon: Crown, text: "Workspace analytics dashboard" },
+  { icon: Check, text: "Role-based access controls" },
+];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -35,30 +45,39 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="Pricing"
+  title="Simple, Transparent Pricing"
   description="Flexible plans for teams of every size. Compare features and choose the Cardrender plan that fits your organization."
   jsonLd={jsonLd}
 >
-  <section class="section">
-    <div class="container pricing-hero">
-      <div>
-        <span class="eyebrow">Pricing</span>
-        <h1>Plans built for modern teams</h1>
-        <p class="muted">
-          Choose a plan that matches your scale. Upgrade anytime as your team grows.
+  <section class="pricing-hero-section">
+    <div class="container">
+      <div class="hero-content-pricing">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Simple, transparent pricing</span>
+        </div>
+        <h1 class="hero-title-pricing">
+          Plans that scale with your <span class="gradient-text">business</span>
+        </h1>
+        <p class="hero-description-pricing">
+          Start free, scale to enterprise. Every plan includes our core features with no hidden fees.
+          Upgrade anytime as your team grows.
         </p>
       </div>
-      <div class="card pricing-highlight">
+      <div class="enterprise-card">
+        <div class="enterprise-icon">
+          <Crown size={32} />
+        </div>
         <h3>Need enterprise support?</h3>
         <p class="muted">
-          Talk with our team about SSO, custom security reviews, and tailored onboarding.
+          SSO, custom security reviews, dedicated success manager, and tailored onboarding for teams of 100+.
         </p>
-        <a class="button secondary" href={`${APP_URL}/register`}>Contact sales</a>
+        <a class="button secondary" href={`${APP_URL}/register`}>Talk to sales</a>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="pricing-cards-section">
     <div class="container">
       {error && (
         <div class="card">
@@ -66,26 +85,39 @@ const jsonLd = {
         </div>
       )}
       {!error && (
-        <div class="grid three pricing-grid">
+        <div class="pricing-grid-premium">
           {activePlans.map((plan) => (
-            <div class={`card pricing-card ${plan.id === mostPopularId ? "popular" : ""}`}>
-              {plan.id === mostPopularId && <span class="pill">Most popular</span>}
-              <h3>{plan.name}</h3>
-              <p class="muted">{plan.description ?? "Build a consistent digital presence for your team."}</p>
-              <div class="price-row">
-                <span class="price">{formatPrice(plan.monthlyPriceCents)}</span>
-                <span class="muted">/month</span>
+            <div class={`pricing-card-premium ${plan.id === mostPopularId ? "popular" : ""}`}>
+              {plan.id === mostPopularId && (
+                <div class="popular-badge">
+                  <Sparkles size={14} />
+                  Most popular
+                </div>
+              )}
+              <div class="plan-header">
+                <h3 class="plan-name">{plan.name}</h3>
+                <p class="plan-description">{plan.description ?? "Build a consistent digital presence for your team."}</p>
               </div>
-              <a class="button primary" href={`${APP_URL}/register`}>Start with {plan.name}</a>
-              <ul class="plan-features">
-                <li>{toLimit(plan.maxSeats, "team members")}</li>
-                <li>{toLimit(plan.maxCards, "cards per user")}</li>
-                <li>{toLimit(plan.maxSignatures, "signatures")}</li>
-                <li>{plan.premiumTemplates ? "Premium templates" : "Core templates"}</li>
-                <li>{plan.customDomain ? "Custom domain support" : "Cardrender subdomain"}</li>
-                <li>{plan.analyticsEnabled ? "Analytics included" : "Analytics on request"}</li>
-                <li>{plan.apiAccess ? "API access" : "Standard integrations"}</li>
-                <li>{plan.prioritySupport ? "Priority support" : "Standard support"}</li>
+              <div class="price-section">
+                <div class="price-row">
+                  <span class="price">{formatPrice(plan.monthlyPriceCents)}</span>
+                  {plan.monthlyPriceCents > 0 && <span class="price-period">/month</span>}
+                </div>
+                <p class="price-note">per user, billed monthly</p>
+              </div>
+              <a class="button primary full-width" href={`${APP_URL}/register`}>
+                Get started
+              </a>
+              <div class="features-divider"></div>
+              <ul class="plan-features-premium">
+                <li><Check size={18} /><span>{toLimit(plan.maxSeats, "team members")}</span></li>
+                <li><Check size={18} /><span>{toLimit(plan.maxCards, "cards per user")}</span></li>
+                <li><Check size={18} /><span>{toLimit(plan.maxSignatures, "signatures")}</span></li>
+                <li><Check size={18} /><span>{plan.premiumTemplates ? "Premium templates" : "Core templates"}</span></li>
+                <li><Check size={18} /><span>{plan.customDomain ? "Custom domain" : "Subdomain only"}</span></li>
+                <li><Check size={18} /><span>{plan.analyticsEnabled ? "Full analytics" : "Basic analytics"}</span></li>
+                <li><Check size={18} /><span>{plan.apiAccess ? "Full API access" : "Limited API"}</span></li>
+                <li><Check size={18} /><span>{plan.prioritySupport ? "Priority support" : "Standard support"}</span></li>
               </ul>
             </div>
           ))}
@@ -94,48 +126,61 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section">
+  <section class="features-included-section">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">Included</span>
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <Check size={16} />
+          Included in every plan
+        </span>
         <h2>Everything you need to roll out at scale</h2>
-        <p class="muted">
-          Every plan includes team management, branded templates, and secure sharing.
+        <p class="section-subtitle">
+          Every plan includes team management, branded templates, and secure sharing. No feature gates.
         </p>
       </div>
-      <div class="grid three">
-        {[
-          "Team directory and member management",
-          "Customizable card templates",
-          "Email signature builder",
-          "QR code sharing and wallet passes",
-          "Workspace analytics dashboard",
-          "Role-based access controls",
-        ].map((item) => (
-          <div class="card">{item}</div>
+      <div class="features-grid-included">
+        {allFeatures.map((feature) => (
+          <div class="feature-item-included">
+            <div class="feature-icon-small">
+              <feature.icon size={20} />
+            </div>
+            <span>{feature.text}</span>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="faq-section">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header-center">
         <span class="eyebrow">FAQ</span>
         <h2>Pricing questions</h2>
       </div>
-      <div class="grid three">
-        <div class="card">
+      <div class="faq-grid">
+        <div class="faq-card">
           <h3>Can I change plans later?</h3>
-          <p class="muted">Yes. You can upgrade or downgrade at any time from the admin dashboard.</p>
+          <p class="muted">Yes. You can upgrade or downgrade at any time from the admin dashboard. Changes take effect immediately.</p>
         </div>
-        <div class="card">
+        <div class="faq-card">
           <h3>Do you offer custom onboarding?</h3>
-          <p class="muted">Enterprise customers receive onboarding, migration support, and rollout planning.</p>
+          <p class="muted">Enterprise customers receive dedicated onboarding, migration support, and rollout planning with a success manager.</p>
         </div>
-        <div class="card">
+        <div class="faq-card">
           <h3>Is there a free trial?</h3>
-          <p class="muted">Every new workspace starts with a free trial, no credit card required.</p>
+          <p class="muted">Every new workspace starts with a 14-day free trial of our Professional plan. No credit card required to start.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What payment methods do you accept?</h3>
+          <p class="muted">We accept all major credit cards, ACH transfers for annual plans, and purchase orders for enterprise customers.</p>
+        </div>
+        <div class="faq-card">
+          <h3>Can I pay annually?</h3>
+          <p class="muted">Yes! Annual plans get 20% off. Switch to annual billing from your dashboard at any time.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What happens if I exceed my limits?</h3>
+          <p class="muted">We'll notify you and offer an upgrade path. No features are shut off without warning.</p>
         </div>
       </div>
     </div>
@@ -143,45 +188,249 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  .pricing-hero {
-    display: grid;
-    gap: 2rem;
+  /* Hero Section */
+  .pricing-hero-section {
+    padding: 6rem 0 4rem;
+  }
+  
+  .hero-content-pricing {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  
+  .hero-title-pricing {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-description-pricing {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .enterprise-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--secondary) / 0.05));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    text-align: center;
+  }
+  
+  .enterprise-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.5rem;
+    display: flex;
     align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: var(--radius);
+    color: white;
   }
-  .pricing-highlight {
+  
+  /* Pricing Cards */
+  .pricing-cards-section {
+    padding: 4rem 0;
+  }
+  
+  .pricing-grid-premium {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .pricing-grid {
-    align-items: stretch;
+  
+  .pricing-card-premium {
+    position: relative;
+    padding: 2.5rem;
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .pricing-card {
-    display: grid;
-    gap: 1rem;
+  
+  .pricing-card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 8px 10px -6px hsl(var(--foreground) / 0.1);
   }
-  .pricing-card.popular {
-    border: 2px solid var(--accent);
+  
+  .pricing-card-premium.popular {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 10px 20px -5px hsl(var(--primary) / 0.2);
   }
+  
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    color: white;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .plan-header {
+    margin-bottom: 2rem;
+  }
+  
+  .plan-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  
+  .plan-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+  }
+  
+  .price-section {
+    margin-bottom: 2rem;
+  }
+  
   .price-row {
     display: flex;
     align-items: baseline;
-    gap: 0.4rem;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
   }
+  
   .price {
-    font-size: 2.2rem;
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: 800;
+    color: hsl(var(--foreground));
   }
-  .plan-features {
+  
+  .price-period {
+    font-size: 1rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .price-note {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .features-divider {
+    height: 1px;
+    background: hsl(var(--border));
+    margin: 2rem 0;
+  }
+  
+  .plan-features-premium {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 0.5rem;
+    gap: 1rem;
   }
-  .plan-features li::before {
-    content: "•";
-    color: var(--accent);
-    margin-right: 0.5rem;
+  
+  .plan-features-premium li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .plan-features-premium li svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  /* Features Included */
+  .features-included-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .features-grid-included {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .feature-item-included {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    transition: all 200ms;
+  }
+  
+  .feature-item-included:hover {
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .feature-icon-small {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--primary) / 0.1);
+    border-radius: calc(var(--radius) - 2px);
+    color: hsl(var(--primary));
+  }
+  
+  /* FAQ */
+  .faq-section {
+    padding: 6rem 0;
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .faq-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+  }
+  
+  .faq-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    .pricing-hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .pricing-grid-premium {
+      grid-template-columns: 1fr;
+    }
+    
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

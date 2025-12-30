@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { BookOpen, Clock, ArrowRight } from "lucide-astro";
 
 const posts = [
   {
@@ -8,28 +9,54 @@ const posts = [
     description: "A practical look at why teams are switching from paper cards to trackable, branded digital profiles.",
     date: "Dec 30, 2025",
     readTime: "6 min read",
+    category: "Product",
   },
 ];
 ---
 
 <BaseLayout
-  title="Blog"
+  title="Blog - Insights on Digital Business Cards"
   description="Insights, playbooks, and updates on digital business cards, team branding, and contact sharing."
 >
-  <section class="section">
+  <section class="blog-hero-section">
     <div class="container">
-      <span class="eyebrow">Blog</span>
-      <h1>Stories for teams modernizing their outreach</h1>
-      <p class="muted">
-        Learn how teams use digital business cards, analytics, and templates to stay consistent and convert more conversations.
-      </p>
-      <div class="grid three blog-grid">
+      <div class="blog-hero-content">
+        <div class="hero-badge">
+          <BookOpen size={16} />
+          <span>Blog & Resources</span>
+        </div>
+        <h1 class="blog-hero-title">
+          Stories for teams <span class="gradient-text">modernizing</span> their outreach
+        </h1>
+        <p class="blog-hero-description">
+          Learn how forward-thinking teams use digital business cards, analytics, and templates
+          to stay consistent and convert more conversations into relationships.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-posts-section">
+    <div class="container">
+      <div class="blog-grid">
         {posts.map((post) => (
-          <a class="card blog-card" href={`/blog/${post.slug}`}>
-            <p class="pill">{post.readTime}</p>
-            <h3>{post.title}</h3>
-            <p class="muted">{post.description}</p>
-            <p class="muted">{post.date}</p>
+          <a class="blog-card-premium" href={`/blog/${post.slug}`}>
+            <div class="blog-card-header">
+              <span class="blog-category">{post.category}</span>
+              <div class="blog-meta">
+                <Clock size={14} />
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+            <h3 class="blog-card-title">{post.title}</h3>
+            <p class="blog-card-description">{post.description}</p>
+            <div class="blog-card-footer">
+              <span class="blog-date">{post.date}</span>
+              <span class="blog-read-more">
+                Read article
+                <ArrowRight size={16} />
+              </span>
+            </div>
           </a>
         ))}
       </div>
@@ -38,11 +65,121 @@ const posts = [
 </BaseLayout>
 
 <style>
-  .blog-grid {
-    margin-top: 2rem;
+  .blog-hero-section {
+    padding: 6rem 0 4rem;
+    text-align: center;
   }
-  .blog-card:hover {
+  
+  .blog-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .blog-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .blog-hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .blog-posts-section {
+    padding: 4rem 0 6rem;
+  }
+  
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .blog-card-premium {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .blog-card-premium:hover {
     transform: translateY(-4px);
-    transition: transform 0.2s ease;
+    box-shadow: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 8px 10px -6px hsl(var(--foreground) / 0.1);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .blog-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .blog-category {
+    display: inline-flex;
+    padding: 0.35rem 0.75rem;
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .blog-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: hsl(var(--foreground));
+  }
+  
+  .blog-card-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+  
+  .blog-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid hsl(var(--border));
+  }
+  
+  .blog-date {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .blog-read-more {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

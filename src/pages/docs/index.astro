@@ -1,62 +1,165 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { BookOpen, Users, Palette, BarChart3, Code, Shield, Rocket } from "lucide-astro";
 
 const sections = [
   {
     title: "Getting Started",
     description: "Set up your workspace, brand kit, and first team members.",
     href: "/docs/getting-started",
+    icon: Rocket,
   },
   {
     title: "Teams & Roles",
     description: "Manage access, roles, and invitations across departments.",
     href: "/docs/teams",
+    icon: Users,
   },
   {
     title: "Branding & Templates",
     description: "Customize card designs, signatures, and directory settings.",
     href: "/docs/branding-and-templates",
+    icon: Palette,
   },
   {
     title: "Analytics",
     description: "Understand views, clicks, and engagement across your team.",
     href: "/docs/analytics",
+    icon: BarChart3,
   },
   {
     title: "Public API",
     description: "Automate card creation and data sync with the API.",
     href: "/docs/api",
+    icon: Code,
   },
   {
     title: "Security",
     description: "Understand access controls, encryption, and audit trails.",
     href: "/docs/security",
+    icon: Shield,
   },
 ];
 ---
 
 <BaseLayout
-  title="Documentation"
+  title="Documentation - Cardrender Guides & API Reference"
   description="Guides, references, and best practices for managing digital business cards with Cardrender."
 >
-  <section class="section">
+  <section class="docs-hero-section">
     <div class="container">
-      <span class="eyebrow">Documentation</span>
-      <h1>Everything you need to roll out Cardrender</h1>
-      <p class="muted">
-        Get up and running quickly, then dive into advanced configuration for branding, analytics, and integrations.
-      </p>
-      <div class="grid three docs-grid">
+      <div class="docs-hero-content">
+        <div class="hero-badge">
+          <BookOpen size={16} />
+          <span>Documentation</span>
+        </div>
+        <h1 class="docs-hero-title">
+          Everything you need to <span class="gradient-text">roll out Cardrender</span>
+        </h1>
+        <p class="docs-hero-description">
+          Get up and running in minutes, then dive into advanced configuration for branding, 
+          analytics, API integrations, and enterprise security.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="docs-grid-section">
+    <div class="container">
+      <div class="docs-grid">
         {sections.map((section) => (
-          <a class="card" href={section.href}>
-            <h3>{section.title}</h3>
-            <p class="muted">{section.description}</p>
+          <a class="docs-card" href={section.href}>
+            <div class="docs-card-icon">
+              <section.icon size={24} />
+            </div>
+            <h3 class="docs-card-title">{section.title}</h3>
+            <p class="docs-card-description">{section.description}</p>
           </a>
         ))}
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .docs-hero-section {
+    padding: 6rem 0 4rem;
+    text-align: center;
+  }
+  
+  .docs-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .docs-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .docs-hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .docs-grid-section {
+    padding: 4rem 0 6rem;
+  }
+  
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .docs-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .docs-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 8px 10px -6px hsl(var(--foreground) / 0.1);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .docs-card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border-radius: var(--radius);
+    color: hsl(var(--primary));
+    margin-bottom: 1.5rem;
+  }
+  
+  .docs-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .docs-card-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 
 <style>
   .docs-grid {
