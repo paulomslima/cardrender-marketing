@@ -1,12 +1,48 @@
 ---
+import { getCollection } from "astro:content";
 import { getLangFromUrl, getAlternateLinks } from "../lib/i18n";
 import { Globe, Check } from "lucide-astro";
 
 const currentLang = getLangFromUrl(Astro.url);
-const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
+const currentPath = Astro.url.pathname;
 
-// Show all configured languages
-const availableLanguages = alternateLinks;
+// Determine if we're on a blog or docs page
+const isBlogPost = currentPath.match(/\/(?:es\/|pt\/)?blog\/([^/]+)/);
+const isDocsPage = currentPath.match(/\/(?:es\/|pt\/)?docs\/([^/]+)/);
+
+let availableLanguages = getAlternateLinks(currentPath, currentLang);
+
+// For blog posts and docs, filter to only show languages with actual content
+if (isBlogPost || isDocsPage) {
+  // Get the slug from the URL
+  const slug = (isBlogPost || isDocsPage)?.[1];
+  
+  if (slug) {
+    // Get all blog or docs entries
+    const collection = isBlogPost ? "blog" : "docs";
+    const allEntries = await getCollection(collection);
+    
+    // Find the current entry by slug
+    const currentEntry = allEntries.find(entry => 
+      entry.slug.endsWith(slug) || entry.slug === slug
+    );
+    
+    if (currentEntry?.data.translationKey) {
+      // Find all entries with the same translationKey
+      const translations = allEntries.filter(entry => 
+        entry.data.translationKey === currentEntry.data.translationKey
+      );
+      
+      // Get available languages from translations
+      const availableLangs = new Set(translations.map(t => t.data.lang));
+      
+      // Filter alternateLinks to only include available languages
+      availableLanguages = availableLanguages.filter(link => 
+        availableLangs.has(link.lang)
+      );
+    }
+  }
+}
 ---
 
 <div class="language-switcher">
