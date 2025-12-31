@@ -463,8 +463,17 @@ const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
   }
 
   @media (max-width: 768px) {
+    .breadcrumb-nav,
+    .article-nav,
+    .article-header .container,
+    .article-container {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
     .breadcrumb-nav {
-      padding: 1rem 0 0.5rem;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
     }
 
     .breadcrumb-nav ol {
@@ -473,7 +482,8 @@ const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
     }
 
     .article-nav {
-      padding: 0.75rem 0 1rem;
+      padding-top: 0.75rem;
+      padding-bottom: 1rem;
     }
 
     .article-header {
@@ -497,7 +507,8 @@ const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
     }
 
     .article-container {
-      padding: 3rem 0;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
       overflow-x: hidden;
     }
 
@@ -523,13 +534,13 @@ const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
     .article-content :global(blockquote) {
       padding: 1rem 1.25rem;
       font-size: 1.0625rem;
-      margin: 2rem -1rem;
+      margin: 2rem 0;
     }
 
     .article-content :global(pre) {
-      margin-left: -1rem;
-      margin-right: -1rem;
-      border-radius: 0;
+      margin-left: 0;
+      margin-right: 0;
+      border-radius: 0.5rem;
       overflow-x: auto;
     }
 
@@ -553,6 +564,25 @@ const ogImage = `${siteUrl}/og-image.jpg`; // Default OG image
     .back-to-blog {
       width: 100%;
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .breadcrumb-nav,
+    .article-nav,
+    .article-header .container,
+    .article-container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .article-title {
+      font-size: 1.75rem;
+    }
+
+    .article-content :global(ul),
+    .article-content :global(ol) {
+      padding-left: 1.5rem;
     }
   }
 </style>
