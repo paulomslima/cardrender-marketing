@@ -531,18 +531,60 @@ img {
   .docs-prose ul,
   .docs-prose ol {
     margin: 1.125rem 0;
-    padding-left: 1.625rem;
+    padding-left: 1.75rem;
+    list-style-position: outside;
+  }
+  
+  .docs-prose ul {
+    list-style-type: disc;
+  }
+  
+  .docs-prose ol {
+    list-style-type: decimal;
   }
   
   .docs-prose li {
     margin: 0.5rem 0;
     line-height: 1.65;
     color: hsl(var(--foreground) / 0.88);
+    padding-left: 0.375rem;
   }
   
   .docs-prose li::marker {
-    color: hsl(var(--muted-foreground) / 0.65);
-    font-weight: 600;
+    color: hsl(var(--primary) / 0.8);
+    font-weight: 700;
+  }
+  
+  .docs-prose ul ul,
+  .docs-prose ol ul {
+    margin: 0.375rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .docs-prose ul ol,
+  .docs-prose ol ol {
+    margin: 0.375rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .docs-prose ul ul {
+    list-style-type: circle;
+  }
+  
+  .docs-prose ul ul ul {
+    list-style-type: square;
+  }
+  
+  .docs-prose li > p {
+    margin: 0.375rem 0;
+  }
+  
+  .docs-prose li > p:first-child {
+    margin-top: 0;
+  }
+  
+  .docs-prose li > p:last-child {
+    margin-bottom: 0;
   }
   
   .docs-prose strong {
