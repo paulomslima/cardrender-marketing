@@ -587,6 +587,51 @@ img {
     margin-bottom: 0;
   }
   
+  .docs-content ul,
+  .docs-content ol {
+    margin: 1.125rem 0;
+    padding-left: 1.75rem;
+    list-style-position: outside;
+  }
+  
+  .docs-content ul {
+    list-style-type: disc;
+  }
+  
+  .docs-content ol {
+    list-style-type: decimal;
+  }
+  
+  .docs-content li {
+    margin: 0.5rem 0;
+    padding-left: 0.375rem;
+  }
+  
+  .docs-content li::marker {
+    color: hsl(var(--primary));
+    font-weight: 700;
+  }
+  
+  .docs-content ul ul,
+  .docs-content ol ul {
+    margin: 0.35rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .docs-content ul ol,
+  .docs-content ol ol {
+    margin: 0.35rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .docs-content ul ul {
+    list-style-type: circle;
+  }
+  
+  .docs-content ul ul ul {
+    list-style-type: square;
+  }
+  
   .docs-prose strong {
     font-weight: 600;
     color: hsl(var(--foreground));
