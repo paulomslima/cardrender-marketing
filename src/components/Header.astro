@@ -34,7 +34,12 @@ const { currentPath } = Astro.props;
       <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
       <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
       <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
-      <a class="mobile-signin" href={`${APP_URL}/login`}>Sign in</a>
+      <div class="mobile-menu-footer">
+        <a class="mobile-signin" href={`${APP_URL}/login`}>Sign in</a>
+        <div class="mobile-language">
+          <LanguageSwitcher />
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -218,13 +223,28 @@ const { currentPath } = Astro.props;
     border-color: hsl(var(--border));
   }
   
-  .mobile-nav-links a.active {
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
-    border-color: hsl(var(--primary) / 0.2);
+  .mobile-nav-links a.active {}
+    .backgrmenu-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid hsl(var(--border));
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   
   .mobile-signin {
+    padding: 1rem 1.25rem !important;
+    text-align: center;
+    color: hsl(var(--muted-foreground)) !important;
+    font-size: 1rem !important;
+    border: 1px solid hsl(var(--border)) !important;
+    border-radius: 12px;
+  }
+  
+  .mobile-language {
+    display: flex;
+    justify-content: center;
     margin-top: 1rem;
     text-align: center;
     color: hsl(var(--muted-foreground)) !important;
@@ -238,6 +258,10 @@ const { currentPath } = Astro.props;
       display: none;
     }
     
+    
+    .nav-actions :global(.language-switcher) {
+      display: none;
+    }
     .mobile-menu-toggle {
       display: block;
     }
