@@ -40,31 +40,59 @@ const { currentPath } = Astro.props;
 </header>
 
 <script>
-  const toggleButton = document.querySelector('.mobile-menu-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const header = document.querySelector('.site-header');
-  
-  toggleButton?.addEventListener('click', () => {
-    const isOpen = header?.classList.toggle('menu-open');
-    toggleButton.setAttribute('aria-expanded', String(isOpen));
+  function initMobileMenu() {
+    const toggleButton = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const header = document.querySelector('.site-header');
     
-    // Prevent body scroll when menu is open
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  });
-  
-  // Close menu when clicking a link
-  const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      header?.classList.remove('menu-open');
-      toggleButton?.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+    if (!toggleButton || !mobileMenu || !header) return;
+    
+    // Remove any existing listeners
+    const newToggleButton = toggleButton.cloneNode(true);
+    toggleButton.parentNode?.replaceChild(newToggleButton, toggleButton);
+    
+    newToggleButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = header.classList.toggle('menu-open');
+      newToggleButton.setAttribute('aria-expanded', String(isOpen));
+      
+      // Prevent body scroll when menu is open
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
     });
-  });
+    
+    // Close menu when clicking a link
+    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        header.classList.remove('menu-open');
+        newToggleButton.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (header.classList.contains('menu-open') && 
+          !mobileMenu.contains(target) && 
+          !newToggleButton.contains(target)) {
+        header.classList.remove('menu-open');
+        newToggleButton.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  
+  // Initialize on load
+  document.addEventListener('DOMContentLoaded', initMobileMenu);
+  
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>
 
 <style>
@@ -160,6 +188,7 @@ const { currentPath } = Astro.props;
     transition: opacity 300ms ease, transform 300ms ease;
     pointer-events: none;
     overflow-y: auto;
+    z-index: 40;
   }
   
   .menu-open .mobile-menu {
