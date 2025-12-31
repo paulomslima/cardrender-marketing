@@ -3,9 +3,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { BookOpen, Clock, ArrowRight } from "lucide-astro";
 import { getCollection } from "astro:content";
 
-// Get all published blog posts, sorted by date
-const allPosts = await getCollection("blog", ({ data }) => {
-  return data.published !== false;
+// Get all published blog posts in English only
+const allPosts = await getCollection("blog", ({ data, slug }) => {
+  return data.published !== false && slug.startsWith('en/');
 });
 
 // Sort posts by date (newest first) and map to format expected by the template
