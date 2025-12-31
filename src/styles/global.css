@@ -336,7 +336,7 @@ img {
   
   .container {
     width: min(100%, 96vw);
-    padding: 0 1.25rem;
+    
   }
   
   .grid.three,
@@ -380,7 +380,7 @@ img {
 @media (max-width: 480px) {
   .container {
     width: 100%;
-    padding: 0 1.25rem;
+    
   }
   
   .section {
