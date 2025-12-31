@@ -1,0 +1,22 @@
+{
+  "name": "Cardrender",
+  "short_name": "Cardrender",
+  "description": "Enterprise digital business card platform. Create, manage, and track digital business cards for your team.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/"
+}

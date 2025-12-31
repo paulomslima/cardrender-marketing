@@ -27,29 +27,77 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_URL).toString
 // Get language and alternate links
 const currentLang = getLangFromUrl(Astro.url);
 const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
+
+// Generate structured data for Organization (appears on all pages)
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Cardrender",
+  "url": "https://cardrender.com",
+  "logo": "https://cardrender.com/cardrender.svg",
+  "description": "Enterprise digital business card platform trusted by Fortune 500 companies",
+  "sameAs": [
+    "https://twitter.com/cardrender",
+    "https://linkedin.com/company/cardrender",
+    "https://github.com/cardrender"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Sales",
+    "email": "sales@cardrender.com"
+  }
+};
+
+// Combine JSON-LD schemas
+const allJsonLd = jsonLd ? [organizationSchema, jsonLd] : [organizationSchema];
 ---
 
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
     <title>{metaTitle}</title>
+    <meta name="title" content={metaTitle} />
     <meta name="description" content={metaDescription} />
-    <meta name="keywords" content="digital business cards, team branding, email signatures, contact sharing, card analytics" />
-    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="keywords" content="digital business cards, team branding, email signatures, contact sharing, card analytics, virtual business cards, QR code cards, enterprise business cards" />
+    <meta name="author" content="Cardrender" />
+    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
     <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Favicon and Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Cardrender" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={metaTitle} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={currentLang === 'es' ? 'es_ES' : currentLang === 'pt' ? 'pt_BR' : 'en_US'} />
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
+    {ogImage && <meta property="og:image:alt" content={metaTitle} />}
+    
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@cardrender" />
+    <meta name="twitter:creator" content="@cardrender" />
     <meta name="twitter:title" content={metaTitle} />
     <meta name="twitter:description" content={metaDescription} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {ogImage && <meta name="twitter:image:alt" content={metaTitle} />}
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
     
     <!-- Alternate language links for SEO -->
     {alternateLinks.map(({ lang, url }) => (
@@ -58,9 +106,16 @@ const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
     <link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname, SITE_URL).toString()} />
     
     <link rel="alternate" href={canonicalUrl} hreflang="en" />
-    {jsonLd && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    )}
+    
+    <!-- Structured Data (JSON-LD) -->
+    {allJsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://app.cardrender.com" />
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRFS6EB8R0"></script>

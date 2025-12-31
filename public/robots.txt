@@ -1,4 +1,42 @@
+# Cardrender Marketing Site Robots.txt
+# Allow all search engines and AI crawlers
+
 User-agent: *
 Allow: /
+Crawl-delay: 0
 
+# Special rules for AI/LLM crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Sitemaps
 Sitemap: https://cardrender.com/sitemap.xml
+Sitemap: https://cardrender.com/sitemap-blog.xml
+Sitemap: https://cardrender.com/sitemap-docs.xml
+
+# Host (for multi-domain sites)
+Host: https://cardrender.com

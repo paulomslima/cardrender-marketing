@@ -1,0 +1,27 @@
+Contact: security@cardrender.com
+Expires: 2026-12-31T23:59:59.000Z
+Encryption: https://cardrender.com/.well-known/pgp-key.txt
+Preferred-Languages: en, es, pt
+Canonical: https://cardrender.com/.well-known/security.txt
+Policy: https://cardrender.com/security-policy
+Acknowledgments: https://cardrender.com/security-hall-of-fame
+
+# Vulnerability Disclosure
+We welcome security researchers to report vulnerabilities responsibly.
+Please include detailed reproduction steps and affected components.
+
+# Scope
+- Web Application: https://cardrender.com
+- App: https://app.cardrender.com
+- API: https://api.cardrender.com
+
+# Out of Scope
+- Social engineering attacks
+- Physical security issues
+- Third-party services we don't control
+
+# Safe Harbor
+We commit to not pursue legal action against security researchers who:
+- Make good faith efforts to avoid privacy violations and service disruptions
+- Report issues promptly and allow reasonable time for fixes
+- Do not publicly disclose vulnerabilities before they are resolved
