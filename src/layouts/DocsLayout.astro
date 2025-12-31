@@ -322,6 +322,31 @@ const pages = [
     padding: 0;
     min-height: 60vh;
   }
+
+  /* Ensure list markers render inside docs content */
+  .docs-content :global(ul),
+  .docs-content :global(ol) {
+    margin: 1.125rem 0;
+    padding-left: 1.75rem;
+    list-style-position: outside;
+  }
+
+  .docs-content :global(ul) {
+    list-style: disc;
+  }
+
+  .docs-content :global(ol) {
+    list-style: decimal;
+  }
+
+  .docs-content :global(li) {
+    margin: 0.5rem 0;
+  }
+
+  .docs-content :global(li::marker) {
+    color: hsl(var(--primary));
+    font-weight: 700;
+  }
   
   /* Table of Contents - shadcn-style */
   .docs-toc {
