@@ -590,16 +590,16 @@ img {
   .docs-content ul,
   .docs-content ol {
     margin: 1.125rem 0;
-    padding-left: 1.75rem;
+    padding-left: 1.85rem;
     list-style-position: outside;
   }
   
   .docs-content ul {
-    list-style-type: disc;
+    list-style: disc outside !important;
   }
   
   .docs-content ol {
-    list-style-type: decimal;
+    list-style: decimal outside !important;
   }
   
   .docs-content li {

@@ -158,6 +158,9 @@ const pages = [
     });
 
     tocList.appendChild(fragment);
+
+    const firstLink = tocList.querySelector('.toc-link');
+    setActiveLink(tocList, firstLink);
   }
 
   function createLink(id, text, className) {
@@ -170,6 +173,16 @@ const pages = [
     return link;
   }
 
+  function setActiveLink(tocList, target) {
+    if (!target) return;
+    tocList.querySelectorAll('.toc-link').forEach(anchor => {
+      anchor.classList.remove('active');
+      anchor.setAttribute('aria-current', 'false');
+    });
+    target.classList.add('active');
+    target.setAttribute('aria-current', 'true');
+  }
+
   function setupScrollSpy(headings, tocList) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -177,12 +190,7 @@ const pages = [
         const link = tocList.querySelector(`a[data-heading="${id}"]`);
 
         if (entry.isIntersecting && id && link) {
-          tocList.querySelectorAll('.toc-link').forEach(anchor => {
-            anchor.classList.remove('active');
-            anchor.setAttribute('aria-current', 'false');
-          });
-          link.classList.add('active');
-          link.setAttribute('aria-current', 'true');
+          setActiveLink(tocList, link);
         }
       });
     }, {
@@ -203,6 +211,7 @@ const pages = [
             top: heading.getBoundingClientRect().top + window.scrollY - 80,
             behavior: 'smooth'
           });
+          setActiveLink(tocList, target);
         }
       });
       tocList.dataset.listenerAttached = 'true';
@@ -323,8 +332,8 @@ const pages = [
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
     border-radius: 14px;
-    padding: 1.25rem 1.25rem 1.5rem;
-    box-shadow: 0 15px 40px hsl(var(--foreground) / 0.06);
+    padding: 0.9rem 0.9rem 1.1rem;
+    box-shadow: 0 10px 28px hsl(var(--foreground) / 0.05);
     transition: opacity 150ms ease;
   }
   
@@ -354,7 +363,7 @@ const pages = [
   .toc-list {
     list-style: none;
     margin: 0;
-    padding: 0 0 0 1.25rem;
+    padding: 0 0 0 0.85rem;
     position: relative;
   }
   
@@ -377,10 +386,10 @@ const pages = [
   .toc-link {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.4rem 0.65rem 0.4rem 0.65rem;
+    gap: 0.35rem;
+    padding: 0.32rem 0.5rem 0.32rem 0.5rem;
     color: hsl(var(--muted-foreground));
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     font-weight: 500;
     border-radius: 0.5rem;
     position: relative;
@@ -390,8 +399,8 @@ const pages = [
   
   .toc-link::before {
     content: '';
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.42rem;
+    height: 0.42rem;
     border-radius: 999px;
     border: 2px solid hsl(var(--border));
     background: hsl(var(--card));
@@ -417,8 +426,8 @@ const pages = [
   
   .toc-sublist {
     list-style: none;
-    margin: 0.2rem 0 0.6rem 1.25rem;
-    padding: 0.2rem 0 0 0.85rem;
+    margin: 0.15rem 0 0.45rem 1rem;
+    padding: 0.15rem 0 0 0.7rem;
     border-left: 1px dashed hsl(var(--border));
   }
   
@@ -428,8 +437,8 @@ const pages = [
   }
   
   .toc-link-nested {
-    font-size: 0.72rem;
-    padding-left: 0.5rem;
+    font-size: 0.64rem;
+    padding-left: 0.35rem;
   }
   
   .toc-link-nested::before {
