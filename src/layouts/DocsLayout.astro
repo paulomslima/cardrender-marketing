@@ -47,7 +47,9 @@ const pages = [
       </aside>
       
       <article class="docs-content">
-        <slot />
+        <div class="docs-prose" id="docs-content">
+          <slot />
+        </div>
       </article>
       
       <aside class="docs-toc">
@@ -55,7 +57,7 @@ const pages = [
           <h4>On this page</h4>
         </div>
         <nav class="toc-nav" id="toc-nav" aria-label="Table of contents">
-          <!-- Will be populated by JavaScript -->
+          <ul class="toc-list" id="toc-list"></ul>
         </nav>
       </aside>
     </div>
@@ -65,10 +67,11 @@ const pages = [
 <script>
   // Lightweight TOC generator - SEO and LLM friendly
   function generateTOC() {
-    const content = document.querySelector('.docs-content, .docs-prose');
+    const content = document.getElementById('docs-content');
     const tocNav = document.getElementById('toc-nav');
+    const tocList = document.getElementById('toc-list');
     
-    if (!content || !tocNav) return;
+    if (!content || !tocNav || !tocList) return;
     
     const headings = Array.from(content.querySelectorAll('h2, h3'));
     
@@ -78,9 +81,7 @@ const pages = [
       return;
     }
     
-    // Create simple list structure for better semantics
-    const list = document.createElement('ul');
-    list.className = 'toc-list';
+    tocList.innerHTML = '';
     
     headings.forEach((heading, index) => {
       // Generate ID from text content
@@ -100,12 +101,11 @@ const pages = [
       link.textContent = heading.textContent || '';
       link.className = 'toc-link';
       link.setAttribute('data-heading', heading.id);
+            link.setAttribute('aria-current', 'false');
       
       item.appendChild(link);
-      list.appendChild(item);
+            tocList.appendChild(item);
     });
-    
-    tocNav.appendChild(list);
     
     // Simple scroll spy
     const observer = new IntersectionObserver((entries) => {
@@ -115,9 +115,15 @@ const pages = [
         
         if (entry.isIntersecting) {
           // Remove active from all
-          tocNav.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                tocNav.querySelectorAll('.toc-link').forEach(l => {
+                  l.classList.remove('active');
+                  l.setAttribute('aria-current', 'false');
+                });
           // Add active to current
-          link?.classList.add('active');
+                if (link) {
+                  link.classList.add('active');
+                  link.setAttribute('aria-current', 'true');
+                }
         }
       });
     }, {
