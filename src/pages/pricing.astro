@@ -111,71 +111,71 @@ const jsonLd = {
               <div class="features-divider"></div>
               <ul class="plan-features-premium">
                 <li>
-                  {plan.maxSeats === -1 || plan.maxSeats > 0 ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.maxSeats === -1 || plan.maxSeats > 0 ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{toLimit(plan.maxSeats, "team members")}</span>
                 </li>
                 <li>
-                  {plan.maxCards === -1 || plan.maxCards > 0 ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.maxCards === -1 || plan.maxCards > 0 ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{toLimit(plan.maxCards, "cards per user")}</span>
                 </li>
                 <li>
-                  {plan.maxSignatures === -1 || plan.maxSignatures > 0 ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.maxSignatures === -1 || plan.maxSignatures > 0 ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{toLimit(plan.maxSignatures, "email signatures")}</span>
                 </li>
                 <li>
-                  {plan.maxLinks === -1 || plan.maxLinks > 0 ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.maxLinks === -1 || plan.maxLinks > 0 ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{toLimit(plan.maxLinks, "custom links")}</span>
                 </li>
                 <li>
-                  {plan.maxStorageMb === -1 || plan.maxStorageMb > 0 ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.maxStorageMb === -1 || plan.maxStorageMb > 0 ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{toLimit(plan.maxStorageMb, "MB storage")}</span>
                 </li>
                 <li>
-                  {plan.customBranding ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.customBranding ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Custom branding</span>
                 </li>
                 <li>
-                  {plan.customDomain ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.customDomain ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Custom domain</span>
                 </li>
                 <li>
-                  {plan.premiumTemplates ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.premiumTemplates ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Premium templates</span>
                 </li>
                 <li>
-                  {plan.headerCustomization ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.headerCustomization ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Header customization</span>
                 </li>
                 <li>
-                  {plan.directoryEnabled ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.directoryEnabled ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Team directory</span>
                 </li>
                 <li>
-                  {plan.analyticsEnabled ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.analyticsEnabled ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>{plan.advancedAnalytics ? "Advanced analytics" : "Basic analytics"}</span>
                 </li>
                 <li>
-                  {plan.leadCapture ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.leadCapture ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Lead capture forms</span>
                 </li>
                 <li>
-                  {plan.apiAccess ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.apiAccess ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>API access</span>
                 </li>
                 <li>
-                  {plan.webhooks ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.webhooks ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Webhooks</span>
                 </li>
                 <li>
-                  {plan.ssoEnabled ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.ssoEnabled ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>SSO/SAML</span>
                 </li>
                 <li>
-                  {plan.whiteLabel ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.whiteLabel ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>White-label branding</span>
                 </li>
                 <li>
-                  {plan.prioritySupport ? <Check size={18} /> : <X size={18} class="text-muted-foreground" />}
+                  {plan.prioritySupport ? <Check size={18} /> : <X size={18} class="text-destructive" />}
                   <span>Priority support</span>
                 </li>
               </ul>
