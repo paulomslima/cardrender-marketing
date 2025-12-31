@@ -115,42 +115,47 @@ const jsonLd = {
   }
   
   .docs-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
-    line-height: 1.2;
-    margin: 0 0 1rem 0;
+    line-height: 1.1;
+    margin: 0 0 1.25rem 0;
     color: hsl(var(--foreground));
+    letter-spacing: -0.02em;
   }
   
   .docs-description {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     color: hsl(var(--muted-foreground));
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 1rem 0;
+    font-weight: 400;
   }
   
   .docs-meta {
     font-size: 0.875rem;
     color: hsl(var(--muted-foreground));
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
   }
   
   .docs-prose {
     color: hsl(var(--foreground));
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    max-width: 75ch;
   }
   
   .docs-prose :global(h2) {
-    font-size: 1.875rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid hsl(var(--border));
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid hsl(var(--border) / 0.5);
     scroll-margin-top: 6rem;
+    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
   }
   
   .docs-prose :global(h2:first-child) {
@@ -162,36 +167,41 @@ const jsonLd = {
   .docs-prose :global(h3) {
     font-size: 1.5rem;
     font-weight: 600;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
     scroll-margin-top: 6rem;
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
   }
   
   .docs-prose :global(h4) {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
     scroll-margin-top: 6rem;
+    color: hsl(var(--foreground));
   }
   
   .docs-prose :global(p) {
-    margin: 1rem 0;
+    margin: 1.5rem 0;
+    line-height: 1.8;
   }
   
   .docs-prose :global(ul),
   .docs-prose :global(ol) {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    padding-left: 1.75rem;
   }
   
   .docs-prose :global(li) {
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
+    line-height: 1.7;
   }
   
   .docs-prose :global(li > ul),
   .docs-prose :global(li > ol) {
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
   }
   
   .docs-prose :global(strong) {
@@ -200,98 +210,107 @@ const jsonLd = {
   }
   
   .docs-prose :global(code) {
-    background: hsl(var(--muted) / 0.2);
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    background: hsl(var(--primary) / 0.08);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.9em;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', 'Courier New', monospace;
     color: hsl(var(--primary));
+    font-weight: 500;
   }
   
   .docs-prose :global(pre) {
-    background: hsl(var(--muted) / 0.1);
-    border: 1px solid hsl(var(--border));
+    background: hsl(var(--foreground) / 0.03);
+    border: 1px solid hsl(var(--border) / 0.5);
     border-radius: 0.75rem;
-    padding: 1.25rem;
-    margin: 1.5rem 0;
+    padding: 1.5rem;
+    margin: 2rem 0;
     overflow-x: auto;
+    line-height: 1.6;
   }
   
   .docs-prose :global(pre code) {
     background: none;
     padding: 0;
     border-radius: 0;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: hsl(var(--foreground));
+    font-weight: 400;
   }
   
   .docs-prose :global(blockquote) {
-    border-left: 4px solid hsl(var(--primary));
-    padding-left: 1.25rem;
-    margin: 1.5rem 0;
-    font-style: italic;
+    border-left: 3px solid hsl(var(--primary));
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: normal;
     color: hsl(var(--muted-foreground));
+    background: hsl(var(--primary) / 0.03);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.5rem;
   }
   
   .docs-prose :global(a) {
     color: hsl(var(--primary));
-    text-decoration: underline;
-    text-decoration-color: hsl(var(--primary) / 0.3);
-    text-underline-offset: 2px;
+    text-decoration: none;
+    border-bottom: 1px solid hsl(var(--primary) / 0.3);
     transition: all 150ms;
+    font-weight: 500;
   }
   
   .docs-prose :global(a:hover) {
-    text-decoration-color: hsl(var(--primary));
+    border-bottom-color: hsl(var(--primary));
+    color: hsl(var(--primary) / 0.8);
   }
   
   .docs-prose :global(hr) {
     border: none;
-    border-top: 1px solid hsl(var(--border));
-    margin: 2.5rem 0;
+    border-top: 1px solid hsl(var(--border) / 0.5);
+    margin: 3rem 0;
   }
   
   .docs-related {
-    margin-top: 3rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid hsl(var(--border));
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid hsl(var(--border) / 0.5);
   }
   
   .docs-related-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: hsl(var(--foreground));
   }
   
   .docs-related-grid {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
   
   .docs-related-card {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    background: hsl(var(--muted) / 0.1);
-    border: 1px solid hsl(var(--border));
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border) / 0.5);
     border-radius: 12px;
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
   }
   
   .docs-related-card:hover {
-    background: hsl(var(--primary) / 0.05);
+    background: hsl(var(--card));
     border-color: hsl(var(--primary));
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px hsl(var(--primary) / 0.1);
+    box-shadow: 0 8px 24px hsl(var(--primary) / 0.12);
   }
   
   .docs-related-icon {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     color: hsl(var(--primary));
     transition: transform 200ms;
+    flex-shrink: 0;
   }
   
   .docs-related-card:hover .docs-related-icon {
@@ -301,27 +320,30 @@ const jsonLd = {
   .docs-related-text {
     font-weight: 500;
     color: hsl(var(--foreground));
+    font-size: 0.9375rem;
   }
   
   @media (max-width: 640px) {
     .docs-title {
-      font-size: 2rem;
+      font-size: 2.25rem;
     }
     
     .docs-description {
-      font-size: 1rem;
+      font-size: 1.0625rem;
     }
     
     .docs-prose {
-      font-size: 0.9375rem;
+      font-size: 1rem;
     }
     
     .docs-prose :global(h2) {
-      font-size: 1.5rem;
+      font-size: 1.625rem;
+      margin-top: 3rem;
     }
     
     .docs-prose :global(h3) {
       font-size: 1.25rem;
+      margin-top: 2rem;
     }
     
     .docs-related-grid {

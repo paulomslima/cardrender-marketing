@@ -101,9 +101,14 @@ img {
 
 @layer components {
   .container {
-    width: min(1100px, 92vw);
+    width: min(1400px, 96vw);
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
+  }
+  
+  .container.docs-container {
+    width: min(1400px, 96vw);
+    padding: 0 1.5rem;
   }
 
   .hero-badge {
@@ -330,8 +335,8 @@ img {
   }
   
   .container {
-    width: min(100%, 94vw);
-    padding: 0 1rem;
+    width: min(100%, 96vw);
+    padding: 0 1.25rem;
   }
   
   .grid.three,
@@ -375,7 +380,7 @@ img {
 @media (max-width: 480px) {
   .container {
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
   }
   
   .section {

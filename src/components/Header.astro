@@ -74,14 +74,14 @@ const { currentPath } = Astro.props;
     z-index: 50;
     backdrop-filter: blur(12px);
     background: hsl(var(--background) / 0.8);
-    border-bottom: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border) / 0.4);
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 2rem;
     padding: 1rem 0;
   }
   .logo img {
