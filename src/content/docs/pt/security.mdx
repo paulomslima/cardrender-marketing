@@ -1,0 +1,192 @@
+---
+title: "Segurança, Conformidade e Proteção de Dados"
+description: "Saiba como Cardrender protege seus dados com criptografia de nível empresarial, certificação SOC 2 Type II e conformidade GDPR. Cobre segurança de dados, controles de acesso e melhores práticas."
+category: "Segurança"
+lastUpdated: "2025-12-30"
+proficiencyLevel: "Intermediário"
+lang: "pt"
+translationKey: "security"
+keywords:
+  - segurança
+  - proteção de dados
+  - criptografia
+  - conformidade
+  - SOC 2
+  - GDPR
+  - CCPA
+  - privacidade
+  - auditoria
+relatedDocs:
+  - title: "Primeiros Passos"
+    url: "/pt/docs/getting-started"
+  - title: "Equipes"
+    url: "/pt/docs/teams"
+  - title: "API"
+    url: "/pt/docs/api"
+---
+
+Cardrender é construído com segurança como prioridade. Cumprimos com padrões da indústria para proteção de dados, controles de acesso e resposta a incidentes para garantir que suas informações sensíveis de contatos permaneçam confidenciais.
+
+## Criptografia de Dados
+
+Cardrender criptografa dados tanto em trânsito quanto em repouso usando protocolos de nível empresarial.
+
+### Criptografia em Trânsito
+
+- **TLS 1.3:** Todas as comunicações cliente-servidor usam Transport Layer Security com criptografia de chave pública
+- **Certificados SSL:** Certificados são rotacionados automaticamente e auditados trimestralmente
+- **HSTS:** HTTP Strict Transport Security força HTTPS em todos os subdomínios
+- **Perfect Forward Secrecy (PFS):** Chaves de sessão comprometidas não podem decifrar comunicações passadas
+
+### Criptografia em Repouso
+
+- **AES-256:** Todos os dados de cartões, imagens, análises e metadados de usuários são armazenados criptografados usando AES-256-GCM
+- **Gerenciamento de chaves:** Chaves de criptografia são rotacionadas trimestralmente e armazenadas em HSMs dedicados (Módulos de Segurança de Hardware)
+- **Isolamento de bancos de dados:** Dados de cada workspace residem em esquemas de banco de dados segregados para prevenir vazamentos entre contas
+
+## Controle de Acesso
+
+Cardrender implementa controle de acesso baseado em funções (RBAC) e suporta múltiplos mecanismos de autenticação para proteger suas contas.
+
+### Autenticação Multifator (2FA)
+
+Proprietários de workspace podem exigir 2FA para todos os membros com funções de administrador ou gerente. Métodos suportados incluem:
+
+- Aplicativos TOTP (Google Authenticator, Authy, 1Password)
+- Chaves de segurança FIDO2/WebAuthn (YubiKey, Touch ID, Windows Hello)
+- Códigos de backup únicos para recuperação de emergência
+
+### Início de Sessão Único (SSO)
+
+Planos Enterprise suportam SSO baseado em SAML 2.0 para centralizar o gerenciamento de identidades. Provedores suportados incluem:
+
+- Okta
+- Azure Active Directory (Entra ID)
+- Google Workspace
+- OneLogin
+- Qualquer provedor compatível com SAML 2.0
+
+SSO simplifica a integração, força políticas de senhas e permite a desvinculação instantânea quando funcionários deixam a organização.
+
+### Controle de Acesso Baseado em Funções (RBAC)
+
+Consulte a [documentação de Equipes](/pt/docs/teams) para detalhes completos sobre funções (Proprietário, Administrador, Gerente, Membro, Convidado) e permissões.
+
+## Registro de Auditoria
+
+Planos Pro e Enterprise incluem registros de auditoria imutáveis para todas as ações do workspace:
+
+- Mudanças de membresía (convidar, remover, mudanças de função)
+- Edições de cartões (quais campos foram alterados, por quem, quando)
+- Mudanças de configuração (marca, API, webhooks)
+- Exclusão de dados e solicitações de exportação
+- Eventos de login (bem-sucedidos e falhados, endereço IP, dispositivo, localização)
+
+Administradores podem exportar registros de auditoria como CSV ou JSON para revisões de conformidade ou investigações de segurança.
+
+## Retenção e Exclusão de Dados
+
+Proprietários de workspace controlam quanto tempo Cardrender retém dados de análises e registros:
+
+- **Análises:** Por padrão 2 anos, configurável até 7 anos ou retido indefinidamente
+- **Registros de auditoria:** 1 ano por padrão, até 7 anos para Enterprise
+- **Contas inativas:** Cartões permanecem ativos indefinidamente, mas contas de usuário sem login por 12 meses recebem avisos de exclusão
+
+### Exclusão de Dados
+
+Usuários podem excluir seus cartões e contas a qualquer momento em **Configurações → Privacidade e Dados**. Exclusão é irreversível:
+
+- Dados de cartões são excluídos imediatamente
+- Análises históricas são anonimizadas (identificadores únicos são excluídos mas métricas agregadas são retidas)
+- Registros de auditoria retêm "Usuário [ID excluído]" para propósitos de conformidade
+- Cópias de backup são purgadas dentro de 30 dias
+
+## Certificações de Conformidade
+
+Cardrender cumpre com padrões de segurança internacionais e passa por auditorias regulares de terceiros.
+
+### SOC 2 Type II
+
+Cardrender é certificado SOC 2 Type II, demonstrando controles efetivos para:
+
+- **Segurança:** Proteção contra acesso não autorizado
+- **Disponibilidade:** Tempo de atividade do sistema e recuperação de desastres
+- **Confidencialidade:** Proteção de informações sensíveis
+- **Integridade de processamento:** Dados precisos, completos e válidos
+- **Privacidade:** Coleta, uso, retenção e divulgação de informações pessoais
+
+Solicite uma cópia do nosso relatório SOC 2 contactando security@cardrender.com.
+
+### GDPR (Regulamento Geral de Proteção de Dados)
+
+Cardrender cumpre com GDPR para todos os usuários, independentemente da localização. Implementamos:
+
+- **Minimização de dados:** Coletamos apenas dados necessários para fornecer o serviço
+- **Direito ao acesso:** Usuários podem baixar todos os seus dados como JSON ou CSV
+- **Direito ao esquecimento:** Solicitações de exclusão são processadas dentro de 30 dias
+- **Portabilidade de dados:** Exporte dados de cartões em formatos padrão (vCard, JSON)
+- **Violações de dados:** Notificação dentro de 72 horas a autoridades e usuários afetados
+
+### CCPA (Lei de Privacidade do Consumidor da Califórnia)
+
+Usuários da Califórnia têm direitos adicionais:
+
+- Saber quais dados pessoais coletamos, usamos e compartilhamos
+- Excluir dados pessoais que coletamos
+- Optar por não participar da "venda" de dados pessoais (Cardrender nunca vende dados de usuários)
+- Não discriminação por exercer os direitos de privacidade
+
+## Gerenciamento de Vulnerabilidades
+
+Cardrender executa um programa de segurança proativo para identificar e remediar vulnerabilidades antes que possam ser exploradas.
+
+### Programa de Divulgação de Vulnerabilidades
+
+Damos as boas-vindas a pesquisadores de segurança para reportar vulnerabilidades de maneira responsável:
+
+- **Escopo:** Aplicação web, API, infraestrutura de produção
+- **Recompensas:** Reconhecimento em nosso hall da fama de segurança, recompensas em dinheiro para descobertas críticas
+- **Coordenação:** Comprometemo-nos a responder dentro de 48 horas e corrigir vulnerabilidades críticas dentro de 7 dias
+
+Reporte problemas para security@cardrender.com com uma descrição detalhada e passos de reprodução.
+
+### Escaneamento e Testes
+
+- **Testes de penetração:** Auditorias anuais por firmas de segurança de terceiros
+- **Escaneamento de dependências:** Análise automatizada de CVEs em bibliotecas de código aberto
+- **Análise estática:** Análise de código para detectar problemas de segurança durante o desenvolvimento
+- **Auditorias de infraestrutura:** Revisões trimestrais de configurações da AWS, políticas IAM e regras de firewall
+
+## Resposta a Incidentes
+
+Cardrender mantém um plano de resposta a incidentes para mitigar violações de segurança:
+
+1. **Detecção:** Monitoramento automatizado, relatórios de usuários e inteligência de ameaças
+2. **Contenção:** Isolar sistemas afetados, revogar credenciais comprometidas
+3. **Erradicação:** Identificar causa raiz, corrigir vulnerabilidades, eliminar malware
+4. **Recuperação:** Restaurar sistemas de cópias de backup verificadas, validar integridade de dados
+5. **Post-mortem:** Documentar cronologia, identificar falhas de processo, implementar melhorias
+
+Incidentes que afetam dados de usuários acionam notificações obrigatórias em conformidade com GDPR e leis estaduais dos EUA.
+
+## Melhores Práticas para Usuários
+
+- **Habilite 2FA:** Adicione uma segunda camada de segurança à sua conta
+- **Use senhas fortes:** Mínimo 16 caracteres, mistura de maiúsculas/minúsculas/números/símbolos
+- **Audite membresía regularmente:** Remova usuários inativos ou externos trimestralmente
+- **Limite funções de administrador:** Atribua privilégios de administrador apenas a pessoas confiáveis
+- **Monitore registros de auditoria:** Revise atividades suspeitas mensalmente
+- **Habilite SSO:** Centralize gerenciamento de acesso se sua organização usa um provedor de identidade
+
+## Recursos de Segurança Empresarial
+
+Clientes Enterprise têm acesso a recursos de segurança adicionais:
+
+- **Políticas de senhas personalizadas:** Forçar requisitos de complexidade, rotação e unicidade
+- **Restrições de IP:** Permitir acesso apenas de faixas de IP corporativas
+- **Auditorias de conformidade:** Auditorias SOC 2 personalizadas ou certificações ISO 27001
+- **Criptografia personalizada:** Traga suas próprias chaves (BYOK) para criptografia de dados em repouso
+- **Residência de dados:** Escolha regiões geográficas para armazenamento de dados (EUA, UE, Ásia-Pacífico)
+- **Retenção estendida de registros:** Retenha registros de auditoria até 10 anos para indústrias altamente reguladas
+
+Contacte sales@cardrender.com para discutir requisitos de segurança empresarial.

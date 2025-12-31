@@ -1,0 +1,172 @@
+---
+title: "Gerenciamento de Equipes e Permissões Baseadas em Funções"
+description: "Configure equipes, atribua funções e gerencie permissões de membros. Aprenda sobre funções de proprietário, administrador, gerente, membro e convidado, e como estruturar equipes para colaboração em escala."
+category: "Equipes"
+lastUpdated: "2025-12-30"
+proficiencyLevel: "Intermediário"
+lang: "pt"
+translationKey: "teams"
+keywords:
+  - gerenciamento de equipes
+  - permissões baseadas em funções
+  - funções de membros
+  - colaboração em workspace
+  - administração de equipes
+  - controle de acesso
+relatedDocs:
+  - title: "Primeiros Passos"
+    url: "/pt/docs/getting-started"
+  - title: "Marca e Modelos"
+    url: "/pt/docs/branding-and-templates"
+  - title: "Segurança"
+    url: "/pt/docs/security"
+---
+
+Cardrender permite que organizações criem equipes estruturadas com permissões granulares. Proprietários e administradores do workspace podem convidar membros, atribuir funções, delegar responsabilidades de gerenciamento e aplicar padrões de marca em toda a organização.
+
+## Permissões Baseadas em Funções
+
+Cardrender usa cinco níveis de permissões para equilibrar flexibilidade e controle.
+
+### Proprietário
+
+- Acesso total ao workspace, incluindo faturamento e configuração de exclusão de conta
+- Transferir propriedade para outro administrador
+- Gerenciar todos os aspectos de membros da equipe, marca, análises e configuração de API
+- Máximo um proprietário por workspace (direitos de propriedade podem ser transferidos)
+
+### Administrador
+
+- Gerenciar membros da equipe (adicionar, remover, editar funções)
+- Configurar marca do workspace, modelos e diretórios de equipe
+- Acesso a análises do workspace e dashboards da equipe
+- Gerenciar configuração de API e webhooks
+- Não pode acessar faturamento ou excluir o workspace
+
+### Gerente
+
+- Criar e editar cartões para membros da equipe
+- Ver análises da equipe (apenas membros dentro de sua equipe)
+- Aplicar modelos e padrões de marca da organização
+- Não pode convidar ou remover membros, nem alterar configuração do workspace
+
+### Membro
+
+- Criar e editar apenas seu próprio cartão
+- Ver suas próprias análises
+- Acessar modelos e ativos de marca da equipe
+- Não pode ver ou modificar cartões de outros membros
+
+### Convidado
+
+- Acesso somente leitura a diretórios compartilhados da equipe
+- Não pode criar ou editar cartões
+- Não pode acessar análises ou configuração
+- Útil para contratados externos, freelancers ou membros de conselho que precisam de cartões de membros da equipe mas não deveriam gerenciar conteúdo
+
+## Gerenciamento de Membros da Equipe
+
+### Adicionar Membros
+
+Proprietários e administradores podem convidar novos membros em **Configurações do Workspace → Membros da Equipe**:
+
+1. Clique em **Convidar Membro**
+2. Insira o email e atribua uma função
+3. Opcionalmente, atribua a uma equipe específica (se usar equipes aninhadas)
+4. O convidado recebe um email com um link de configuração
+
+Novos membros são guiados através da integração: carregar uma foto, inserir informações de contato e personalizar seu cartão usando modelos da equipe.
+
+### Desativação de Membros
+
+Quando um funcionário deixa a organização, desative sua conta para preservar análises históricas enquanto desvincula cartões ativos:
+
+1. Vá para **Configurações do Workspace → Membros da Equipe**
+2. Encontre o membro na lista
+3. Clique em **Desativar**
+4. Seu cartão mostra imediatamente uma mensagem "Esta pessoa não está mais com [Empresa]" com um CTA de diretório da equipe
+
+Contas desativadas mantêm visualizações históricas e dados de cliques para propósitos de auditoria, mas o usuário perde o acesso de login.
+
+### Transferência de Propriedade
+
+Proprietários podem transferir direitos de propriedade para qualquer administrador:
+
+1. Vá para **Configurações do Workspace → Gerenciamento de Workspace**
+2. Clique em **Transferir Propriedade**
+3. Selecione um administrador da lista suspensa
+4. Confirme a transferência (esta ação é irreversível)
+
+Após a transferência, o proprietário anterior passa automaticamente para a função de administrador.
+
+## Estrutura de Equipes
+
+Organizações empresariais podem criar equipes aninhadas para refletir hierarquias departamentais. Equipes ajudam a:
+
+- Segmentar análises por departamento
+- Aplicar padrões de marca específicos da equipe (ex., equipes de produto vs. vendas)
+- Delegar gerenciamento a gerentes da equipe
+- Construir diretórios públicos baseados em estrutura de equipes
+
+### Criação de Equipes
+
+Proprietários e administradores podem criar equipes em **Configurações do Workspace → Equipes**:
+
+1. Clique em **Nova Equipe**
+2. Nomeie a equipe (ex., "Vendas LATAM", "Equipe de Produto")
+3. Atribua um gerente da equipe
+4. Atribua membros à equipe
+
+Gerentes da equipe podem ver análises e gerenciar cartões apenas para membros dentro de sua equipe.
+
+### Configuração da Equipe
+
+Cada equipe pode ter configuração personalizada:
+
+- **Configuração de marca específica da equipe:** Logotipos, cores ou mensagens personalizadas
+- **Modelos específicos da equipe:** Modelos de cartões pré-aprovados relevantes para o departamento
+- **Análises da equipe:** Desempenho agregado de todos os membros da equipe
+- **Diretórios da equipe:** Listagens públicas ou privadas de todos os membros da equipe
+
+## Diretório da Equipe
+
+Diretórios da equipe exibem todos os membros da equipe em uma página pesquisável, indexada por SEO. Compradores podem descobrir contatos relevantes, funcionários podem compartilhar um único link e organizações obtêm tráfego orgânico de buscas de marca.
+
+### Configuração de Diretórios Públicos vs. Privados
+
+Proprietários e administradores controlam a visibilidade do diretório:
+
+- **Público:** Indexado por motores de busca, linkável do site da empresa
+- **Privado:** Requer login, acessível apenas para membros da equipe e convidados
+
+Diretórios privados são úteis para equipes internas (ex., TI, Finanças) que não deveriam estar expostas publicamente.
+
+### Personalização do Diretório
+
+Administradores podem personalizar o layout do diretório da equipe:
+
+- Marca do cabeçalho (logo, banner, slogan)
+- Ordem de classificação (alfabética, por equipe, por título)
+- Campos de busca e filtragem (buscar por nome, departamento, localização)
+- Links personalizados ao site da empresa, política de privacidade ou informações de suporte
+
+Diretórios suportam campos personalizados, então você pode mostrar especializações de vendedores, idiomas falados, fusos horários ou qualquer metadado relevante.
+
+## Operações em Massa
+
+Planos Enterprise suportam gerenciamento de membros em massa via carga CSV ou API para:
+
+- Importar funcionários de HRIS (Workday, BambooHR, ADP)
+- Atualizar cartões automaticamente quando títulos ou departamentos mudam
+- Desativar contas em massa durante reduções de pessoal ou rotatividade sazonal
+
+Consulte a [documentação da API](/pt/docs/api) para endpoints de operações em massa.
+
+## Melhores Práticas
+
+- Atribua funções de administrador a mínimo duas pessoas para evitar bloqueios
+- Use equipes para refletir seu organograma e delegar gerenciamento
+- Audite a membresía da equipe trimestralmente para remover contas inativas
+- Habilite SSO e 2FA para membros com permissões de administrador ou gerente
+- Crie equipes separadas para contratados se precisarem de padrões de marca diferentes
+- Use convidados para membros de conselho, investidores ou parceiros que precisam de acesso somente leitura

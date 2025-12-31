@@ -10,6 +10,9 @@ const currentPath = Astro.url.pathname;
 const isBlogPost = currentPath.match(/\/(?:es\/|pt\/)?blog\/([^/]+)/);
 const isDocsPage = currentPath.match(/\/(?:es\/|pt\/)?docs\/([^/]+)/);
 
+// List of static doc pages (only available in English)
+const staticDocPages = ['analytics', 'api', 'security', 'teams', 'branding-and-templates'];
+
 let availableLanguages = getAlternateLinks(currentPath, currentLang);
 
 // Map of available static pages by language
@@ -25,29 +28,35 @@ if (isBlogPost || isDocsPage) {
   const slug = (isBlogPost || isDocsPage)?.[1];
   
   if (slug) {
-    // Get all blog or docs entries
-    const collection = isBlogPost ? "blog" : "docs";
-    const allEntries = await getCollection(collection);
-    
-    // Find the current entry by slug (now needs to check folder structure)
-    const currentEntry = allEntries.find(entry => {
-      const entrySlug = entry.slug.split('/').pop(); // Extract slug from folder path
-      return entrySlug === slug;
-    });
-    
-    if (currentEntry?.data.translationKey) {
-      // Find all entries with the same translationKey
-      const translations = allEntries.filter(entry => 
-        entry.data.translationKey === currentEntry.data.translationKey
-      );
+    // Check if this is a static doc page (only available in English)
+    if (isDocsPage && staticDocPages.includes(slug)) {
+      // Only show English for static doc pages
+      availableLanguages = availableLanguages.filter(link => link.lang === 'en');
+    } else {
+      // Get all blog or docs entries
+      const collection = isBlogPost ? "blog" : "docs";
+      const allEntries = await getCollection(collection);
       
-      // Get available languages from translations
-      const availableLangs = new Set(translations.map(t => t.data.lang));
+      // Find the current entry by slug (now needs to check folder structure)
+      const currentEntry = allEntries.find(entry => {
+        const entrySlug = entry.slug.split('/').pop(); // Extract slug from folder path
+        return entrySlug === slug;
+      });
       
-      // Filter alternateLinks to only include available languages
-      availableLanguages = availableLanguages.filter(link => 
-        availableLangs.has(link.lang)
-      );
+      if (currentEntry?.data.translationKey) {
+        // Find all entries with the same translationKey
+        const translations = allEntries.filter(entry => 
+          entry.data.translationKey === currentEntry.data.translationKey
+        );
+        
+        // Get available languages from translations
+        const availableLangs = new Set(translations.map(t => t.data.lang));
+        
+        // Filter alternateLinks to only include available languages
+        availableLanguages = availableLanguages.filter(link => 
+          availableLangs.has(link.lang)
+        );
+      }
     }
   }
 } else {

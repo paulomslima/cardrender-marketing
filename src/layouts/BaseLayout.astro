@@ -61,6 +61,16 @@ const alternateLinks = getAlternateLinks(Astro.url.pathname, currentLang);
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRFS6EB8R0"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JRFS6EB8R0');
+    </script>
+    
     <slot name="head" />
   </head>
   <body>

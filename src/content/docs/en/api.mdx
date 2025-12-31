@@ -1,0 +1,196 @@
+---
+title: "Public API - Automate Card Creation & Member Provisioning"
+description: "Automate card creation, member provisioning, and analytics exports with Cardrender's REST API. Comprehensive documentation for developers."
+category: "API"
+lastUpdated: "2025-12-30"
+proficiencyLevel: "Advanced"
+lang: "en"
+translationKey: "api"
+keywords:
+  - cardrender api
+  - rest api
+  - api documentation
+  - webhooks
+  - automation
+  - api integration
+relatedDocs:
+  - title: "Getting Started"
+    url: "/docs/getting-started"
+  - title: "Analytics"
+    url: "/docs/analytics"
+  - title: "Security"
+    url: "/docs/security"
+---
+
+Cardrender offers a REST API for automating card creation, member onboarding, and analytics collection. Integrate Cardrender into your existing workflows, CRM systems, and custom applications.
+
+## Authentication
+
+Create API keys from the workspace settings page. Keys include scoped permissions and can be revoked at any time.
+
+All API requests must include an `Authorization` header with your API key:
+
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Base URL
+
+```
+https://cardrender.pages.dev/api
+```
+
+## Core Endpoints
+
+### Cards
+
+Create, update, publish, and archive cards programmatically.
+
+**Create a card:**
+```bash
+POST /cards
+Content-Type: application/json
+
+{
+  "userId": "user_123",
+  "name": "John Doe",
+  "title": "Sales Director",
+  "email": "john@company.com",
+  "phone": "+1234567890"
+}
+```
+
+**Update a card:**
+```bash
+PATCH /cards/:cardId
+Content-Type: application/json
+
+{
+  "title": "VP of Sales"
+}
+```
+
+### Members
+
+Invite, update roles, and deactivate members.
+
+**Invite a member:**
+```bash
+POST /members/invite
+Content-Type: application/json
+
+{
+  "email": "newuser@company.com",
+  "role": "member",
+  "teamId": "team_456"
+}
+```
+
+### Analytics
+
+Retrieve view and click data for reporting and analysis.
+
+**Get card analytics:**
+```bash
+GET /analytics/cards/:cardId?start=2025-01-01&end=2025-01-31
+```
+
+**Response:**
+```json
+{
+  "views": 156,
+  "uniqueVisitors": 89,
+  "clicks": {
+    "email": 23,
+    "phone": 12,
+    "linkedin": 45
+  },
+  "saves": 18
+}
+```
+
+## Webhooks
+
+Use webhooks to receive real-time notifications when cards are viewed, shared, or downloaded.
+
+### Setting Up Webhooks
+
+Configure webhook endpoints in your workspace settings. Cardrender will send POST requests to your endpoint when events occur.
+
+**Webhook payload:**
+```json
+{
+  "event": "card.viewed",
+  "timestamp": "2025-12-30T14:30:00Z",
+  "data": {
+    "cardId": "card_789",
+    "userId": "user_123",
+    "viewerId": "visitor_456",
+    "location": "San Francisco, CA",
+    "device": "mobile"
+  }
+}
+```
+
+### Available Events
+
+- `card.viewed` - Someone opened a card
+- `card.shared` - Card link was shared
+- `contact.saved` - Contact was saved to device
+- `link.clicked` - Any link on the card was clicked
+- `member.invited` - New member was invited to workspace
+- `member.activated` - Member accepted invitation
+
+## Rate Limits
+
+- **Standard plans:** 1,000 requests per hour
+- **Enterprise plans:** 10,000 requests per hour
+
+Rate limit headers are included in all responses:
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 950
+X-RateLimit-Reset: 1735574400
+```
+
+## Error Handling
+
+Cardrender uses standard HTTP status codes:
+
+- `200` - Success
+- `400` - Bad request (invalid parameters)
+- `401` - Unauthorized (invalid API key)
+- `403` - Forbidden (insufficient permissions)
+- `404` - Not found
+- `429` - Too many requests (rate limit exceeded)
+- `500` - Server error
+
+**Error response format:**
+```json
+{
+  "error": {
+    "code": "invalid_parameter",
+    "message": "Email address is required",
+    "field": "email"
+  }
+}
+```
+
+## Best Practices
+
+- Cache API responses when appropriate to reduce requests
+- Use webhooks instead of polling for real-time updates
+- Implement exponential backoff for rate limit errors
+- Store API keys securely (never commit to version control)
+- Use scoped API keys with minimal required permissions
+- Monitor webhook delivery failures and implement retry logic
+
+## SDKs & Libraries
+
+Official SDKs are available for popular languages:
+
+- JavaScript/TypeScript (npm: `@cardrender/sdk`)
+- Python (pip: `cardrender`)
+- Ruby (gem: `cardrender`)
+
+Community-maintained libraries are available for other languages. See our GitHub organization for details.

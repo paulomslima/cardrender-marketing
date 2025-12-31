@@ -1,0 +1,268 @@
+---
+title: "API REST do Cardrender - Documentação para Desenvolvedores"
+description: "Integre Cardrender com seus apps. Documentação completa da API REST, referências de endpoints, webhooks, limites de taxa e guias de autenticação para automatizar o gerenciamento de cartões digitais."
+category: "API"
+lastUpdated: "2025-12-30"
+proficiencyLevel: "Avançado"
+lang: "pt"
+translationKey: "api"
+keywords:
+  - API REST
+  - documentação de desenvolvedores
+  - webhooks
+  - autenticação API
+  - endpoints de cartões
+  - integração programática
+  - automação
+relatedDocs:
+  - title: "Primeiros Passos"
+    url: "/pt/docs/getting-started"
+  - title: "Análises"
+    url: "/pt/docs/analytics"
+  - title: "Segurança"
+    url: "/pt/docs/security"
+---
+
+A API REST do Cardrender permite integrações programáticas com sua pilha de aplicativos. Automatize a criação de cartões, sincronize membros da equipe de diretórios, recupere análises em tempo real e configure webhooks para receber notificações de eventos.
+
+## Autenticação
+
+Todas as requisições de API exigem uma chave de API passada no cabeçalho `Authorization`. Gere chaves de API em **Configurações do Workspace → API e Webhooks**.
+
+```bash
+Authorization: Bearer sua_chave_api_aqui
+```
+
+Chaves de API herdam as permissões do seu papel de usuário. Proprietários e administradores do workspace têm acesso completo de leitura/escrita; gerentes podem criar cartões mas não acessar configurações da equipe; membros têm acesso somente leitura aos seus próprios cartões.
+
+**Rotação de Chaves:** Rotacione chaves comprometidas imediatamente do console de configurações. Chaves antigas são revogadas instantaneamente.
+
+## URL Base
+
+Todos os endpoints estão disponíveis em:
+
+```
+https://api.cardrender.com/v1
+```
+
+Requisições devem usar `Content-Type: application/json` para payloads POST/PATCH.
+
+## Endpoints Principais
+
+### Cartões
+
+#### Criar um Cartão
+
+```bash
+POST /cards
+Content-Type: application/json
+Authorization: Bearer sua_chave_api
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "jane@acme.com",
+  "phone": "+55-11-98765-4321",
+  "title": "VP de Vendas",
+  "company": "Acme Corp",
+  "linkedin": "https://linkedin.com/in/janedoe",
+  "customFields": {
+    "territory": "Sul",
+    "specialization": "SaaS Enterprise"
+  }
+}
+```
+
+**Resposta (201):**
+
+```json
+{
+  "id": "card_abc123",
+  "url": "https://cardrender.com/jane-doe",
+  "qrCode": "https://cdn.cardrender.com/qr/card_abc123.png",
+  "createdAt": "2025-12-30T10:00:00Z"
+}
+```
+
+#### Atualizar um Cartão
+
+```bash
+PATCH /cards/{card_id}
+Content-Type: application/json
+Authorization: Bearer sua_chave_api
+
+{
+  "title": "VP Sênior de Vendas",
+  "phone": "+55-11-99999-8888"
+}
+```
+
+Atualize campos específicos sem sobrescrever todo o cartão. Campos não especificados permanecem inalterados.
+
+### Membros
+
+#### Adicionar um Membro à Equipe
+
+```bash
+POST /members
+Content-Type: application/json
+Authorization: Bearer sua_chave_api
+
+{
+  "email": "novo@acme.com",
+  "role": "member",
+  "cardData": {
+    "firstName": "João",
+    "lastName": "Silva",
+    "title": "Engenheiro de Vendas"
+  }
+}
+```
+
+Cria um usuário e um cartão em uma única operação. Papéis válidos: `owner`, `admin`, `manager`, `member`, `guest`.
+
+### Análises
+
+#### Recuperar Análises de Cartões
+
+```bash
+GET /cards/{card_id}/analytics?start=2025-01-01&end=2025-01-31
+Authorization: Bearer sua_chave_api
+```
+
+**Resposta:**
+
+```json
+{
+  "views": 342,
+  "uniqueVisitors": 218,
+  "contactSaves": 47,
+  "clicksByType": {
+    "email": 89,
+    "phone": 34,
+    "linkedin": 156
+  }
+}
+```
+
+Parâmetros de data são opcionais; por padrão retorna os últimos 30 dias.
+
+## Webhooks
+
+Webhooks enviam notificações HTTP POST em tempo real para seus endpoints quando eventos específicos ocorrem. Use webhooks para:
+
+- Registrar visualizações de cartões em seu CRM
+- Acionar fluxos de trabalho de automação a partir de salvamentos de contatos
+- Sincronizar mudanças de membros da equipe com diretórios internos
+- Alertar representantes de vendas quando prospects de alta prioridade visualizam cartões
+
+### Configuração de Webhooks
+
+1. Navegue para **Configurações do Workspace → API e Webhooks**
+2. Clique em **Novo Webhook**
+3. Insira sua URL de endpoint (deve ser HTTPS)
+4. Selecione tipos de eventos para se inscrever
+5. Salve e verifique se o teste foi bem-sucedido
+
+Cardrender assinará cada requisição com um segredo HMAC-SHA256. Valide a assinatura para garantir que as requisições vêm do Cardrender:
+
+```python
+import hmac
+import hashlib
+
+def verify_webhook(payload, signature, secret):
+    expected = hmac.new(
+        secret.encode(),
+        payload.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(signature, expected)
+```
+
+### Eventos Disponíveis
+
+- `card.viewed`: Alguém visualiza um cartão
+- `card.contact_saved`: Alguém baixa um vCard ou adiciona aos contatos
+- `card.link_clicked`: Alguém clica em um email, telefone ou outro link
+- `member.added`: Novo membro adicionado ao workspace
+- `member.removed`: Membro removido do workspace
+
+**Payload de Exemplo:**
+
+```json
+{
+  "event": "card.viewed",
+  "timestamp": "2025-12-30T14:23:10Z",
+  "data": {
+    "cardId": "card_abc123",
+    "viewerId": "anônimo",
+    "device": "móvel",
+    "location": "São Paulo, SP"
+  }
+}
+```
+
+## Limites de Taxa
+
+Limites de taxa previnem abuso e garantem o desempenho da plataforma:
+
+- **Nível Gratuito:** 100 requisições/hora
+- **Pro:** 1,000 requisições/hora
+- **Enterprise:** 10,000 requisições/hora (personalizável)
+
+Exceder limites retorna `429 Too Many Requests`. Cabeçalhos de resposta incluem:
+
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 847
+X-RateLimit-Reset: 1704043200
+```
+
+Use backoff exponencial para retentar requisições falhadas.
+
+## Tratamento de Erros
+
+A API retorna códigos de status HTTP padrão:
+
+- **200 OK:** Requisição bem-sucedida
+- **201 Created:** Recurso criado com sucesso
+- **400 Bad Request:** Payload inválido ou parâmetros ausentes
+- **401 Unauthorized:** Chave de API ausente ou inválida
+- **403 Forbidden:** Permissões insuficientes
+- **404 Not Found:** Recurso não existe
+- **429 Too Many Requests:** Limite de taxa excedido
+- **500 Internal Server Error:** Problema do lado do servidor
+
+Corpos de erro incluem detalhes:
+
+```json
+{
+  "error": "validation_failed",
+  "message": "Campo de email obrigatório",
+  "details": {
+    "field": "email",
+    "code": "required"
+  }
+}
+```
+
+## Melhores Práticas
+
+- Armazene chaves de API em variáveis de ambiente ou gerenciadores de segredos, nunca no código-fonte
+- Use HTTPS para todas as requisições
+- Implemente tratamento de retentativas com backoff exponencial
+- Armazene em cache as respostas quando apropriado para reduzir chamadas à API
+- Monitore limites de taxa e atualize planos conforme necessário
+- Valide assinaturas de webhooks para prevenir ataques de spoofing
+- Registre payloads de webhook para depuração e auditoria
+
+## SDKs e Bibliotecas
+
+Cardrender fornece SDKs oficiais para:
+
+- **JavaScript/TypeScript:** `npm install @cardrender/sdk`
+- **Python:** `pip install cardrender`
+- **Ruby:** `gem install cardrender`
+- **PHP:** `composer require cardrender/sdk`
+
+SDKs lidam com autenticação, retentativas e serialização automaticamente. Consulte os repos do GitHub para documentação completa e exemplos.

@@ -1,0 +1,172 @@
+---
+title: "Gestión de Equipos y Permisos Basados en Roles"
+description: "Configura equipos, asigna roles y gestiona permisos de miembros. Aprende sobre roles de propietario, administrador, gerente, miembro e invitado, y cómo estructurar equipos para colaboración a escala."
+category: "Equipos"
+lastUpdated: "2025-12-30"
+proficiencyLevel: "Intermedio"
+lang: "es"
+translationKey: "teams"
+keywords:
+  - gestión de equipos
+  - permisos basados en roles
+  - roles de miembros
+  - colaboración en workspace
+  - administración de equipos
+  - control de acceso
+relatedDocs:
+  - title: "Primeros Pasos"
+    url: "/es/docs/getting-started"
+  - title: "Marca y Plantillas"
+    url: "/es/docs/branding-and-templates"
+  - title: "Seguridad"
+    url: "/es/docs/security"
+---
+
+Cardrender permite a las organizaciones crear equipos estructurados con permisos granulares. Los propietarios y administradores de workspace pueden invitar miembros, asignar roles, delegar responsabilidades de gestión y aplicar estándares de marca en toda la organización.
+
+## Permisos Basados en Roles
+
+Cardrender usa cinco niveles de permisos para equilibrar flexibilidad y control.
+
+### Propietario
+
+- Acceso total al workspace, incluyendo facturación y configuración de eliminación de cuenta
+- Transferir propiedad a otro administrador
+- Gestionar todos los aspectos de miembros del equipo, marca, analíticas y configuración de API
+- Máximo un propietario por workspace (se pueden transferir derechos de propiedad)
+
+### Administrador
+
+- Gestionar miembros del equipo (agregar, eliminar, editar roles)
+- Configurar marca del workspace, plantillas y directorios de equipo
+- Acceso a analíticas del workspace y dashboards del equipo
+- Gestionar configuración de API y webhooks
+- No puede acceder a facturación o eliminar el workspace
+
+### Gerente
+
+- Crear y editar tarjetas para miembros del equipo
+- Ver analíticas del equipo (solo miembros dentro de su equipo)
+- Aplicar plantillas y estándares de marca de la organización
+- No puede invitar o eliminar miembros, ni cambiar configuración del workspace
+
+### Miembro
+
+- Crear y editar su propia tarjeta solamente
+- Ver sus propias analíticas
+- Acceder a plantillas y activos de marca del equipo
+- No puede ver o modificar tarjetas de otros miembros
+
+### Invitado
+
+- Acceso de solo lectura a directorios compartidos del equipo
+- No puede crear o editar tarjetas
+- No puede acceder a analíticas o configuración
+- Útil para contratistas externos, freelancers o miembros de junta que necesitan tarjetas de miembros del equipo pero no deberían gestionar contenido
+
+## Gestión de Miembros del Equipo
+
+### Agregar Miembros
+
+Los propietarios y administradores pueden invitar nuevos miembros desde **Configuración del Workspace → Miembros del Equipo**:
+
+1. Haz clic en **Invitar Miembro**
+2. Ingresa el email y asigna un rol
+3. Opcionalmente, asigna a un equipo específico (si usas equipos anidados)
+4. El invitado recibe un email con un enlace de configuración
+
+Los nuevos miembros son guiados a través de la incorporación: cargar una foto, ingresar información de contacto y personalizar su tarjeta usando plantillas del equipo.
+
+### Desactivación de Miembros
+
+Cuando un empleado deja la organización, desactiva su cuenta para preservar analíticas históricas mientras desvinculas tarjetas activas:
+
+1. Ve a **Configuración del Workspace → Miembros del Equipo**
+2. Encuentra al miembro en la lista
+3. Haz clic en **Desactivar**
+4. Su tarjeta muestra inmediatamente un mensaje "Esta persona ya no está con [Empresa]" con un CTA de directorio del equipo
+
+Las cuentas desactivadas mantienen vistas históricas y datos de clics para propósitos de auditoría, pero el usuario pierde el acceso de inicio de sesión.
+
+### Transferencia de Propiedad
+
+Los propietarios pueden transferir derechos de propiedad a cualquier administrador:
+
+1. Ve a **Configuración del Workspace → Gestión de Workspace**
+2. Haz clic en **Transferir Propiedad**
+3. Selecciona un administrador de la lista desplegable
+4. Confirma la transferencia (esta acción es irreversible)
+
+Después de la transferencia, el propietario anterior pasa automáticamente al rol de administrador.
+
+## Estructura de Equipos
+
+Las organizaciones empresariales pueden crear equipos anidados para reflejar jerarquías departamentales. Los equipos ayudan a:
+
+- Segmentar analíticas por departamento
+- Aplicar estándares de marca específicos del equipo (ej., equipos de producto vs. ventas)
+- Delegar gestión a gerentes del equipo
+- Construir directorios públicos basados en estructura de equipos
+
+### Creación de Equipos
+
+Los propietarios y administradores pueden crear equipos desde **Configuración del Workspace → Equipos**:
+
+1. Haz clic en **Nuevo Equipo**
+2. Nombra el equipo (ej., "Ventas LATAM", "Equipo de Producto")
+3. Asigna un gerente del equipo
+4. Asigna miembros al equipo
+
+Los gerentes del equipo pueden ver analíticas y gestionar tarjetas solo para miembros dentro de su equipo.
+
+### Configuración del Equipo
+
+Cada equipo puede tener configuración personalizada:
+
+- **Configuración de marca específica del equipo:** Logotipos, colores o mensajes personalizados
+- **Plantillas específicas del equipo:** Plantillas de tarjetas pre-aprobadas relevantes para el departamento
+- **Analíticas del equipo:** Rendimiento agregado de todos los miembros del equipo
+- **Directorios del equipo:** Listados públicos o privados de todos los miembros del equipo
+
+## Directorio del Equipo
+
+Los directorios del equipo muestran todos los miembros del equipo en una página consultable, indexada por SEO. Los compradores pueden descubrir contactos relevantes, los empleados pueden compartir un solo enlace y las organizaciones obtienen tráfico orgánico desde búsquedas de marca.
+
+### Configuración de Directorios Públicos vs. Privados
+
+Los propietarios y administradores controlan la visibilidad del directorio:
+
+- **Público:** Indexado por motores de búsqueda, vinculable desde el sitio web de la empresa
+- **Privado:** Requiere inicio de sesión, solo accesible para miembros del equipo y invitados
+
+Los directorios privados son útiles para equipos internos (ej., TI, Finanzas) que no deberían estar expuestos públicamente.
+
+### Personalización del Directorio
+
+Los administradores pueden personalizar el diseño del directorio del equipo:
+
+- Marca del encabezado (logo, banner, eslogan)
+- Orden de clasificación (alfabético, por equipo, por título)
+- Campos de búsqueda y filtrado (búsqueda por nombre, departamento, ubicación)
+- Enlaces personalizados al sitio web de la empresa, política de privacidad o información de soporte
+
+Los directorios soportan campos personalizados, así que puedes mostrar especializaciones de vendedores, idiomas hablados, zonas horarias o cualquier metadato relevante.
+
+## Operaciones en Masa
+
+Los planes Enterprise soportan gestión de miembros en masa a través de carga CSV o API para:
+
+- Importar empleados desde HRIS (Workday, BambooHR, ADP)
+- Actualizar tarjetas automáticamente cuando cambian títulos o departamentos
+- Desactivar cuentas masivamente durante reducciones de personal o rotación estacional
+
+Consulta la [documentación de API](/es/docs/api) para endpoints de operaciones en masa.
+
+## Mejores Prácticas
+
+- Asigna roles de administrador a mínimo dos personas para evitar lockouts
+- Usa equipos para reflejar tu organigrama y delegar gestión
+- Audita la membresía del equipo trimestralmente para eliminar cuentas inactivas
+- Habilita SSO y 2FA para miembros con permisos de administrador o gerente
+- Crea equipos separados para contratistas si necesitan estándares de marca diferentes
+- Usa invitados para miembros de junta, inversores o socios que necesitan acceso de solo lectura

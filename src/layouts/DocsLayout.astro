@@ -54,7 +54,7 @@ const pages = [
         <div class="toc-header">
           <h4>On this page</h4>
         </div>
-        <nav class="toc-nav" id="toc-nav">
+        <nav class="toc-nav" id="toc-nav" aria-label="Table of contents">
           <!-- Will be populated by JavaScript -->
         </nav>
       </aside>
@@ -63,108 +63,80 @@ const pages = [
 </BaseLayout>
 
 <script>
-  // Generate table of contents from headings
+  // Lightweight TOC generator - SEO and LLM friendly
   function generateTOC() {
-    const content = document.querySelector('.docs-content');
+    const content = document.querySelector('.docs-content, .docs-prose');
     const tocNav = document.getElementById('toc-nav');
     
     if (!content || !tocNav) return;
     
-    const headings = content.querySelectorAll('h2, h3');
+    const headings = Array.from(content.querySelectorAll('h2, h3'));
     
     if (headings.length === 0) {
-      tocNav.parentElement?.style.setProperty('display', 'none');
+      const tocContainer = tocNav.closest('.docs-toc') as HTMLElement;
+      if (tocContainer) tocContainer.style.display = 'none';
       return;
     }
     
-    const headingElements: Element[] = [];
+    // Create simple list structure for better semantics
+    const list = document.createElement('ul');
+    list.className = 'toc-list';
     
     headings.forEach((heading, index) => {
-      // Add ID to heading if it doesn't have one
+      // Generate ID from text content
       if (!heading.id) {
         heading.id = heading.textContent
           ?.toLowerCase()
+          .trim()
           .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '') || `heading-${index}`;
+          .replace(/^-+|-+$/g, '') || `section-${index}`;
       }
       
-      headingElements.push(heading);
+      const item = document.createElement('li');
+      item.className = heading.tagName === 'H3' ? 'toc-item toc-item-nested' : 'toc-item';
       
       const link = document.createElement('a');
       link.href = `#${heading.id}`;
       link.textContent = heading.textContent || '';
-      link.className = heading.tagName === 'H2' ? 'toc-link' : 'toc-link toc-link-sub';
-      link.dataset.headingId = heading.id;
+      link.className = 'toc-link';
+      link.setAttribute('data-heading', heading.id);
       
-      // Smooth scroll to section
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetHeading = document.getElementById(heading.id);
-        if (targetHeading) {
-          targetHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.history.replaceState(null, '', `#${heading.id}`);
-        }
-      });
-      
-      tocNav.appendChild(link);
+      item.appendChild(link);
+      list.appendChild(item);
     });
     
-    // Better scroll spy implementation
-    let activeId: string | null = null;
+    tocNav.appendChild(list);
     
-    function updateActiveHeading() {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // Find the heading that's currently in view
-      let currentId: string | null = null;
-      
-      for (let i = headingElements.length - 1; i >= 0; i--) {
-        const heading = headingElements[i] as HTMLElement;
-        const rect = heading.getBoundingClientRect();
+    // Simple scroll spy
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const link = tocNav.querySelector(`a[data-heading="${id}"]`);
         
-        // Check if heading is in the upper portion of viewport
-        if (rect.top <= 150) {
-          currentId = heading.id;
-          break;
+        if (entry.isIntersecting) {
+          // Remove active from all
+          tocNav.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+          // Add active to current
+          link?.classList.add('active');
         }
-      }
-      
-      // Only update if changed
-      if (currentId !== activeId) {
-        activeId = currentId;
-        const links = tocNav.querySelectorAll('a');
-        links.forEach(link => {
-          if (link.dataset.headingId === currentId) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }
-    }
+      });
+    }, {
+      rootMargin: '-100px 0px -80% 0px'
+    });
     
-    // Throttle scroll events for performance
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveHeading();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-    
-    // Initial check
-    updateActiveHeading();
-    
-    // Check on hash change
-    window.addEventListener('hashchange', updateActiveHeading);
+    // Observe all headings
+    headings.forEach(heading => observer.observe(heading));
   }
   
-  // Run on page load
-  document.addEventListener('DOMContentLoaded', generateTOC);
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', generateTOC);
+  } else {
+    generateTOC();
+  }
+  
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', generateTOC);
 </script>
 
 <style>
@@ -285,9 +257,25 @@ const pages = [
   }
   
   .toc-nav {
+    position: sticky;
+    top: 6rem;
+  }
+  
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
+  }
+  
+  .toc-item {
+    margin: 0;
+  }
+  
+  .toc-item-nested {
+    margin-left: 1rem;
   }
   
   .toc-link {
@@ -295,40 +283,23 @@ const pages = [
     font-size: 0.8125rem;
     color: hsl(var(--muted-foreground));
     padding: 0.5rem 0 0.5rem 1rem;
-    border-left: 2px solid hsl(var(--border) / 0.25);
-    margin-bottom: 0;
-    transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
-    line-height: 1.45;
+    border-left: 2px solid hsl(var(--border) / 0.3);
+    transition: all 150ms ease;
+    line-height: 1.4;
     text-decoration: none;
   }
   
   .toc-link:hover {
     color: hsl(var(--foreground));
-    border-left-color: hsl(var(--primary) / 0.6);
-    padding-left: 1.125rem;
-    background: hsl(var(--muted) / 0.1);
+    border-left-color: hsl(var(--primary) / 0.5);
   }
   
   .toc-link.active {
     color: hsl(var(--primary));
     border-left-color: hsl(var(--primary));
     border-left-width: 3px;
-    font-weight: 600;
-    padding-left: 1.125rem;
-    background: linear-gradient(90deg, hsl(var(--primary) / 0.08) 0%, transparent 100%);
-  }
-  
-  .toc-link-sub {
-    padding-left: 1.75rem;
-    font-size: 0.75rem;
-  }
-  
-  .toc-link-sub:hover {
-    padding-left: 1.875rem;
-  }
-  
-  .toc-link-sub.active {
-    padding-left: 1.875rem;
+    font-weight: 500;
+    background: hsl(var(--primary) / 0.05);
   }
   
   /* Responsive */
