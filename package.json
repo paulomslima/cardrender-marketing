@@ -12,6 +12,8 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "astro": "^5.16.6",
+    "flowbite": "^4.0.1",
+    "flowbite-typography": "^1.0.5",
     "lucide-astro": "^0.556.0"
   },
   "devDependencies": {

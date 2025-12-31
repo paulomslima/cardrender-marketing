@@ -1,309 +1,115 @@
 ---
 import { APP_URL } from "../lib/config";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import { Menu, X } from "lucide-astro";
 const { currentPath } = Astro.props;
 ---
 
-<header class="site-header">
-  <div class="container nav">
-    <a class="logo" href="/">
-      <img src="/cardrender.svg" alt="Cardrender" />
+<nav class="site-header sticky top-0 z-50 backdrop-blur-lg bg-background/95 border-b border-border/40">
+  <div class="container mx-auto flex flex-wrap items-center justify-between py-4">
+    <a href="/" class="flex items-center">
+      <img src="/cardrender.svg" alt="Cardrender" class="h-[34px] max-w-[196px]" />
     </a>
-    <nav class="nav-links">
-      <a class={currentPath === "/features" ? "active" : ""} href="/features">Features</a>
-      <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
-      <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
-      <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
-    </nav>
-    <div class="nav-actions">
-      <LanguageSwitcher />
-      <a class="button ghost desktop-only" href={`${APP_URL}/login`}>Sign in</a>
-      <a class="button primary" href={`${APP_URL}/register`}>Start free</a>
-    </div>
-    <button class="mobile-menu-toggle" aria-label="Toggle menu" type="button">
-      <Menu class="menu-icon" size={24} />
-      <X class="close-icon" size={24} />
-    </button>
-  </div>
-  
-  <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <nav class="mobile-nav-links">
-      <a class={currentPath === "/features" ? "active" : ""} href="/features">Features</a>
-      <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
-      <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
-      <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
-      <div class="mobile-menu-footer">
-        <a class="mobile-signin" href={`${APP_URL}/login`}>Sign in</a>
-        <div class="mobile-language">
-          <LanguageSwitcher />
-        </div>
+    
+    <div class="flex items-center gap-3 md:order-2">
+      <div class="hidden md:block">
+        <LanguageSwitcher />
       </div>
-    </nav>
+      <a href={`${APP_URL}/login`} class="button ghost hidden md:inline-flex">
+        Sign in
+      </a>
+      <a href={`${APP_URL}/register`} class="button primary">
+        Start free
+      </a>
+      <button 
+        data-collapse-toggle="navbar-menu" 
+        type="button" 
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-foreground rounded-lg md:hidden hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-muted"
+        aria-controls="navbar-menu" 
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="hidden w-full md:block md:w-auto md:order-1" id="navbar-menu">
+      <ul class="flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-6 md:mt-0 border border-border rounded-lg md:border-0 bg-card md:bg-transparent">
+        <li>
+          <a 
+            href="/features" 
+            class={`block py-2 px-3 rounded md:p-0 transition-colors ${
+              currentPath === "/features" 
+                ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Features
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/pricing" 
+            class={`block py-2 px-3 rounded md:p-0 transition-colors ${
+              currentPath === "/pricing" 
+                ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Pricing
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/blog" 
+            class={`block py-2 px-3 rounded md:p-0 transition-colors ${
+              currentPath?.startsWith("/blog") 
+                ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Blog
+          </a>
+        </li>
+        <li>
+          <a 
+            href="/docs" 
+            class={`block py-2 px-3 rounded md:p-0 transition-colors ${
+              currentPath?.startsWith("/docs") 
+                ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Docs
+          </a>
+        </li>
+        <li class="md:hidden pt-4 mt-4 border-t border-border">
+          <a 
+            href={`${APP_URL}/login`} 
+            class="block py-2 px-3 text-center rounded border border-border text-muted-foreground hover:bg-muted/50 mb-3"
+          >
+            Sign in
+          </a>
+          <div class="flex justify-center">
+            <LanguageSwitcher />
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
-</header>
+</nav>
 
 <script>
-  function initMobileMenu() {
-    const toggleButton = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const header = document.querySelector('.site-header');
-    
-    if (!toggleButton || !mobileMenu || !header) return;
-    
-    // Remove any existing listeners
-    const newToggleButton = toggleButton.cloneNode(true);
-    toggleButton.parentNode?.replaceChild(newToggleButton, toggleButton);
-    
-    newToggleButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpen = header.classList.toggle('menu-open');
-      newToggleButton.setAttribute('aria-expanded', String(isOpen));
-      
-      // Prevent body scroll when menu is open
-      if (isOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking a link
-    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        header.classList.remove('menu-open');
-        newToggleButton.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (header.classList.contains('menu-open') && 
-          !mobileMenu.contains(target) && 
-          !newToggleButton.contains(target)) {
-        header.classList.remove('menu-open');
-        newToggleButton.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
-    });
-  }
+  import { initFlowbite } from 'flowbite';
   
-  // Initialize on load
-  document.addEventListener('DOMContentLoaded', initMobileMenu);
+  // Initialize Flowbite on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    initFlowbite();
+  });
   
   // Re-initialize on Astro page transitions
-  document.addEventListener('astro:page-load', initMobileMenu);
+  document.addEventListener('astro:page-load', () => {
+    initFlowbite();
+  });
 </script>
-
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    backdrop-filter: blur(12px);
-    background: hsl(var(--background) / 0.95);
-    border-bottom: 1px solid hsl(var(--border) / 0.4);
-  }
-  
-  .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: 1rem 0;
-  }
-  
-  .logo img {
-    height: 34px;
-    max-width: 196px;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-    font-weight: 500;
-  }
-  
-  .nav-links a {
-    color: hsl(var(--muted-foreground));
-    transition: color 150ms ease;
-    position: relative;
-    font-size: 0.9375rem;
-  }
-  
-  .nav-links a:hover {
-    color: hsl(var(--foreground));
-  }
-  
-  .nav-links a.active {
-    color: hsl(var(--foreground));
-  }
-  
-  .nav-links a.active::after {
-    content: "";
-    position: absolute;
-    bottom: -1rem;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: hsl(var(--primary));
-    border-radius: 2px;
-  }
-  
-  .nav-actions {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-  }
-  
-  /* Mobile menu toggle */
-  .mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    color: hsl(var(--foreground));
-    z-index: 60;
-    position: relative;
-  }
-  
-  .mobile-menu-toggle .close-icon {
-    display: none;
-  }
-  
-  .menu-open .mobile-menu-toggle .menu-icon {
-    display: none;
-  }
-  
-  .menu-open .mobile-menu-toggle .close-icon {
-    display: block;
-  }
-  
-  /* Mobile menu */
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 69px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: hsl(var(--background));
-    padding: 1.5rem;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 250ms ease, visibility 250ms ease;
-    overflow-y: auto;
-    z-index: 40;
-  }
-  
-  .menu-open .mobile-menu {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .mobile-nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  
-  .mobile-nav-links a {
-    padding: 0.875rem 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: hsl(var(--foreground));
-    border-radius: 0.5rem;
-    transition: background 150ms ease;
-  }
-  
-  .mobile-nav-links a:hover {
-    background: hsl(var(--muted) / 0.5);
-  }
-  
-  .mobile-nav-links a.active {
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
-  }
-  
-  .mobile-menu-footer {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid hsl(var(--border));
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .mobile-signin {
-    padding: 0.875rem 1rem;
-    text-align: center;
-    color: hsl(var(--muted-foreground));
-    font-size: 1rem;
-    font-weight: 500;
-    border: 1px solid hsl(var(--border));
-    border-radius: 0.5rem;
-    transition: all 150ms ease;
-  }
-  
-  .mobile-signin:hover {
-    background: hsl(var(--muted) / 0.5);
-    color: hsl(var(--foreground));
-  }
-  
-  .mobile-language {
-    display: flex;
-    justify-content: center;
-  }
-  
-  /* Responsive */
-  @media (max-width: 860px) {
-    .nav-links {
-      display: none;
-    }
-    
-    .mobile-menu-toggle {
-      display: block;
-    }
-    
-    .mobile-menu {
-      display: block;
-    }
-    
-    .desktop-only {
-      display: none;
-    }
-    
-    .nav-actions :global(.language-switcher) {
-      display: none;
-    }
-    
-    .nav-actions {
-      gap: 0.5rem;
-    }
-  }
-  
-  @media (max-width: 540px) {
-    .nav {
-      gap: 0.75rem;
-    }
-    
-    .logo img {
-      height: 28px;
-    }
-    
-    .nav-actions .button {
-      padding: 0.5rem 1rem;
-      font-size: 0.875rem;
-    }
-    
-    .mobile-menu {
-      padding: 1.25rem;
-    }
-  }
-</style>
