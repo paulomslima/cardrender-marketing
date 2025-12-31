@@ -39,20 +39,32 @@ export type PlansResult = {
 
 export async function fetchPlans(): Promise<PlansResult> {
   try {
+    console.log('Fetching plans from:', `${API_BASE_URL}/api/public/plans`);
     const response = await fetch(`${API_BASE_URL}/api/public/plans`, {
       headers: { Accept: "application/json" },
     });
     
-    // If API is not available (404), use mock data
-    if (response.status === 404 || !response.ok) {
-      console.warn('Plans API not available, using mock data');
+    console.log('API Response status:', response.status);
+    
+    // If API is not available yet (404), use mock data
+    if (response.status === 404) {
+      console.warn('⚠️ Plans API endpoint not deployed yet. Using mock data.');
+      console.warn('📝 Deploy the API endpoint at: /api/public/plans');
+      return getMockPlans();
+    }
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('API Error:', response.status, errorText);
       return getMockPlans();
     }
     
     const data = (await response.json()) as PlansResponse;
+    console.log('✅ Fetched plans from API:', data.plans?.length || 0);
     return { plans: data.plans ?? [], error: null };
   } catch (error) {
-    console.warn('Plans API error, using mock data:', error);
+    console.error('❌ Plans API error:', error);
+    console.warn('Using mock data as fallback');
     return getMockPlans();
   }
 }
