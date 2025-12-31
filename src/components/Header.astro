@@ -1,6 +1,7 @@
 ---
 import { APP_URL } from "../lib/config";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { Menu, X } from "lucide-astro";
 const { currentPath } = Astro.props;
 ---
 
@@ -17,17 +18,60 @@ const { currentPath } = Astro.props;
     </nav>
     <div class="nav-actions">
       <LanguageSwitcher />
-      <a class="button ghost" href={`${APP_URL}/login`}>Sign in</a>
+      <a class="button ghost desktop-only" href={`${APP_URL}/login`}>Sign in</a>
       <a class="button primary" href={`${APP_URL}/register`}>Start free</a>
     </div>
+    <button class="mobile-menu-toggle" aria-label="Toggle menu" type="button">
+      <Menu class="menu-icon" size={24} />
+      <X class="close-icon" size={24} />
+    </button>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <nav class="mobile-nav-links">
+      <a class={currentPath === "/features" ? "active" : ""} href="/features">Features</a>
+      <a class={currentPath === "/pricing" ? "active" : ""} href="/pricing">Pricing</a>
+      <a class={currentPath?.startsWith("/blog") ? "active" : ""} href="/blog">Blog</a>
+      <a class={currentPath?.startsWith("/docs") ? "active" : ""} href="/docs">Docs</a>
+      <a class="mobile-signin" href={`${APP_URL}/login`}>Sign in</a>
+    </nav>
   </div>
 </header>
+
+<script>
+  const toggleButton = document.querySelector('.mobile-menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const header = document.querySelector('.site-header');
+  
+  toggleButton?.addEventListener('click', () => {
+    const isOpen = header?.classList.toggle('menu-open');
+    toggleButton.setAttribute('aria-expanded', String(isOpen));
+    
+    // Prevent body scroll when menu is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when clicking a link
+  const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      header?.classList.remove('menu-open');
+      toggleButton?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
 
 <style>
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 50;
     backdrop-filter: blur(12px);
     background: hsl(var(--background) / 0.8);
     border-bottom: 1px solid hsl(var(--border));
@@ -72,15 +116,131 @@ const { currentPath } = Astro.props;
   .nav-actions {
     display: flex;
     gap: 0.75rem;
+    align-items: center;
   }
+  
+  /* Mobile menu toggle button */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: hsl(var(--foreground));
+    position: relative;
+    z-index: 60;
+  }
+  
+  .mobile-menu-toggle .close-icon {
+    display: none;
+  }
+  
+  .menu-open .mobile-menu-toggle .menu-icon {
+    display: none;
+  }
+  
+  .menu-open .mobile-menu-toggle .close-icon {
+    display: block;
+  }
+  
+  /* Mobile menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 69px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: hsl(var(--background) / 0.98);
+    backdrop-filter: blur(12px);
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms ease, transform 300ms ease;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  
+  .menu-open .mobile-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .mobile-nav-links a {
+    padding: 1rem 1.25rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    border-radius: 12px;
+    transition: all 150ms ease;
+    border: 1px solid transparent;
+  }
+  
+  .mobile-nav-links a:hover {
+    background: hsl(var(--muted) / 0.1);
+    border-color: hsl(var(--border));
+  }
+  
+  .mobile-nav-links a.active {
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    border-color: hsl(var(--primary) / 0.2);
+  }
+  
+  .mobile-signin {
+    margin-top: 1rem;
+    text-align: center;
+    color: hsl(var(--muted-foreground)) !important;
+    border-top: 1px solid hsl(var(--border));
+    padding-top: 1.5rem !important;
+  }
+  
+  /* Responsive breakpoints */
   @media (max-width: 860px) {
     .nav-links {
       display: none;
     }
-  }
-  @media (max-width: 540px) {
-    .nav-actions .button.ghost {
+    
+    .mobile-menu-toggle {
+      display: block;
+    }
+    
+    .mobile-menu {
+      display: block;
+    }
+    
+    .desktop-only {
       display: none;
+    }
+    
+    .nav-actions {
+      gap: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 540px) {
+    .nav {
+      gap: 0.75rem;
+    }
+    
+    .logo img {
+      height: 28px;
+    }
+    
+    .nav-actions .button {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+    
+    .mobile-menu {
+      padding: 1.5rem;
     }
   }
 </style>
