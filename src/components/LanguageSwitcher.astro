@@ -12,6 +12,13 @@ const isDocsPage = currentPath.match(/\/(?:es\/|pt\/)?docs\/([^/]+)/);
 
 let availableLanguages = getAlternateLinks(currentPath, currentLang);
 
+// Map of available static pages by language
+const staticPageMap: Record<string, string[]> = {
+  en: ['/', '/features', '/pricing', '/blog', '/blog/index', '/docs', '/docs/index'],
+  es: ['/es/', '/es/features', '/es/pricing', '/es/blog', '/es/blog/index', '/es/docs', '/es/docs/index'],
+  pt: ['/pt/', '/pt/features', '/pt/pricing', '/pt/blog', '/pt/blog/index', '/pt/docs', '/pt/docs/index'],
+};
+
 // For blog posts and docs, filter to only show languages with actual content
 if (isBlogPost || isDocsPage) {
   // Get the slug from the URL
@@ -43,6 +50,13 @@ if (isBlogPost || isDocsPage) {
       );
     }
   }
+} else {
+  // For static pages, check if the page exists in each language
+  availableLanguages = availableLanguages.filter(link => {
+    const pages = staticPageMap[link.lang] || [];
+    // Check if the target URL exists in the available pages
+    return pages.includes(link.url) || pages.some(page => link.url.startsWith(page));
+  });
 }
 ---
 

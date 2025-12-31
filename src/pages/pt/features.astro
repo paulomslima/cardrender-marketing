@@ -1,0 +1,668 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { APP_URL } from "../../lib/config";
+import { 
+  Sparkles, Zap, Shield, TrendingUp, Users, Globe, 
+  CheckCircle2, XCircle, BarChart3, Lock, Palette, 
+  Workflow, Clock, Target, RefreshCw, MessageSquare,
+  ArrowRight, AlertCircle
+} from "lucide-astro";
+
+const painPoints = [
+  {
+    icon: XCircle,
+    title: "Informações de contato desatualizadas",
+    description: "Membros da equipe compartilham cartões com cargos, telefones ou e-mails antigos. Quando os prospects entram em contato, metade das informações está errada.",
+  },
+  {
+    icon: AlertCircle,
+    title: "Marca inconsistente",
+    description: "Cada departamento cria seus próprios cartões. Vendas usa um modelo, marketing outro, e a liderança tem designs personalizados que quebram as diretrizes da marca.",
+  },
+  {
+    icon: Clock,
+    title: "Ciclos de implementação lentos",
+    description: "Atualizações de marca levam meses para se propagar. Quando os novos cartões chegam, o rebranding já está desatualizado e o orçamento acabou.",
+  },
+  {
+    icon: Target,
+    title: "Zero visibilidade do impacto",
+    description: "Você distribui centenas de cartões mas não tem ideia de quem os visualizou, quais eventos geraram engajamento ou quais ações de acompanhamento importam.",
+  },
+];
+
+const solutions = [
+  {
+    icon: RefreshCw,
+    title: "Sempre atualizado",
+    problem: "Cartões de papel com informações desatualizadas",
+    solution: "Perfis ao vivo que sincronizam em cada compartilhamento",
+    details: "Atualize uma vez, mude em todos os lugares. Quando alguém visualiza seu cartão, sempre vê seus detalhes atuais—sem reimpressões, sem atrasos.",
+  },
+  {
+    icon: Palette,
+    title: "Consistência de marca por padrão",
+    problem: "Todos criando seus próprios designs",
+    solution: "Modelos centralizados com fluxos de aprovação",
+    details: "Marketing define os modelos. Equipes personalizam dentro dos parâmetros. Cada cartão corresponde aos seus padrões de marca sem revisões de design.",
+  },
+  {
+    icon: Zap,
+    title: "Implante em minutos, não em meses",
+    problem: "Semanas esperando fornecedores de impressão",
+    solution: "Lançamento instantâneo para membros ilimitados da equipe",
+    details: "Lance toda a sua organização de vendas na segunda-feira de manhã. Adicione novos funcionários em segundos. Escale de 10 a 10.000 sem ciclos de aquisição.",
+  },
+  {
+    icon: BarChart3,
+    title: "Rastreie cada interação",
+    problem: "Sem dados sobre eficácia dos cartões",
+    solution: "Análises em tempo real sobre visualizações, cliques e conversões",
+    details: "Veja quais cartões são compartilhados, que conteúdo gera cliques e quais membros da equipe geram mais engajamento.",
+  },
+];
+
+const featuresByCategory = [
+  {
+    category: "Gestão de Equipes",
+    icon: Users,
+    features: [
+      "Importação em massa de CSV ou CRM",
+      "Controles de acesso baseados em funções",
+      "Segmentação por departamento e região",
+      "Fluxos de aprovação para mudanças",
+      "Integração SSO e SAML",
+    ],
+  },
+  {
+    category: "Design e Marca",
+    icon: Palette,
+    features: [
+      "Biblioteca de modelos com mais de 50 designs",
+      "Cores e fontes de marca personalizadas",
+      "Gestão de logos e recursos",
+      "Visualização antes de publicar",
+      "Opções de marca branca para empresas",
+    ],
+  },
+  {
+    category: "Análises e Insights",
+    icon: TrendingUp,
+    features: [
+      "Rastreamento de visualizações em tempo real",
+      "Taxas de cliques por conteúdo",
+      "Dados de engajamento geográfico",
+      "Relatórios de desempenho baseados em tempo",
+      "Exportar para ferramentas de BI via API",
+    ],
+  },
+  {
+    category: "Segurança e Conformidade",
+    icon: Shield,
+    features: [
+      "Certificação SOC 2 Type II",
+      "Conformidade com GDPR e CCPA",
+      "Criptografia de ponta a ponta",
+      "Logs de auditoria para todas as alterações",
+      "Opções de residência de dados",
+    ],
+  },
+  {
+    category: "Integração e Automação",
+    icon: Workflow,
+    features: [
+      "API REST com webhooks",
+      "Conectores do Zapier e Make.com",
+      "Sincronização com CRM (Salesforce, HubSpot)",
+      "Geração automática de assinatura de e-mail",
+      "Embeds de diretório para sites",
+    ],
+  },
+  {
+    category: "Distribuição Global",
+    icon: Globe,
+    features: [
+      "Geração de códigos QR",
+      "Passes para Apple/Google Wallet",
+      "Suporte para cartões NFC",
+      "Links e embeds compartilháveis",
+      "Suporte multilíngue",
+    ],
+  },
+];
+
+const useCases = [
+  {
+    title: "Equipes de Vendas",
+    description: "Representantes compartilham cartões em conferências e rastreiam quais prospects interagem. A liderança vê quais eventos impulsionam o pipeline.",
+    metrics: "3x acompanhamento mais rápido, 45% de aumento em salvamento de contatos",
+  },
+  {
+    title: "Implementações Empresariais",
+    description: "Lance mais de 500 funcionários com marca consistente. Atualize cargos e territórios instantaneamente conforme mudanças organizacionais acontecem.",
+    metrics: "2 dias para implantar, 98% de taxa de completude de perfil",
+  },
+  {
+    title: "Marketing de Eventos",
+    description: "Crie cartões específicos para eventos com informações do estande e links de sessões. Rastreie o engajamento por segmento de participantes.",
+    metrics: "67% de taxa de escaneamento, 2.3x maior participação em sessões",
+  },
+  {
+    title: "Recrutamento e RH",
+    description: "Recrutadores compartilham cartões com candidatos. Novos contratados recebem integração com cartões no primeiro dia.",
+    metrics: "89% de taxa de resposta de candidatos, zero atrito na configuração",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Funcionalidades do Cardrender",
+  description: "Plataforma empresarial de cartões de visita digitais com análises, gestão de equipes e atualizações em tempo real.",
+  inLanguage: "pt-BR",
+};
+---
+
+<BaseLayout
+  title="Funcionalidades - Cartões de Visita Digitais que Escalam"
+  description="Substitua cartões de papel desatualizados por perfis digitais inteligentes. Atualizações em tempo real, consistência de marca e análises para equipes modernas."
+  jsonLd={jsonLd}
+>
+  <!-- Hero Section -->
+  <section class="features-hero-section">
+    <div class="container">
+      <div class="features-hero-content">
+        <div class="hero-badge">
+          <Sparkles size={16} />
+          <span>Funcionalidades poderosas</span>
+        </div>
+        <h1 class="features-hero-title">
+          Tudo o que sua equipe precisa.<br />
+          <span class="gradient-text">Nada do que não precisa.</span>
+        </h1>
+        <p class="features-hero-description">
+          Pare de lutar com cartões desatualizados, marca inconsistente e zero visibilidade.
+          Obtenha perfis ao vivo, gestão centralizada e análises em tempo real em uma única plataforma.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Começar teste gratuito
+            <ArrowRight size={18} />
+          </a>
+          <a class="button secondary large" href="/pt/pricing">
+            Ver preços
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain Points Section -->
+  <section class="pain-points-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <AlertCircle size={16} />
+          Os problemas que as equipes enfrentam
+        </span>
+        <h2>Cartões de papel estão custando mais do que você pensa</h2>
+        <p class="section-subtitle">
+          Esses problemas se agravam à medida que sua equipe cresce. Cardrender os elimina por design.
+        </p>
+      </div>
+      <div class="pain-points-grid">
+        {painPoints.map((pain) => (
+          <div class="pain-card">
+            <div class="pain-icon">
+              <pain.icon size={24} />
+            </div>
+            <h3>{pain.title}</h3>
+            <p class="muted">{pain.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section class="solutions-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">
+          <CheckCircle2 size={16} />
+          Como o Cardrender resolve
+        </span>
+        <h2>Do ponto de dor à funcionalidade poderosa</h2>
+      </div>
+      <div class="solutions-grid">
+        {solutions.map((solution) => (
+          <div class="solution-card">
+            <div class="solution-icon">
+              <solution.icon size={28} />
+            </div>
+            <h3 class="solution-title">{solution.title}</h3>
+            <div class="solution-comparison">
+              <div class="comparison-item before">
+                <XCircle size={16} />
+                <span>{solution.problem}</span>
+              </div>
+              <div class="comparison-item after">
+                <CheckCircle2 size={16} />
+                <span>{solution.solution}</span>
+              </div>
+            </div>
+            <p class="solution-details">{solution.details}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features by Category -->
+  <section class="features-categories-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Plataforma completa</span>
+        <h2>Construído para empresas, com preço para escalar</h2>
+        <p class="section-subtitle">
+          Todas as funcionalidades que você precisa para gerenciar a identidade da equipe desde a integração até o desligamento.
+        </p>
+      </div>
+      <div class="categories-grid">
+        {featuresByCategory.map((category) => (
+          <div class="category-card">
+            <div class="category-header">
+              <div class="category-icon">
+                <category.icon size={24} />
+              </div>
+              <h3 class="category-title">{category.category}</h3>
+            </div>
+            <ul class="category-features">
+              {category.features.map((feature) => (
+                <li>
+                  <CheckCircle2 size={16} />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="use-cases-section">
+    <div class="container">
+      <div class="section-header-center">
+        <span class="eyebrow">Resultados reais</span>
+        <h2>Como as equipes usam o Cardrender</h2>
+      </div>
+      <div class="use-cases-grid">
+        {useCases.map((useCase) => (
+          <div class="use-case-card">
+            <h3 class="use-case-title">{useCase.title}</h3>
+            <p class="use-case-description">{useCase.description}</p>
+            <div class="use-case-metrics">
+              <MessageSquare size={16} />
+              <span>{useCase.metrics}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="features-cta-section">
+    <div class="container">
+      <div class="features-cta-card">
+        <div class="cta-content">
+          <h2>Pronto para resolver o problema de cartões de visita da sua equipe?</h2>
+          <p class="cta-description">
+            Junte-se a mais de 500.000 profissionais que pararam de lutar com cartões de papel.
+            Comece seu teste gratuito—não é necessário cartão de crédito.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="button primary large" href={`${APP_URL}/register`}>
+            Começar grátis
+            <ArrowRight size={18} />
+          </a>
+          <a class="button ghost large" href="/pt/docs/getting-started">
+            Ver documentação
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .features-hero-section {
+    padding: 6rem 0 4rem;
+    position: relative;
+  }
+  
+  .features-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .features-hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  
+  .features-hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: hsl(var(--muted-foreground));
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  
+  /* Pain Points Section */
+  .pain-points-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--destructive) / 0.02), transparent);
+  }
+  
+  .pain-points-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .pain-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+  }
+  
+  .pain-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--destructive) / 0.1);
+    border-radius: var(--radius);
+    color: hsl(var(--destructive));
+    margin-bottom: 1.5rem;
+  }
+  
+  .pain-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Solutions Section */
+  .solutions-section {
+    padding: 6rem 0;
+  }
+  
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .solution-card {
+    padding: 2.5rem;
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .solution-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px hsl(var(--primary) / 0.15), 0 8px 10px -6px hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary));
+  }
+  
+  .solution-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: var(--radius);
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+  
+  .solution-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  
+  .solution-comparison {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .comparison-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: calc(var(--radius) - 2px);
+  }
+  
+  .comparison-item.before {
+    background: hsl(var(--destructive) / 0.05);
+    color: hsl(var(--destructive));
+  }
+  
+  .comparison-item.before svg {
+    flex-shrink: 0;
+    color: hsl(var(--destructive));
+  }
+  
+  .comparison-item.after {
+    background: hsl(var(--secondary) / 0.1);
+    color: hsl(var(--foreground));
+    font-weight: 600;
+  }
+  
+  .comparison-item.after svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  .solution-details {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+  }
+  
+  /* Features by Category */
+  .features-categories-section {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.02), transparent);
+  }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+  
+  .category-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .category-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.1));
+    border-radius: var(--radius);
+    color: hsl(var(--primary));
+  }
+  
+  .category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .category-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+  
+  .category-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .category-features li svg {
+    flex-shrink: 0;
+    color: hsl(var(--secondary));
+  }
+  
+  /* Use Cases */
+  .use-cases-section {
+    padding: 6rem 0;
+  }
+  
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .use-case-card {
+    padding: 2rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: calc(var(--radius) + 0.5rem);
+    transition: all 300ms;
+  }
+  
+  .use-case-card:hover {
+    border-color: hsl(var(--primary) / 0.3);
+  }
+  
+  .use-case-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  
+  .use-case-description {
+    color: hsl(var(--muted-foreground));
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  
+  .use-case-metrics {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: hsl(var(--secondary) / 0.1);
+    border-radius: calc(var(--radius) - 2px);
+    color: hsl(var(--secondary));
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  .use-case-metrics svg {
+    flex-shrink: 0;
+  }
+  
+  /* CTA Section */
+  .features-cta-section {
+    padding: 6rem 0;
+  }
+  
+  .features-cta-card {
+    padding: 4rem 3rem;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.9));
+    border-radius: calc(var(--radius) + 1rem);
+    text-align: center;
+    color: white;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.4);
+  }
+  
+  .features-cta-card h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  .features-cta-card .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.95;
+  }
+  
+  .features-cta-card .button.primary {
+    background: white;
+    color: hsl(var(--primary));
+  }
+  
+  .features-cta-card .button.primary:hover {
+    background: hsl(var(--background));
+  }
+  
+  .features-cta-card .button.ghost {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    background: transparent;
+  }
+  
+  .features-cta-card .button.ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    .features-hero-section {
+      padding: 4rem 0 3rem;
+    }
+    
+    .pain-points-grid,
+    .solutions-grid,
+    .categories-grid,
+    .use-cases-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .features-cta-card {
+      padding: 3rem 2rem;
+    }
+  }
+</style>
