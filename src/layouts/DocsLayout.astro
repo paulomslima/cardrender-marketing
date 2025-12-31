@@ -77,6 +77,8 @@ const pages = [
       return;
     }
     
+    const headingElements: Element[] = [];
+    
     headings.forEach((heading, index) => {
       // Add ID to heading if it doesn't have one
       if (!heading.id) {
@@ -86,43 +88,83 @@ const pages = [
           .replace(/(^-|-$)/g, '') || `heading-${index}`;
       }
       
+      headingElements.push(heading);
+      
       const link = document.createElement('a');
       link.href = `#${heading.id}`;
       link.textContent = heading.textContent || '';
       link.className = heading.tagName === 'H2' ? 'toc-link' : 'toc-link toc-link-sub';
+      link.dataset.headingId = heading.id;
       
-      // Highlight active section on scroll
+      // Smooth scroll to section
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        heading.scrollIntoView({ behavior: 'smooth' });
-        history.pushState(null, '', `#${heading.id}`);
+        const targetHeading = document.getElementById(heading.id);
+        if (targetHeading) {
+          targetHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.history.replaceState(null, '', `#${heading.id}`);
+        }
       });
       
       tocNav.appendChild(link);
     });
     
-    // Highlight current section on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          const links = tocNav.querySelectorAll('a');
-          links.forEach(link => {
-            if (link.getAttribute('href') === `#${id}`) {
-              link.classList.add('active');
-            } else {
-              link.classList.remove('active');
-            }
-          });
-        }
-      });
-    }, { rootMargin: '-100px 0px -66%' });
+    // Better scroll spy implementation
+    let activeId: string | null = null;
     
-    headings.forEach(heading => observer.observe(heading));
+    function updateActiveHeading() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Find the heading that's currently in view
+      let currentId: string | null = null;
+      
+      for (let i = headingElements.length - 1; i >= 0; i--) {
+        const heading = headingElements[i] as HTMLElement;
+        const rect = heading.getBoundingClientRect();
+        
+        // Check if heading is in the upper portion of viewport
+        if (rect.top <= 150) {
+          currentId = heading.id;
+          break;
+        }
+      }
+      
+      // Only update if changed
+      if (currentId !== activeId) {
+        activeId = currentId;
+        const links = tocNav.querySelectorAll('a');
+        links.forEach(link => {
+          if (link.dataset.headingId === currentId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    }
+    
+    // Throttle scroll events for performance
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveHeading();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    
+    // Initial check
+    updateActiveHeading();
+    
+    // Check on hash change
+    window.addEventListener('hashchange', updateActiveHeading);
   }
   
   // Run on page load
-  generateTOC();
+  document.addEventListener('DOMContentLoaded', generateTOC);
 </script>
 
 <style>
@@ -250,26 +292,37 @@ const pages = [
     display: block;
     font-size: 0.8125rem;
     color: hsl(var(--muted-foreground));
-    padding: 0.25rem 0;
-    border-left: 2px solid transparent;
-    padding-left: 0.75rem;
-    transition: all 150ms;
+    padding: 0.375rem 0 0.375rem 0.875rem;
+    border-left: 2px solid hsl(var(--border) / 0.3);
+    margin-bottom: 0.125rem;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.4;
   }
   
   .toc-link:hover {
     color: hsl(var(--foreground));
-    border-left-color: hsl(var(--border));
+    border-left-color: hsl(var(--primary) / 0.5);
+    padding-left: 1rem;
   }
   
   .toc-link.active {
     color: hsl(var(--primary));
     border-left-color: hsl(var(--primary));
-    font-weight: 500;
+    font-weight: 600;
+    padding-left: 1rem;
+    background: hsl(var(--primary) / 0.04);
+    margin-left: -0.125rem;
+    padding-right: 0.5rem;
+    border-radius: 0 0.375rem 0.375rem 0;
   }
   
   .toc-link-sub {
     padding-left: 1.5rem;
     font-size: 0.75rem;
+  }
+  
+  .toc-link-sub.active {
+    padding-left: 1.625rem;
   }
   
   /* Responsive */
