@@ -1,75 +1,330 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import { FileText, BookOpen, Users, Palette, BarChart3, Code, Shield } from "lucide-astro";
 
 const { title, description } = Astro.props;
+
 const pages = [
-  { label: "Getting Started", href: "/docs/getting-started" },
-  { label: "Teams & Roles", href: "/docs/teams" },
-  { label: "Branding & Templates", href: "/docs/branding-and-templates" },
-  { label: "Analytics", href: "/docs/analytics" },
-  { label: "Public API", href: "/docs/api" },
-  { label: "Security", href: "/docs/security" },
+  { label: "Getting Started", href: "/docs/getting-started", icon: FileText },
+  { label: "Teams & Roles", href: "/docs/teams", icon: Users },
+  { label: "Branding & Templates", href: "/docs/branding-and-templates", icon: Palette },
+  { label: "Analytics", href: "/docs/analytics", icon: BarChart3 },
+  { label: "Public API", href: "/docs/api", icon: Code },
+  { label: "Security", href: "/docs/security", icon: Shield },
 ];
 ---
 
 <BaseLayout title={title} description={description}>
-  <section class="section">
+  <div class="docs-hero">
+    <div class="container">
+      <div class="docs-breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/docs">Documentation</a>
+      </div>
+    </div>
+  </div>
+  
+  <section class="docs-section">
     <div class="container docs-layout">
-      <aside class="docs-nav">
-        <h3>Documentation</h3>
-        <nav>
-          {pages.map((page) => (
-            <a class={Astro.url.pathname === page.href ? "active" : ""} href={page.href}>
-              {page.label}
-            </a>
-          ))}
+      <aside class="docs-sidebar">
+        <div class="docs-nav-header">
+          <BookOpen size={20} />
+          <h3>Documentation</h3>
+        </div>
+        <nav class="docs-nav">
+          {pages.map((page) => {
+            const Icon = page.icon;
+            const isActive = Astro.url.pathname === page.href;
+            return (
+              <a class={isActive ? "active" : ""} href={page.href}>
+                <Icon size={18} />
+                <span>{page.label}</span>
+              </a>
+            );
+          })}
         </nav>
       </aside>
+      
       <article class="docs-content">
         <slot />
       </article>
+      
+      <aside class="docs-toc">
+        <div class="toc-header">
+          <h4>On this page</h4>
+        </div>
+        <nav class="toc-nav" id="toc-nav">
+          <!-- Will be populated by JavaScript -->
+        </nav>
+      </aside>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  // Generate table of contents from headings
+  function generateTOC() {
+    const content = document.querySelector('.docs-content');
+    const tocNav = document.getElementById('toc-nav');
+    
+    if (!content || !tocNav) return;
+    
+    const headings = content.querySelectorAll('h2, h3');
+    
+    if (headings.length === 0) {
+      tocNav.parentElement?.style.setProperty('display', 'none');
+      return;
+    }
+    
+    headings.forEach((heading, index) => {
+      // Add ID to heading if it doesn't have one
+      if (!heading.id) {
+        heading.id = heading.textContent
+          ?.toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '') || `heading-${index}`;
+      }
+      
+      const link = document.createElement('a');
+      link.href = `#${heading.id}`;
+      link.textContent = heading.textContent || '';
+      link.className = heading.tagName === 'H2' ? 'toc-link' : 'toc-link toc-link-sub';
+      
+      // Highlight active section on scroll
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        heading.scrollIntoView({ behavior: 'smooth' });
+        history.pushState(null, '', `#${heading.id}`);
+      });
+      
+      tocNav.appendChild(link);
+    });
+    
+    // Highlight current section on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const links = tocNav.querySelectorAll('a');
+          links.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -66%' });
+    
+    headings.forEach(heading => observer.observe(heading));
+  }
+  
+  // Run on page load
+  generateTOC();
+</script>
+
 <style>
+  .docs-hero {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--secondary) / 0.05));
+    border-bottom: 1px solid hsl(var(--border));
+    padding: 1.5rem 0;
+  }
+  
+  .docs-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .docs-breadcrumb a {
+    color: hsl(var(--muted-foreground));
+    transition: color 150ms;
+  }
+  
+  .docs-breadcrumb a:hover {
+    color: hsl(var(--primary));
+  }
+  
+  .docs-section {
+    padding: 3rem 0;
+  }
+  
   .docs-layout {
     display: grid;
-    grid-template-columns: minmax(200px, 240px) 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 240px 1fr 200px;
+    gap: 3rem;
+    align-items: start;
   }
-  .docs-nav {
-    background: var(--surface);
-    border: 1px solid var(--border);
+  
+  /* Sidebar Navigation */
+  .docs-sidebar {
+    position: sticky;
+    top: 6rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 16px;
     padding: 1.5rem;
-    border-radius: 20px;
-    height: fit-content;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
   }
-  .docs-nav h3 {
-    margin-top: 0;
+  
+  .docs-nav-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid hsl(var(--border));
   }
-  .docs-nav a {
-    display: block;
-    padding: 0.4rem 0;
-    color: var(--muted);
+  
+  .docs-nav-header h3 {
+    margin: 0;
+    font-size: 1rem;
     font-weight: 600;
   }
+  
+  .docs-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .docs-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    color: hsl(var(--muted-foreground));
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .docs-nav a:hover {
+    background: hsl(var(--muted) / 0.1);
+    color: hsl(var(--foreground));
+  }
+  
   .docs-nav a.active {
-    color: var(--ink);
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    font-weight: 600;
   }
+  
+  /* Main Content */
   .docs-content {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 2rem;
-    box-shadow: var(--shadow);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 20px;
+    padding: 3rem;
+    min-height: 60vh;
+    box-shadow: 0 1px 3px 0 hsl(var(--foreground) / 0.1);
   }
-  .docs-content h1 {
-    margin-top: 0;
+  
+  /* Table of Contents */
+  .docs-toc {
+    position: sticky;
+    top: 6rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
   }
+  
+  .toc-header {
+    margin-bottom: 1rem;
+  }
+  
+  .toc-header h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+  }
+  
+  .toc-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .toc-link {
+    display: block;
+    font-size: 0.8125rem;
+    color: hsl(var(--muted-foreground));
+    padding: 0.25rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.75rem;
+    transition: all 150ms;
+  }
+  
+  .toc-link:hover {
+    color: hsl(var(--foreground));
+    border-left-color: hsl(var(--border));
+  }
+  
+  .toc-link.active {
+    color: hsl(var(--primary));
+    border-left-color: hsl(var(--primary));
+    font-weight: 500;
+  }
+  
+  .toc-link-sub {
+    padding-left: 1.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .docs-layout {
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+    }
+    
+    .docs-toc {
+      display: none;
+    }
+  }
+  
   @media (max-width: 900px) {
     .docs-layout {
       grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .docs-sidebar {
+      position: static;
+      max-height: none;
+    }
+    
+    .docs-content {
+      padding: 2rem 1.5rem;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .docs-hero {
+      padding: 1rem 0;
+    }
+    
+    .docs-section {
+      padding: 2rem 0;
+    }
+    
+    .docs-content {
+      padding: 1.5rem 1rem;
+      border-radius: 12px;
+    }
+    
+    .docs-sidebar {
+      padding: 1rem;
+      border-radius: 12px;
     }
   }
 </style>
+

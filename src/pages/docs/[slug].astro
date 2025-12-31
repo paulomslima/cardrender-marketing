@@ -44,28 +44,37 @@ const jsonLd = {
 ---
 
 <DocsLayout title={entry.data.title} description={entry.data.description}>
-  <div class="mb-8">
+  <div class="docs-header">
     {entry.data.category && (
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+      <span class="docs-category-badge">
         {entry.data.category}
-      </div>
+      </span>
     )}
-    <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
-    <p class="text-xl text-muted-foreground mb-2">{entry.data.description}</p>
-    <p class="text-sm text-muted-foreground">Last updated: {entry.data.lastUpdated}</p>
+    {entry.data.proficiencyLevel && (
+      <span class="docs-level-badge">
+        {entry.data.proficiencyLevel}
+      </span>
+    )}
+  </div>
+  
+  <h1 class="docs-title">{entry.data.title}</h1>
+  <p class="docs-description">{entry.data.description}</p>
+  <div class="docs-meta">
+    <span>Last updated: {new Date(entry.data.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
   </div>
 
-  <div class="prose prose-lg max-w-none">
+  <div class="docs-prose">
     <Content />
   </div>
 
-  {entry.data.relatedDocs.length > 0 && (
-    <div class="mt-12 pt-8 border-t border-border">
-      <h3 class="text-lg font-semibold mb-4">Related Documentation</h3>
-      <div class="grid gap-4 sm:grid-cols-3">
+  {entry.data.relatedDocs && entry.data.relatedDocs.length > 0 && (
+    <div class="docs-related">
+      <h3 class="docs-related-title">Related Documentation</h3>
+      <div class="docs-related-grid">
         {entry.data.relatedDocs.map((doc) => (
-          <a href={doc.url} class="block p-4 rounded-lg border border-border hover:border-primary transition-colors">
-            <p class="font-medium text-foreground">{doc.title}</p>
+          <a href={doc.url} class="docs-related-card">
+            <span class="docs-related-icon">→</span>
+            <span class="docs-related-text">{doc.title}</span>
           </a>
         ))}
       </div>
@@ -74,3 +83,249 @@ const jsonLd = {
 </DocsLayout>
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<style>
+  .docs-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .docs-category-badge,
+  .docs-level-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .docs-category-badge {
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+  
+  .docs-level-badge {
+    background: hsl(var(--secondary) / 0.1);
+    color: hsl(var(--secondary));
+  }
+  
+  .docs-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    color: hsl(var(--foreground));
+  }
+  
+  .docs-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: hsl(var(--muted-foreground));
+    margin: 0 0 0.75rem 0;
+  }
+  
+  .docs-meta {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  
+  .docs-prose {
+    color: hsl(var(--foreground));
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  
+  .docs-prose :global(h2) {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid hsl(var(--border));
+    scroll-margin-top: 6rem;
+  }
+  
+  .docs-prose :global(h2:first-child) {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+  
+  .docs-prose :global(h3) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    scroll-margin-top: 6rem;
+  }
+  
+  .docs-prose :global(h4) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    scroll-margin-top: 6rem;
+  }
+  
+  .docs-prose :global(p) {
+    margin: 1rem 0;
+  }
+  
+  .docs-prose :global(ul),
+  .docs-prose :global(ol) {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  .docs-prose :global(li) {
+    margin: 0.5rem 0;
+  }
+  
+  .docs-prose :global(li > ul),
+  .docs-prose :global(li > ol) {
+    margin: 0.5rem 0;
+  }
+  
+  .docs-prose :global(strong) {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+  
+  .docs-prose :global(code) {
+    background: hsl(var(--muted) / 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    color: hsl(var(--primary));
+  }
+  
+  .docs-prose :global(pre) {
+    background: hsl(var(--muted) / 0.1);
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  
+  .docs-prose :global(pre code) {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+  }
+  
+  .docs-prose :global(blockquote) {
+    border-left: 4px solid hsl(var(--primary));
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .docs-prose :global(a) {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--primary) / 0.3);
+    text-underline-offset: 2px;
+    transition: all 150ms;
+  }
+  
+  .docs-prose :global(a:hover) {
+    text-decoration-color: hsl(var(--primary));
+  }
+  
+  .docs-prose :global(hr) {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin: 2.5rem 0;
+  }
+  
+  .docs-related {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid hsl(var(--border));
+  }
+  
+  .docs-related-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+  }
+  
+  .docs-related-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .docs-related-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: hsl(var(--muted) / 0.1);
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+  }
+  
+  .docs-related-card:hover {
+    background: hsl(var(--primary) / 0.05);
+    border-color: hsl(var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.1);
+  }
+  
+  .docs-related-icon {
+    font-size: 1.25rem;
+    color: hsl(var(--primary));
+    transition: transform 200ms;
+  }
+  
+  .docs-related-card:hover .docs-related-icon {
+    transform: translateX(4px);
+  }
+  
+  .docs-related-text {
+    font-weight: 500;
+    color: hsl(var(--foreground));
+  }
+  
+  @media (max-width: 640px) {
+    .docs-title {
+      font-size: 2rem;
+    }
+    
+    .docs-description {
+      font-size: 1rem;
+    }
+    
+    .docs-prose {
+      font-size: 0.9375rem;
+    }
+    
+    .docs-prose :global(h2) {
+      font-size: 1.5rem;
+    }
+    
+    .docs-prose :global(h3) {
+      font-size: 1.25rem;
+    }
+    
+    .docs-related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
