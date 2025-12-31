@@ -360,6 +360,7 @@ const pages = [
     padding: 0.9rem 0.9rem 1.1rem;
     box-shadow: 0 10px 28px hsl(var(--foreground) / 0.05);
     transition: opacity 150ms ease;
+    font-size: 13px;
   }
   
   .docs-toc.hidden {
@@ -414,7 +415,7 @@ const pages = [
     gap: 0.35rem;
     padding: 0.32rem 0.5rem 0.32rem 0.5rem;
     color: hsl(var(--muted-foreground));
-    font-size: 13px !important;
+    font-size: inherit;
     font-weight: 500;
     border-radius: 0.5rem;
     position: relative;
@@ -439,16 +440,16 @@ const pages = [
   }
   
   .toc-link.active {
-    color: hsl(var(--secondary));
-    background: hsl(var(--secondary) / 0.18);
-    font-weight: 600;
-    box-shadow: inset 0 0 0 1px hsl(var(--secondary) / 0.25);
+    color: hsl(var(--secondary)) !important;
+    background: hsl(var(--secondary) / 0.22) !important;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px hsl(var(--secondary) / 0.35);
   }
   
   .toc-link.active::before {
-    border-color: hsl(var(--secondary));
-    background: hsl(var(--secondary));
-    box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.25);
+    border-color: hsl(var(--secondary)) !important;
+    background: hsl(var(--secondary)) !important;
+    box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.3) !important;
   }
   
   .toc-sublist {
