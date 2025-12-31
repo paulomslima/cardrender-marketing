@@ -6,22 +6,35 @@ import DocsLayout from "../../layouts/DocsLayout.astro";
   title="Public API"
   description="Automate card creation, member provisioning, and analytics exports."
 >
-  <h1>Public API</h1>
-  <p>
-    Cardrender offers a REST API for automating card creation, member onboarding, and analytics collection.
-  </p>
-  <h2>Authentication</h2>
-  <p>
-    Create API keys from the workspace settings page. Keys include scoped permissions and can be revoked at any time.
-  </p>
-  <h2>Core endpoints</h2>
-  <ul>
-    <li>Cards: create, update, publish, and archive cards</li>
-    <li>Members: invite, update roles, and deactivate members</li>
-    <li>Analytics: retrieve view and click data</li>
-  </ul>
-  <h2>Webhooks</h2>
-  <p>
-    Use webhooks to receive real-time notifications when cards are viewed, shared, or downloaded.
-  </p>
+  <div class="docs-header">
+    <span class="docs-category-badge">
+      API
+    </span>
+  </div>
+  
+  <h1 class="docs-title">Public API</h1>
+  <p class="docs-description">Automate card creation, member provisioning, and analytics exports.</p>
+  <div class="docs-meta">
+    <span>Last updated: 2025-12-30</span>
+  </div>
+
+  <div class="docs-prose">
+    <p>
+      Cardrender offers a REST API for automating card creation, member onboarding, and analytics collection.
+    </p>
+    <h2>Authentication</h2>
+    <p>
+      Create API keys from the workspace settings page. Keys include scoped permissions and can be revoked at any time.
+    </p>
+    <h2>Core endpoints</h2>
+    <ul>
+      <li>Cards: create, update, publish, and archive cards</li>
+      <li>Members: invite, update roles, and deactivate members</li>
+      <li>Analytics: retrieve view and click data</li>
+    </ul>
+    <h2>Webhooks</h2>
+    <p>
+      Use webhooks to receive real-time notifications when cards are viewed, shared, or downloaded.
+    </p>
+  </div>
 </DocsLayout>
