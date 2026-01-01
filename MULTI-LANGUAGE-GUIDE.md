@@ -2,7 +2,7 @@
 
 ## 🌍 Supported Languages
 
-The Cardrender marketing site supports the following languages:
+The CardRender marketing site supports the following languages:
 
 - **en** - English (default)
 - **es** - Español (Spanish)
@@ -51,7 +51,7 @@ src/content/
    description: "Tu descripción traducida (150-160 caracteres)"
    date: "Dec 30, 2025"
    readTime: "6 min de lectura"
-   author: "Equipo Cardrender"
+   author: "Equipo CardRender"
    category: "Producto"
    lang: "es"                           # Change to target language
    translationKey: "my-post"            # Keep same as English version
@@ -233,7 +233,7 @@ To add support for a new language (e.g., Italian):
 
 2. **Maintain consistency:**
    - Use same terminology across all pages
-   - Keep brand names untranslated (Cardrender)
+   - Keep brand names untranslated (CardRender)
    - Maintain consistent tone and voice
 
 3. **Localize, don't just translate:**

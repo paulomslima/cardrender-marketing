@@ -23,7 +23,7 @@ title: "Your SEO-Optimized Blog Title"
 description: "Compelling 150-160 character description with keywords"
 date: "Jan 15, 2026"
 readTime: "8 min read"
-author: "Cardrender Team"
+author: "CardRender Team"
 category: "Product"  # or "Features", "Updates", "Guides"
 keywords:
   - primary keyword
@@ -54,7 +54,7 @@ title: "How to Calculate ROI from Digital Business Cards"
 description: "Learn how to measure networking effectiveness with analytics. Track views, clicks, and conversions to prove ROI from your digital business card investment."
 date: "Jan 15, 2026"
 readTime: "8 min read"
-author: "Cardrender Team"
+author: "CardRender Team"
 category: "Guides"
 keywords:
   - networking ROI
@@ -123,7 +123,7 @@ Your documentation content here...
 ```mdx
 ---
 title: "CRM Integration Setup - Connect Salesforce and HubSpot"
-description: "Step-by-step guide to integrate Cardrender with your CRM for automated lead tracking and contact sync."
+description: "Step-by-step guide to integrate CardRender with your CRM for automated lead tracking and contact sync."
 category: "Integration"
 lastUpdated: "2026-01-15"
 proficiencyLevel: "Intermediate"
@@ -142,17 +142,17 @@ relatedDocs:
     url: "/docs/security"
 ---
 
-Connect Cardrender with your CRM to automatically track card views, sync contacts, and measure networking ROI.
+Connect CardRender with your CRM to automatically track card views, sync contacts, and measure networking ROI.
 
 ## Prerequisites
 
-- Admin access to your Cardrender workspace
+- Admin access to your CardRender workspace
 - CRM administrator permissions
 - API credentials from your CRM
 
 ## Step 1: Generate API Keys
 
-Navigate to your Cardrender workspace settings...
+Navigate to your CardRender workspace settings...
 
 ```
 

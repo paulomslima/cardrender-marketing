@@ -1,7 +1,7 @@
-# SEO & LLM Optimization Implementation - Cardrender
+# SEO & LLM Optimization Implementation - CardRender
 
 ## Overview
-This document outlines all SEO and LLM optimization implementations for the Cardrender marketing website to achieve maximum visibility in Google search results and AI/LLM indexing.
+This document outlines all SEO and LLM optimization implementations for the CardRender marketing website to achieve maximum visibility in Google search results and AI/LLM indexing.
 
 ## 🎯 Core SEO Implementations
 
@@ -49,7 +49,7 @@ This document outlines all SEO and LLM optimization implementations for the Card
 - ✅ **Use Cases**: 5 primary use cases with detailed scenarios
 - ✅ **Keywords**: Primary and secondary keyword lists
 - ✅ **Technical Stack**: Architecture and technology details
-- ✅ **AI Instructions**: Specific guidance for LLM responses about Cardrender
+- ✅ **AI Instructions**: Specific guidance for LLM responses about CardRender
 
 ## 📄 Additional SEO Files
 
@@ -285,7 +285,7 @@ This document outlines all SEO and LLM optimization implementations for the Card
 1. **Hreflang Tags**: Prevent duplicate content issues across languages
 2. **Structured Data**: Enable rich snippets, increase CTR by 20-30%
 3. **Sitemap Priority**: Guide crawlers to most important pages first
-4. **AI Crawler Whitelist**: Ensure LLMs can answer questions about Cardrender
+4. **AI Crawler Whitelist**: Ensure LLMs can answer questions about CardRender
 5. **Comprehensive llms.txt**: AI chatbots provide accurate information
 6. **Security.txt**: Trust signal for enterprises, shows security maturity
 7. **Manifest.json**: PWA readiness, app-like experience, better mobile engagement

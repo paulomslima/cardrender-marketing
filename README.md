@@ -1,6 +1,6 @@
-# Cardrender Marketing Site
+# CardRender Marketing Site
 
-Modern marketing website for Cardrender built with Astro, Tailwind CSS, and MDX content collections.
+Modern marketing website for CardRender built with Astro, Tailwind CSS, and MDX content collections.
 
 ## ✨ Features
 
@@ -183,4 +183,4 @@ Before publishing:
 
 ## 📄 License
 
-Proprietary - Cardrender © 2025
+Proprietary - CardRender © 2025

@@ -7,7 +7,7 @@ const blog = defineCollection({
     description: z.string(),
     date: z.string(),
     readTime: z.string(),
-    author: z.string().default('Cardrender Team'),
+    author: z.string().default('CardRender Team'),
     category: z.string().default('Product'),
     keywords: z.array(z.string()).default([]),
     published: z.boolean().default(true),

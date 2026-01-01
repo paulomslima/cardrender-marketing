@@ -1,6 +1,6 @@
 # Multi-Language Setup Complete! 🌍
 
-Your Cardrender marketing site is now fully prepared for multi-language content.
+Your CardRender marketing site is now fully prepared for multi-language content.
 
 ## ✅ What Was Configured
 

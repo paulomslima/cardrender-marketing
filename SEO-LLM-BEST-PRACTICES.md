@@ -1,6 +1,6 @@
 # SEO & LLM Best Practices Implementation
 
-This document outlines all SEO and LLM optimization practices implemented in the Cardrender marketing site.
+This document outlines all SEO and LLM optimization practices implemented in the CardRender marketing site.
 
 ## 📋 Overview
 
@@ -18,7 +18,7 @@ const title = "SEO-optimized title with primary keywords";
 const description = "Compelling meta description 150-160 characters with value proposition";
 const date = "Dec 30, 2025";
 const readTime = "6 min read";
-const author = "Cardrender Team";
+const author = "CardRender Team";
 const category = "Product";
 
 // SEO keywords array
@@ -39,12 +39,12 @@ const jsonLd = {
   dateModified: "2025-12-30T00:00:00Z",
   author: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
   },
   publisher: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
     logo: {
       "@type": "ImageObject",
@@ -67,7 +67,7 @@ const jsonLd = {
 ```astro
 ---
 // Core metadata
-const title = "Getting Started with Cardrender - Create Your First Digital Business Card";
+const title = "Getting Started with CardRender - Create Your First Digital Business Card";
 const description = "Create and deploy your first professional digital business card in under 5 minutes.";
 const category = "Setup";
 const lastUpdated = "2025-12-30";
@@ -96,7 +96,7 @@ const jsonLd = {
   dateModified: lastUpdated + "T00:00:00Z",
   author: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
   },
   keywords: keywords.join(", "),
@@ -122,7 +122,7 @@ const jsonLd = {
 <meta property="og:image" content="https://cardrender.com/og-image.jpg" />
 <meta property="article:published_time" content="2025-12-30T00:00:00Z" />
 <meta property="article:modified_time" content="2025-12-30T00:00:00Z" />
-<meta property="article:author" content="Cardrender Team" />
+<meta property="article:author" content="CardRender Team" />
 <meta property="article:section" content="Product" />
 <meta property="article:tag" content="digital business cards" />
 ```

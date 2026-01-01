@@ -41,7 +41,7 @@ const title = "SEO-Optimized Title with Primary Keywords (50-60 chars)";
 const description = "Compelling description that explains value proposition in 150-160 characters with relevant keywords.";
 const date = "Jan 15, 2026";
 const readTime = "8 min read";
-const author = "Cardrender Team";
+const author = "CardRender Team";
 const category = "Product"; // or "Features", "Updates", "Guides"
 
 const keywords = [
@@ -61,12 +61,12 @@ const jsonLd = {
   dateModified: "2026-01-15T00:00:00Z",
   author: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
   },
   publisher: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
     logo: {
       "@type": "ImageObject",
@@ -124,7 +124,7 @@ const jsonLd = {
   dateModified: lastUpdated + "T00:00:00Z",
   author: {
     "@type": "Organization",
-    name: "Cardrender",
+    name: "CardRender",
     url: "https://cardrender.com",
   },
   keywords: keywords.join(", "),

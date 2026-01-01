@@ -1,6 +1,6 @@
 {
-  "name": "Cardrender",
-  "short_name": "Cardrender",
+  "name": "CardRender",
+  "short_name": "CardRender",
   "description": "Enterprise digital business card platform. Create, manage, and track digital business cards for your team.",
   "start_url": "/",
   "display": "standalone",

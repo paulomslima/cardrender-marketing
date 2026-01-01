@@ -2,7 +2,7 @@
 
 ## 🎉 What Changed
 
-Your Cardrender marketing site now uses **Astro Content Collections** with **MDX** for all blog posts and documentation. This means you can write content in simple Markdown files instead of Astro components.
+Your CardRender marketing site now uses **Astro Content Collections** with **MDX** for all blog posts and documentation. This means you can write content in simple Markdown files instead of Astro components.
 
 ## 📁 New Structure
 
@@ -99,7 +99,7 @@ title: "Your Blog Post Title with Keywords"
 description: "150-160 character description for SEO"
 date: "Jan 15, 2026"
 readTime: "8 min read"
-author: "Cardrender Team"
+author: "CardRender Team"
 category: "Product"
 keywords:
   - keyword 1
