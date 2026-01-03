@@ -63,6 +63,10 @@ const jsonLd = {
           Start free, scale to enterprise. Every plan includes our core features with no hidden fees.
           Upgrade anytime as your team grows.
         </p>
+        <div class="release-note">
+          <span class="pill">Coming Q2 2026</span>
+          Wallet passes will include dynamic updates and attendee notifications at launch.
+        </div>
       </div>
     </div>
   </section>
@@ -238,6 +242,32 @@ const jsonLd = {
     font-size: 1.125rem;
     line-height: 1.7;
     color: hsl(var(--muted-foreground));
+  }
+
+  .release-note {
+    margin-top: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border: 1px dashed hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--primary) / 0.03);
+    color: hsl(var(--foreground));
+    font-size: 0.95rem;
+  }
+
+  .release-note .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.75rem;
+    background: hsl(var(--secondary));
+    color: white;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
   
   .enterprise-card {
