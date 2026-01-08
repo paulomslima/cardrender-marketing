@@ -1,7 +1,11 @@
 ---
 import { APP_URL } from "../lib/config";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../lib/i18n";
+
 const { currentPath } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <nav class="site-header sticky top-0 z-50 backdrop-blur-lg bg-background/95 border-b border-border/40 p-4">
@@ -10,15 +14,15 @@ const { currentPath } = Astro.props;
       <img src="/cardrender.svg" alt="CardRender" class="h-[34px] max-w-[196px]" />
     </a>
     
-    <div class="flex items-center gap-3 md:order-2">
+      <div class="flex items-center gap-3 md:order-2">
       <div class="hidden md:block">
         <LanguageSwitcher />
       </div>
       <a href={`${APP_URL}/login`} class="button ghost hidden md:inline-flex">
-        Sign in
+        {t('auth.signIn')}
       </a>
       <a href={`${APP_URL}/register`} class="button primary">
-        Start free
+        {t('auth.startFree')}
       </a>
       <button 
         data-collapse-toggle="navbar-menu" 
@@ -38,50 +42,50 @@ const { currentPath } = Astro.props;
       <ul class="flex flex-col p-5 md:p-0 mt-5 md:mt-0 md:flex-row md:space-x-6 border border-border rounded-lg md:border-0 bg-card md:bg-transparent">
         <li>
           <a 
-            href="/features" 
+            href={getLocalizedPath('/features', currentLang)} 
             class={`block py-2 px-3 rounded md:p-0 transition-colors ${
-              currentPath === "/features" 
+              currentPath === getLocalizedPath('/features', currentLang) 
                 ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Features
+            {t('nav.features')}
           </a>
         </li>
         <li>
           <a 
-            href="/pricing" 
+            href={getLocalizedPath('/pricing', currentLang)} 
             class={`block py-2 px-3 rounded md:p-0 transition-colors ${
-              currentPath === "/pricing" 
+              currentPath === getLocalizedPath('/pricing', currentLang) 
                 ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Pricing
+            {t('nav.pricing')}
           </a>
         </li>
         <li>
           <a 
-            href="/blog" 
+            href={getLocalizedPath('/blog', currentLang)} 
             class={`block py-2 px-3 rounded md:p-0 transition-colors ${
-              currentPath?.startsWith("/blog") 
+              currentPath?.startsWith(getLocalizedPath('/blog', currentLang)) 
                 ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Blog
+            {t('nav.blog')}
           </a>
         </li>
         <li>
           <a 
-            href="/docs" 
+            href={getLocalizedPath('/docs', currentLang)} 
             class={`block py-2 px-3 rounded md:p-0 transition-colors ${
-              currentPath?.startsWith("/docs") 
+              currentPath?.startsWith(getLocalizedPath('/docs', currentLang)) 
                 ? "text-foreground md:text-foreground relative md:after:content-[''] md:after:absolute md:after:-bottom-4 md:after:left-0 md:after:right-0 md:after:h-0.5 md:after:bg-primary md:after:rounded" 
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Docs
+            {t('nav.docs')}
           </a>
         </li>
         <li class="md:hidden pt-4 mt-4 border-t border-border">

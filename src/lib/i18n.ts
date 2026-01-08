@@ -31,6 +31,9 @@ export const ui = {
     'footer.company': 'Company',
     'footer.resources': 'Resources',
     'footer.legal': 'Legal',
+    'footer.tagline': 'Digital business cards and team identity management for modern companies.',
+    'auth.signIn': 'Sign in',
+    'auth.startFree': 'Start free',
   },
   es: {
     'nav.home': 'Inicio',
@@ -50,6 +53,9 @@ export const ui = {
     'footer.company': 'Empresa',
     'footer.resources': 'Recursos',
     'footer.legal': 'Legal',
+    'footer.tagline': 'Tarjetas digitales y gestión de identidad de equipo para empresas modernas.',
+    'auth.signIn': 'Iniciar sesión',
+    'auth.startFree': 'Comenzar gratis',
   },
   pt: {
     'nav.home': 'Início',
@@ -69,6 +75,9 @@ export const ui = {
     'footer.company': 'Empresa',
     'footer.resources': 'Recursos',
     'footer.legal': 'Legal',
+    'footer.tagline': 'Cartões digitais e gestão de identidade de equipe para empresas modernas.',
+    'auth.signIn': 'Iniciar sessão',
+    'auth.startFree': 'Comece de graça',
   },
   fr: {
     'nav.home': 'Accueil',

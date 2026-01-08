@@ -1,5 +1,9 @@
 ---
 import { APP_URL } from "../lib/config";
+import { getLangFromUrl, useTranslations, getLocalizedPath } from "../lib/i18n";
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
 ---
 
 <footer class="site-footer">
@@ -7,27 +11,25 @@ import { APP_URL } from "../lib/config";
     <div class="footer-grid">
       <div class="brand">
         <img src="/cardrender.svg" alt="CardRender" />
-        <p class="muted">
-          Digital business cards, email signatures, and team identity management for modern companies.
-        </p>
+        <p class="muted">{t('footer.tagline')}</p>
       </div>
       <div>
-        <h4>Product</h4>
-        <a href="/pricing">Pricing</a>
-        <a href="/docs">Documentation</a>
-        <a href="/blog">Blog</a>
+        <h4>{t('footer.product')}</h4>
+        <a href={getLocalizedPath('/pricing', currentLang)}>{t('nav.pricing')}</a>
+        <a href={getLocalizedPath('/docs', currentLang)}>Documentation</a>
+        <a href={getLocalizedPath('/blog', currentLang)}>{t('nav.blog')}</a>
       </div>
       <div>
-        <h4>Company</h4>
-        <a href={`${APP_URL}/register`}>Get started</a>
-        <a href={`${APP_URL}/login`}>Sign in</a>
-        <a href="/docs/getting-started">Onboarding</a>
+        <h4>{t('footer.company')}</h4>
+        <a href={`${APP_URL}/register`}>{t('auth.startFree')}</a>
+        <a href={`${APP_URL}/login`}>{t('auth.signIn')}</a>
+        <a href={getLocalizedPath('/docs/getting-started', currentLang)}>Onboarding</a>
       </div>
       <div>
-        <h4>Legal</h4>
-        <a href="/docs/security">Security</a>
-        <a href="/docs/api">API</a>
-        <a href="/docs/analytics">Analytics</a>
+        <h4>{t('footer.legal')}</h4>
+        <a href={getLocalizedPath('/docs/security', currentLang)}>Security</a>
+        <a href={getLocalizedPath('/docs/api', currentLang)}>API</a>
+        <a href={getLocalizedPath('/docs/analytics', currentLang)}>Analytics</a>
       </div>
     </div>
     <div class="footer-bottom">
