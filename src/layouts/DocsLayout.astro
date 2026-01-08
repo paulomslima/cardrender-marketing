@@ -1,17 +1,20 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import { FileText, BookOpen, Users, Palette, BarChart3, Code, Shield } from "lucide-astro";
+import { getLangFromUrl, getLocalizedPath } from "../lib/i18n";
 
 const { title, description } = Astro.props;
 
 const pages = [
-  { label: "Getting Started", href: "/docs/getting-started", icon: FileText },
-  { label: "Teams & Roles", href: "/docs/teams", icon: Users },
-  { label: "Branding & Templates", href: "/docs/branding-and-templates", icon: Palette },
-  { label: "Analytics", href: "/docs/analytics", icon: BarChart3 },
-  { label: "Public API", href: "/docs/api", icon: Code },
-  { label: "Security", href: "/docs/security", icon: Shield },
+  { label: "Getting Started", path: "/docs/getting-started", icon: FileText },
+  { label: "Teams & Roles", path: "/docs/teams", icon: Users },
+  { label: "Branding & Templates", path: "/docs/branding-and-templates", icon: Palette },
+  { label: "Analytics", path: "/docs/analytics", icon: BarChart3 },
+  { label: "Public API", path: "/docs/api", icon: Code },
+  { label: "Security", path: "/docs/security", icon: Shield },
 ];
+
+const currentLang = getLangFromUrl(Astro.url);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -35,9 +38,10 @@ const pages = [
         <nav class="docs-nav">
           {pages.map((page) => {
             const Icon = page.icon;
-            const isActive = Astro.url.pathname === page.href;
+            const localizedHref = getLocalizedPath(page.path, currentLang);
+            const isActive = Astro.url.pathname === localizedHref;
             return (
-              <a class={isActive ? "active" : ""} href={page.href}>
+              <a class={isActive ? "active" : ""} href={localizedHref}>
                 <Icon size={18} />
                 <span>{page.label}</span>
               </a>
