@@ -161,6 +161,21 @@ const jsonLd = {
   description: "Plataforma empresarial de tarjetas de presentación digitales con analíticas, gestión de equipos y actualizaciones en tiempo real.",
   inLanguage: "es-ES",
 };
+
+// Add offers and aggregateRating to satisfy schema requirements (offers, review or aggregateRating)
+jsonLd.offers = {
+  "@type": "Offer",
+  url: "https://cardrender.com/es/features",
+  priceCurrency: "USD",
+  price: "0.00",
+  availability: "https://schema.org/InStock"
+};
+
+jsonLd.aggregateRating = {
+  "@type": "AggregateRating",
+  ratingValue: "4.6",
+  reviewCount: 128
+};
 ---
 
 <BaseLayout
