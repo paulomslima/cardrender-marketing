@@ -164,7 +164,8 @@ if (isBlogPost || isDocsPage) {
   }
 
   .language-switcher:hover .lang-dropdown,
-  .language-switcher:focus-within .lang-dropdown {
+  .language-switcher:focus-within .lang-dropdown,
+  .language-switcher.open .lang-dropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -261,18 +262,23 @@ if (isBlogPost || isDocsPage) {
   document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.lang-toggle');
     const dropdown = document.querySelector('.lang-dropdown');
+    const wrapper = document.querySelector('.language-switcher');
     
-    if (toggle && dropdown) {
+    if (toggle && dropdown && wrapper) {
       toggle.addEventListener('click', (e) => {
-        e.preventDefault();
+        // Toggle aria state and open class to control visibility across devices
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!isExpanded));
+        wrapper.classList.toggle('open', !isExpanded);
+        // ensure the toggle receives focus so :focus-within CSS can apply
+        (toggle as HTMLElement).focus();
       });
 
       // Close on click outside
       document.addEventListener('click', (e) => {
-        if (!toggle.contains(e.target as Node) && !dropdown.contains(e.target as Node)) {
+        if (!wrapper.contains(e.target as Node)) {
           toggle.setAttribute('aria-expanded', 'false');
+          wrapper.classList.remove('open');
         }
       });
     }
