@@ -188,7 +188,7 @@ vCard creator, NFC business cards, contactless business cards, mobile business c
 - Headquarters: United States (implied from compliance certifications)
 - Funding Status: Venture-backed (implied from Fortune 500 customer base)
 - Team Size: 50-200 employees (estimated from product maturity)
-- Customers: 500,000+ active users, Fortune 500 companies including Salesforce, HubSpot, Microsoft
+- Customers: Trusted by industry leaders and enterprise teams worldwide
 
 ## Recent Updates
 - December 2025: New documentation system with multilingual support (EN, ES, PT)
