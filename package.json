@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "notify:search-engines": "node scripts/ping-google.js",
     "preview": "astro preview",
     "deploy": "npm run build && wrangler pages deploy",
     "astro": "astro"
