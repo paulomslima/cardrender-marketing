@@ -1,0 +1,68 @@
+---
+import DocsLayout from "../layouts/DocsLayout.astro";
+
+const { entry, Content } = Astro.props;
+
+// Determine proper language tag for jsonLd
+const langMap: Record<string,string> = {
+  en: 'en-US',
+  es: 'es-ES',
+  pt: 'pt-BR'
+};
+const inLanguage = langMap[entry.data.lang] ?? 'en-US';
+
+// Generate enhanced jsonLd for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: entry.data.title,
+  description: entry.data.description,
+  dateModified: new Date(entry.data.lastUpdated).toISOString(),
+  author: {
+    "@type": "Organization",
+    name: "CardRender",
+    url: "https://cardrender.com",
+  },
+  keywords: entry.data.keywords?.join(", ") || undefined,
+  articleSection: entry.data.category,
+  proficiencyLevel: entry.data.proficiencyLevel,
+  inLanguage,
+};
+---
+
+<DocsLayout title={entry.data.title} description={entry.data.description} jsonLd={jsonLd}>
+  <div class="docs-header">
+    {entry.data.category && (
+      <span class="docs-category-badge">{entry.data.category}</span>
+    )}
+    {entry.data.proficiencyLevel && (
+      <span class="docs-level-badge">{entry.data.proficiencyLevel}</span>
+    )}
+  </div>
+
+  <h1 class="docs-title">{entry.data.title}</h1>
+  <p class="docs-description">{entry.data.description}</p>
+  <div class="docs-meta">
+    <span>Last updated: {new Date(entry.data.lastUpdated).toLocaleDateString()}</span>
+  </div>
+
+  <div class="docs-prose">
+    <Content />
+  </div>
+
+  {entry.data.relatedDocs && entry.data.relatedDocs.length > 0 && (
+    <div class="docs-related">
+      <h3 class="docs-related-title">Related Documentation</h3>
+      <div class="docs-related-grid">
+        {entry.data.relatedDocs.map((doc) => (
+          <a href={doc.url} class="docs-related-card">
+            <span class="docs-related-icon">→</span>
+            <span class="docs-related-text">{doc.title}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</DocsLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
