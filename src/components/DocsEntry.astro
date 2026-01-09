@@ -1,7 +1,9 @@
 ---
 import DocsLayout from "../layouts/DocsLayout.astro";
+import { useTranslations } from "../lib/i18n";
 
 const { entry, Content } = Astro.props;
+const t = useTranslations(entry.data.lang);
 
 // Determine proper language tag for jsonLd
 const langMap: Record<string,string> = {
@@ -43,16 +45,18 @@ const jsonLd = {
   <h1 class="docs-title">{entry.data.title}</h1>
   <p class="docs-description">{entry.data.description}</p>
   <div class="docs-meta">
-    <span>Last updated: {new Date(entry.data.lastUpdated).toLocaleDateString()}</span>
+    <span>{t('docs.lastUpdated')}: {new Intl.DateTimeFormat(entry.data.lang === 'pt' ? 'pt-BR' : entry.data.lang === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(entry.data.lastUpdated))}</span>
   </div>
 
   <div class="docs-prose">
-    <Content />
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
   </div>
 
   {entry.data.relatedDocs && entry.data.relatedDocs.length > 0 && (
     <div class="docs-related">
-      <h3 class="docs-related-title">Related Documentation</h3>
+      <h3 class="docs-related-title">{t('docs.relatedDocs')}</h3>
       <div class="docs-related-grid">
         {entry.data.relatedDocs.map((doc) => (
           <a href={doc.url} class="docs-related-card">
