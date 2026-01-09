@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
+import rehypeSlug from "./src/lib/rehypeSlug.js";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,6 +22,8 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    mdx(),
+    mdx({
+      rehypePlugins: [rehypeSlug],
+    }),
   ],
 });

@@ -2,8 +2,11 @@
 import BaseLayout from "./BaseLayout.astro";
 import { FileText, BookOpen, Users, Palette, BarChart3, Code, Shield } from "lucide-astro";
 import { getLangFromUrl, getLocalizedPath, useTranslations } from "../lib/i18n";
+import { createSlugger } from "../lib/slugger";
 
-const { title, description } = Astro.props;
+const { title, description, jsonLd, headings = [] } = Astro.props;
+
+const tocTree = buildToc(headings);
 
 const pages = [
   { label: "Getting Started", path: "/docs/getting-started", icon: FileText },
@@ -16,9 +19,40 @@ const pages = [
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
+
+function buildToc(headings) {
+  const slugger = createSlugger();
+  const normalized = headings.map((heading) => ({
+    depth: heading.depth,
+    text: heading.text ?? "",
+    slug: slugger(heading.text ?? ""),
+  }));
+
+  const tree = [];
+  let currentSection = null;
+
+  normalized.forEach((heading) => {
+    if (heading.depth === 2) {
+      currentSection = { ...heading, children: [] };
+      tree.push(currentSection);
+      return;
+    }
+
+    if (heading.depth === 3) {
+      const child = { ...heading, children: [] };
+      if (currentSection) {
+        currentSection.children.push(child);
+      } else {
+        tree.push(child);
+      }
+    }
+  });
+
+  return tree;
+}
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
   <div class="docs-hero">
     <div class="container">
       <div class="docs-breadcrumb">
@@ -57,12 +91,41 @@ const t = useTranslations(currentLang);
         </div>
       </article>
       
-      <aside class="docs-toc">
+      <aside class={`docs-toc${tocTree.length === 0 ? ' hidden' : ''}`}>
         <div class="toc-header">
-          <h4>On this page</h4>
+          <h4>Table of contents</h4>
         </div>
         <nav class="toc-nav" id="toc-nav" aria-label="Table of contents">
-          <ul class="toc-list" id="toc-list"></ul>
+          <ul class="toc-list" id="toc-list">
+            {tocTree.map((node) => (
+              <li class="toc-item">
+                <a
+                  class="toc-link"
+                  href={`#${node.slug}`}
+                  data-heading={node.slug}
+                  aria-current="false"
+                >
+                  {node.text}
+                </a>
+                {node.children && node.children.length > 0 && (
+                  <ul class="toc-sublist">
+                    {node.children.map((child) => (
+                      <li class="toc-subitem">
+                        <a
+                          class="toc-link toc-link-nested"
+                          href={`#${child.slug}`}
+                          data-heading={child.slug}
+                          aria-current="false"
+                        >
+                          {child.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </nav>
       </aside>
     </div>
@@ -85,6 +148,7 @@ const t = useTranslations(currentLang);
     if (!content || !tocList || !tocContainer) return;
 
     const headings = Array.from(content.querySelectorAll('h2, h3'));
+    const hasServerToc = tocList.querySelector('a[data-heading]');
 
     if (headings.length === 0) {
       tocContainer.classList.add('hidden');
@@ -93,22 +157,46 @@ const t = useTranslations(currentLang);
 
     tocContainer.classList.remove('hidden');
 
-    const tree = buildHeadingTree(headings);
-    renderTOC(tree, tocList);
+    if (!hasServerToc) {
+      const tree = buildHeadingTree(headings);
+      renderTOC(tree, tocList);
+    }
+
+    const firstLink = tocList.querySelector('.toc-link');
+    setActiveLink(tocList, firstLink);
     tocObserver = setupScrollSpy(headings, tocList);
   }
 
   function buildHeadingTree(headings) {
     const tree = [];
     let currentSection = null;
+    const slugCounts = new Map();
+
+    const slugify = (value) => {
+      const base = (value ?? '')
+        .toString()
+        .toLowerCase()
+        .trim()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      return base || 'section';
+    };
+
+    const uniqueSlug = (value, fallback) => {
+      const base = slugify(value) || fallback;
+      const count = slugCounts.get(base) ?? 0;
+      slugCounts.set(base, count + 1);
+      return count === 0 ? base : `${base}-${count + 1}`;
+    };
 
     headings.forEach((heading, index) => {
       if (!heading.id) {
-        heading.id = heading.textContent
-          ?.toLowerCase()
-          .trim()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '') || `section-${index}`;
+        heading.id = uniqueSlug(heading.textContent, `section-${index}`);
       }
 
       const entry = {
@@ -791,4 +879,3 @@ const t = useTranslations(currentLang);
     }
   }
 </style>
-

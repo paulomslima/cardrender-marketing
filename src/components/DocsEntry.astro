@@ -2,7 +2,7 @@
 import DocsLayout from "../layouts/DocsLayout.astro";
 import { useTranslations } from "../lib/i18n";
 
-const { entry, Content } = Astro.props;
+const { entry, Content, headings = [] } = Astro.props;
 const t = useTranslations(entry.data.lang);
 
 // Determine proper language tag for jsonLd
@@ -32,7 +32,12 @@ const jsonLd = {
 };
 ---
 
-<DocsLayout title={entry.data.title} description={entry.data.description} jsonLd={jsonLd}>
+<DocsLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  jsonLd={jsonLd}
+  headings={headings}
+>
   <div class="docs-header">
     {entry.data.category && (
       <span class="docs-category-badge">{entry.data.category}</span>
@@ -68,5 +73,3 @@ const jsonLd = {
     </div>
   )}
 </DocsLayout>
-
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
