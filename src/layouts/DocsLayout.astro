@@ -967,10 +967,18 @@ function buildToc(headings) {
     .docs-title {
       font-size: 2rem;
       letter-spacing: -0.02em;
+      max-width: none;
+      text-wrap: pretty;
     }
     
     .docs-description {
       font-size: 1rem;
+      max-width: none;
+    }
+
+    .docs-meta {
+      max-width: none;
+      flex-wrap: wrap;
     }
     
     .docs-prose {
