@@ -38,26 +38,37 @@ const jsonLd = {
   jsonLd={jsonLd}
   headings={headings}
 >
-  <div class="docs-header">
-    {entry.data.category && (
-      <span class="docs-category-badge">{entry.data.category}</span>
-    )}
-    {entry.data.proficiencyLevel && (
-      <span class="docs-level-badge">{entry.data.proficiencyLevel}</span>
-    )}
-  </div>
+  <article class="docs-article" itemscope itemtype="https://schema.org/TechArticle">
+    <header class="docs-article-header">
+      <div class="docs-header">
+        {entry.data.category && (
+          <span class="docs-category-badge">{entry.data.category}</span>
+        )}
+        {entry.data.proficiencyLevel && (
+          <span class="docs-level-badge">{entry.data.proficiencyLevel}</span>
+        )}
+      </div>
 
-  <h1 class="docs-title">{entry.data.title}</h1>
-  <p class="docs-description">{entry.data.description}</p>
-  <div class="docs-meta">
-    <span>{t('docs.lastUpdated')}: {new Intl.DateTimeFormat(entry.data.lang === 'pt' ? 'pt-BR' : entry.data.lang === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(entry.data.lastUpdated))}</span>
-  </div>
+      <h1 class="docs-title" itemprop="headline">{entry.data.title}</h1>
+      <p class="docs-description" itemprop="description">{entry.data.description}</p>
+      <div class="docs-meta">
+        <span class="docs-meta-label">{t('docs.lastUpdated')}:</span>
+        <time
+          class="docs-meta-value"
+          itemprop="dateModified"
+          datetime={new Date(entry.data.lastUpdated).toISOString()}
+        >
+          {new Intl.DateTimeFormat(entry.data.lang === 'pt' ? 'pt-BR' : entry.data.lang === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(entry.data.lastUpdated))}
+        </time>
+      </div>
+    </header>
 
-  <div class="docs-prose">
-    <div class="prose prose-lg max-w-none">
-      <Content />
+    <div class="docs-prose" itemprop="articleBody">
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
     </div>
-  </div>
+  </article>
 
   {entry.data.relatedDocs && entry.data.relatedDocs.length > 0 && (
     <div class="docs-related">

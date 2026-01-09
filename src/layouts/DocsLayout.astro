@@ -416,6 +416,14 @@ function buildToc(headings) {
     min-height: 60vh;
   }
 
+  .docs-article {
+    display: block;
+  }
+
+  .docs-article-header {
+    margin-bottom: 2.5rem;
+  }
+
   .docs-header {
     display: flex;
     align-items: center;
@@ -454,6 +462,8 @@ function buildToc(headings) {
     margin: 0 0 1.5rem 0;
     color: hsl(var(--foreground));
     letter-spacing: -0.025em;
+    max-width: 32ch;
+    text-wrap: balance;
   }
 
   .docs-description {
@@ -462,14 +472,26 @@ function buildToc(headings) {
     color: hsl(var(--muted-foreground) / 0.95);
     margin: 0 0 1.25rem 0;
     font-weight: 400;
+    max-width: 68ch;
   }
 
   .docs-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.8125rem;
     color: hsl(var(--muted-foreground) / 0.75);
     padding-bottom: 2rem;
     margin-bottom: 2.5rem;
     border-bottom: 1px solid hsl(var(--border) / 0.4);
+    max-width: 68ch;
+  }
+
+  .docs-meta-label {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    font-size: 0.6875rem;
   }
 
   /* Ensure list markers render inside docs content */
